@@ -1,0 +1,14 @@
+<ul>
+    <? foreach ($this->container as $page) : ?>
+        
+         
+        <? 
+            // can not do that cause we need to set active class to a tag 
+            /*echo $this->navigation()->menu()->htmlify($page)*/ 
+        ?>
+        
+        <li<? if ($page->getClass()) : ?> class="<?=$page->getClass()?>"<? endif; ?>>
+            <a href="<?=$page->getHref()?>"<? if ($page->isActive()) : ?> class="active"<? endif; ?>><?=$page->getLabel()?></a>
+        </li>
+    <? endforeach; ?>
+</ul>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Main navigation -->
+<navigation>
+    <pages>
+        <page1>
+            <route>Home</route>
+            <label>Home</label>
+            
+            <class>first</class>
+            
+            <module>default</module>
+            <controller>index</controller>
+            <action>index</action>
+        </page1>
+        <page2>
+            <route>AboutUs</route>
+            <label>About Us</label>
+            
+            <module>default</module>
+            <controller>index</controller>
+            <action>about-us</action>
+        </page2>
+        <page3>
+            <route>Terms</route>
+            <label>Terms</label>
+            
+            <module>static-contents</module>
+            <controller>index</controller>
+            <action>terms</action>
+        </page3>
+        <page4>
+            <route>Privacy</route>
+            <label>Privacy</label>
+            
+            <module>static-contents</module>
+            <controller>index</controller>
+            <action>privacy</action>
+        </page4>
+        <page5>
+            <route>ContactUs</route>
+            <label>Contact Us</label>
+            
+            <module>default</module>
+            <controller>index</controller>
+            <action>contact-us</action>
+        </page5>
+        <page6>
+            <route>Help</route>
+            <label>Help</label>
+            
+            <class>last</class>
+            
+            <module>static-contents</module>
+            <controller>index</controller>
+            <action>help</action>
+        </page6>
+    </pages>
+</navigation>

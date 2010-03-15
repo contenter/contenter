@@ -1,0 +1,80 @@
+TypeBusiness:
+  business_type_1:
+    name: Restaurants
+  business_type_2:
+    name: Dance Clubs
+  business_type_3:
+    name: Bars
+  business_type_4:
+    name: Casinos
+  business_type_5:
+    name: Theatres
+  business_type_6:
+    name: Movie Theatres
+  business_type_7:
+    name: Museums
+  business_type_8:
+    name: Aquariums
+  business_type_9:
+    name: Art galleries
+  business_type_10:
+    name: Transportation Services
+  business_type_11:
+    name: Sport Venues
+  business_type_12:
+    name: Sporting Goods
+  business_type_13:
+    name: Salons
+  business_type_14:
+    name: Barber Shops
+  business_type_15:
+    name: Spas
+  business_type_16:
+    name: Wineries
+  business_type_17:
+    name: Boutique Shops
+  business_type_18:
+    name: Book stores
+  business_type_19:
+    name: Coffee shops
+  business_type_20:
+    name: Ice Cream parlors
+  business_type_21:
+    name: Fitness Centers
+  business_type_22:
+    name: Natural Food stores
+  business_type_23:
+    name: Vitamin shops
+  business_type_24:
+    name: Hobbie shops
+  business_type_25:
+    name: Car Wash
+  business_type_26:
+    name: Candy stores
+  business_type_27:
+    name: State parks
+  business_type_28:
+    name: Theme parks
+  business_type_29:
+    name: Amusement parks
+  business_type_30:
+    name: Automotive
+  business_type_31:
+    name: Home
+  business_type_32:
+    name: Law
+  business_type_33:
+    name: Taxes
+  business_type_34:
+    name: Health
+  business_type_35:
+    name: Fashion
+  business_type_36:
+    name: Hotels
+  business_type_37:
+    name: Local Events
+  business_type_38:
+    name: Department Stores
+  business_type_39:
+    name: Grocery Stores
+  

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configdata>
+    <secure_pages>
+        <resource>
+            <module>user</module>
+            <controller>register_venue</controller>
+            <action>venue-2</action>
+        </resource>
+        <resource>
+            <module>user</module>
+            <controller>register_venue</controller>
+            <action>venue-3</action>
+        </resource>
+        <resource>
+            <module>user</module>
+            <controller>register_venue</controller>
+            <action>venue-4</action>
+        </resource>
+    </secure_pages>
+</configdata>

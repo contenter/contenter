@@ -1,0 +1,34 @@
+<?php
+abstract class FinalView_Grid_Title_Decorator_Abstract implements FinalView_Grid_Title_Decorator_Interface
+{
+    protected $_title = '';
+    /**
+     * @var FinalView_Grid
+     */
+    protected $_grid = null;
+    
+    public function __construct($title)
+    {
+        $this->_title = $title;
+    }
+    /**
+     * Set grid
+     * @param FinalView_Grid $grid
+     */
+    public function setGrid(FinalView_Grid $grid)
+    {
+        $this->_grid = $grid;
+    }
+    /**
+     * Return Grid
+     * @return FinalView_Grid
+     */
+    public function getGrid()
+    {
+        return $this->_grid;
+    }
+    public function render()
+    {
+        echo $title;
+    }
+}

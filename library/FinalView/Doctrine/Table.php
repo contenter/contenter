@@ -1,0 +1,69 @@
+<?php
+class FinalView_Doctrine_Table extends Doctrine_Table
+{
+    private $_queryParams;
+    private $_query;
+    
+    
+    final public function _getQuery()
+    {
+        if ($this->_query === null) {
+        	$this->_query = $this->createQuery($this->getTableName());
+        }
+        
+        return $this->_query;
+    }
+    
+    private function _resetQuery()
+    {
+        $this->_query = null;
+    } 
+    
+    final public function findByParams($params = array())
+    {
+        $this->build($this->_getQuery(), $params);
+
+        $result = $this->_getQuery()->execute();
+        
+        $this->_resetQuery();
+        
+        return $result;
+    }
+    
+    public function build($query, $params)
+    {
+        $this->_queryParams = $params;
+        $this->_query = &$query;
+         
+        $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
+        foreach ($params as $param=>$value) {
+            
+            $method = $filter->filter($param).'Selector';            
+            if (!method_exists($this, $method)) {
+            	throw new FinalView_Doctrine_Table_Exception('undefined condition in findByParams');
+            }
+            
+            $this->$method($value);
+        }
+        
+        return $this->_getQuery();      
+    }
+    
+    protected function innerJoin($relation, $params)
+    {    
+        $tableObject = $this->getRelation($relation)->getTable();
+        
+        $this->_getQuery()->innerJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() );
+      
+        return $tableObject->build(&$this->_query, $params);
+    }
+    
+    protected function LeftJoin($relation, $params)
+    {    
+        $tableObject = $this->getRelation($relation)->getTable();
+        
+        $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() );
+    
+        return $tableObject->build(&$this->_query, $params);
+    }    
+}

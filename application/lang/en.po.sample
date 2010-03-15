@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: dV <dmitryv@finalview.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "AUTHORIZE_FAILED"
+msgstr "Incorrect e-mail or password"
+
+msgid "IDENTITY_NOT_FOUND"
+msgstr "User is not found"
+
+msgid "AUTHORIZE_UNCONFIRMED"
+msgstr "Our records show that you have already registered, but did not confirmed your account yet. Check your e-mail box or spam folder for the link to confirm your account. Press <a href=\"user/register/re-send-confirmation.html?email=%s&role=%d\">RESEND</a> to get confirmation link on your email again."
+
+msgid "AUTHORIZE_EXPIRED"
+msgstr "Our records show that your account is already expired. <a href=\"#\">@TODO: Link to account prolongation</a>"
+
+msgid "EMAIL_ADDRESS_NOT_FOUND"
+msgstr "Sorry, but given email address was not found in our database"
+
+msgid "PASSWORD_WAS_SENT"
+msgstr "For security purposes, a message was sent to your e-mail address with a link to confirm your intention for changing password. Click on the link or cut and paste it to your browser, and press enter."
+
+msgid "SUCCESS_REGISTRATION_MESSAGE"
+msgstr "You registered successfully. Confirmation link was sent on your email."
+
+msgid "NOT_UNIQUE_PASSWORDS"
+msgstr "Password and its Confirmation must be identical"
+
+msgid "PREFERENCES_SUCCESS_MESSAGE"
+msgstr "Preferences set successfully"
+
+msgid "PICTURE_UPLOADED_SUCCESSFULLY"
+msgstr "Picture uploaded successfully"
+
+msgid "BACKGROUND_UPLOADED_SUCCESSFULLY"
+msgstr "Background uploaded successfully"
+
+msgid "PROFILE_VIDEO_UPLOADED_SUCCESSFULLY"
+msgstr "Profile video uploaded successfully"
+
+msgid "Request sent"
+msgstr "Request to add user has been sent for approval"
+
+msgid "Choose banner or help"
+msgstr "You should choose whether to upload banner file or call for help"
+
