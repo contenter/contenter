@@ -178,34 +178,6 @@ function array_set_element_position(&$input, $key, $position)
 }
 
 /**
- * Return path to the temporary directory. 
- *
- * @return  string
- */
-function get_tmp_dir() 
-{
-    static $TMPDIR;
-    
-    if (!isset($TMPDIR)) 
-    {
-        switch (true) {
-            // пытаемся определить по переменным окружения
-            case $TMPDIR = getenv('WIN' == substr(PHP_OS, 0, 3) ? 'TMP': 'TMPDIR');
-                break;
-            // пытаемся определить по настройкам PHP (встречается у некоторых хостеров)
-            case $TMPDIR = ini_get('upload_tmp_dir');
-                break;
-            // если дойдет досюда, придется создать временную папку руками
-            default:
-                $TMPDIR = APPLICATION_PATH . DIRECTORY_SEPARATOR . '_tmp';
-                break;
-        }
-    }
-    
-    return $TMPDIR;
-}
-
-/**
  * Generate random file name with specified extension if given
  *
  * @param   string $ext

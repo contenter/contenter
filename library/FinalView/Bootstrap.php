@@ -21,6 +21,12 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
     
+	protected function _initLocale()
+	{
+		if ($locale = $this->getOption('locale')) {
+            Zend_Registry::set('locale', $locale);
+        }
+	}
     
     protected function _initMagicFile() 
     {

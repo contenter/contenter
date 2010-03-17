@@ -28,4 +28,19 @@ final class FinalView_Doctrine
 
         return $result;
     }
+    
+    /**
+     * Migrate database to specified $to version. Migrates from current to latest if you do not specify.
+     *
+     * @param string $migrationsPath Path to migrations directory which contains your migration classes
+     * @param string $to Version you wish to migrate to.
+     * @return bool true
+     * @throws new Doctrine_Migration_Exception
+     */
+    public static function migrate($migrationsPath, $to = null)
+    {
+        $migration = new FinalView_Doctrine_Migration($migrationsPath);
+
+        return $migration->migrate($to);
+    }    
 }

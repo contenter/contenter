@@ -142,6 +142,7 @@ class FinalView_Mail implements FinalView_Mail_Interface
         }
         
         $this->_mailer->setSubject($this->_parse($this->_template()->subject));
+        
         trim($this->_template()->html) 
             ? $this->setBodyHtml($this->_parse($this->_template()->html))
             : $this->_mailer->setBodyText($this->_parse($this->_template()->text));
