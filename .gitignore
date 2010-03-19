@@ -1,2 +1,4 @@
 /doctrine/models/generated/*
 /doctrine/migrations/*
+
+/application/configs/environment.php
