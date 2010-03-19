@@ -19,16 +19,27 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $this->_query = null;
     } 
     
-    final public function findByParams($params = array())
+    final public function findByParams($params = array(), $hydrationMode = null)
     {
         $this->build($this->_getQuery(), $params);
 
-        $result = $this->_getQuery()->execute();
+        $result = $this->_getQuery()->execute(array(), $hydrationMode);
         
         $this->_resetQuery();
         
         return $result;
     }
+    
+    final public function findOneByParams($params = array(), $hydrationMode = null)
+    {
+        $this->build($this->_getQuery(), $params);
+
+        $result = $this->_getQuery()->limit(1)->fetchOne(array(), $hydrationMode);
+        
+        $this->_resetQuery();
+        
+        return $result;
+    }    
     
     public function build($query, $params)
     {
