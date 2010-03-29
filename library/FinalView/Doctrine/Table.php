@@ -39,6 +39,26 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $this->_resetQuery();
         
         return $result;
+    }
+    
+    final public function findPageByParams($params = array(), $pageNum, $perPage, $hydrationMode = null)
+    {
+        $this->build($this->_getQuery(), $params);
+        
+        if (!isset($params['pager']['page'], $params['pager']['per_page'])) {
+        	throw new FinalView_Table_Exception('findPageByParams: not specified pager params');
+        }
+        
+        $query = clone($this->_getQuery());
+        $pager = new Doctrine_Pager(
+            $query,
+            $pageNum,
+            $perPage
+        );
+        
+        $this->_resetQuery();
+        
+        return $pager;
     }    
     
     public function build($query, $params)

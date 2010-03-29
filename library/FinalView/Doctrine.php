@@ -42,5 +42,45 @@ final class FinalView_Doctrine
         $migration = new FinalView_Doctrine_Migration($migrationsPath);
 
         return $migration->migrate($to);
-    }    
+    }
+    
+    /**
+     * Get the connection object for a table by the actual table name
+     * FIXME: I think this method is flawed because a individual connections could have the same table name
+     *
+     * @param string $tableName
+     * @return Doctrine_Connection
+     */
+    public static function getConnectionByTableName($tableName)
+    {      
+        $loadedModelsFiles = Doctrine::getLoadedModelFiles();
+        
+        foreach ($loadedModelsFiles as $model => $modelPath) {
+        	if (substr($model, 0, 4) === 'Base') {
+                $baseModels[] = $model;
+                continue;
+            }
+            $customModels[] = $model;
+        }
+        
+        $models = array();
+        
+        foreach ($customModels as $modelName) {
+        	if (in_array('Base'.$modelName, $baseModels)) {
+                $models[] = $modelName;
+            }
+        }
+        
+        $models = Doctrine::filterInvalidModels($models);
+     
+        foreach ($models as $name) {
+            $table = Doctrine::getTable($name);
+
+            if ($table->getTableName() == $tableName) {
+               return $table->getConnection();
+            }
+        }
+
+        return Doctrine_Manager::connection();
+    }        
 }

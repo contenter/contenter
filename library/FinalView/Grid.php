@@ -1,295 +1,173 @@
 <?php 
-class FinalView_Grid
+class FinalView_Grid extends FinalView_Grid_Entity_Abstract
 {
-    /**
-     *
-     * @var Zend_View
-     */
-    protected $_view;
-    protected $_data;
-    protected $_titles;
-    protected $_viewScript;
-    protected $_uri;
-    protected $_actions;
-    protected $_buttons;
-    protected $_buttonsList = array();
-    protected $_actionsList = array();
-    protected $_titlesList = array();
-    protected $_fieldsDecorators = array();
-    
-    private $_uriParams = array();    
-    /**
-     * @var FinalView_Grid_Decorator_Abstract
-     */
-    protected $_decorator = null;
-    /**
-     * @var Doctrine_Pager
-     */
-    protected $_pager = null;
-    
-    public function __construct($titles = array(), $uri = '#')
-    {
-        $this->_view = new Zend_View();
-        $this->_titles = $titles;
-        $this->_uri = $uri;
-    }
-    /**
-     * Set grid decorator
-     * @param FinalView_Grid_Decorator_Abstract $decorator
-     */
-    public function setDecorator(FinalView_Grid_Decorator_Abstract $decorator)
-    {
-        $this->_decorator = $decorator;
-    }
-    /**
-     * Get grid decorator
-     * @return FinalView_Grid_Decorator_Abstract
-     */
-    public function getDecorator()
-    {
-        if (null === $this->_decorator) {
-            $this->_decorator = new FinalView_Grid_Decorator_Standart($this);
-        }
-        
-        return $this->_decorator;
-    }
-    
-    /**
-     * Set grid titles
-     * @param array $titles
-     */
-    public function setTitles(array $titles)
-    {
-        foreach ($titles as $key => $title) {
-            $this->addTitle($key, $title);
-        }
-        
-        return $this;
-    }
-    
-    public function setPager(Doctrine_Pager $pager)
-    {
-        $this->_pager = $pager;
-        return $this;
-    }
-    
-    public function setUri($uri)
-    {
-        $this->_uri = $uri;
-        return $this;
-    }
-    
-    public function setUriParams($params)
-    {
-        $this->_uriParams = $params;
-        return $this;
-    }
-    
-    public function getUriParams()
-    {
-        return $this->_uriParams;    
-    }    
-    
-    /**
-     * Add title
-     * @param string $field
-     * @param array $title
-     * @return 
-     */
-    public function addTitle($field, $title)
-    {
-        if ($title instanceof FinalView_Grid_Title_Abstract) {
-            $this->_titlesList[$field] = $title;
-        } else {
-            $titleClass = 'FinalView_Grid_Title_Decorator_'.ucfirst($title['decorator']);
-            $this->_titlesList[$field] = new $titleClass($title['title']);
-        }
-        $this->_titlesList[$field]->setGrid($this);
-    }
-    
-    public function setData($data)
-    {
-        $this->_data = $data;
-        return $this;
-    }
 
-    public function addFieldsDecorators(array $decorators)
+    const GRID_NAME = 'grid';
+    
+    protected $_columns;
+    protected $_plugins = array();
+    protected $_iterator;
+    
+    protected $_renderer;
+    
+    protected $_script = 'grid.phtml';
+    
+    public function __construct(array $options = array())
     {
-        foreach ($decorators as $field => $decorator) {
-            $this->addFieldDecorator($field, $decorator);
+        $forbidden = array();        
+        
+        if (isset($options['plugins'])) {
+        	foreach ((array)$options['plugins'] as $plugin) {
+                $this->addPlugin($plugin);
+            }            
         }
+        
+        foreach ($options as $key => $value) {
+            $normalized = ucfirst($key);
+            if (in_array($normalized, $forbidden)) {
+                continue;
+            }
+
+            $method = 'set' . $normalized;
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }        
+    }
+       
+    public function getName()
+    {
+        return self::GRID_NAME;
     }
     
-    public function addFieldDecorator($field, $decorator)
+    private function _initPlugins()
     {
-        if ($decorator instanceof FinalView_Grid_Field_Decorator_Abstract) {
-            $this->_fieldsDecorators[$field] = $decorator;
-        } else {
-            $fieldDecorator = 'FinalView_Grid_Field_Decorator_'.ucfirst($decorator);
-            $this->_fieldsDecorators[$field] = new $fieldDecorator();
+        foreach ($this->_plugins as $plugin) {
+        	$plugin->init();
         }
-        return $this;
+    } 
+    
+    public function addPlugin(FinalView_Grid_Plugin_Abstract $plugin)
+    {        
+        $plugin->setGrid($this);
+        
+        $this->_plugins[$plugin->name] = $plugin;        
     }
     
-    public function setViewScript($script)
+    public function getPlugins()
     {
-        $this->_view->setScriptPath(dirname($script));
-        $this->_viewScript = basename($script);
-    }
-    /**
-     * Add grid buttons
-     * 
-     * @param array $buttons
-     */
-    public function addButtons(array $buttons)
-    {
-        foreach ($buttons as $button) {
-            $this->addButton($button);
-        }
-    }
-    /**
-     * Add grid button
-     * @param mixed $button - array or FinalView_Grid_Button_Abstract
-     */
-    public function addButton($button)
-    {
-        if ($button instanceof FinalView_Grid_Button_Decorator_Abstract) {
-            $this->_buttonsList[$button['name']] = $button;
-        } else {
-            $buttonClass = 'FinalView_Grid_Button_Decorator_'.ucfirst($button['decorator']);
-            $this->_buttonsList[$button['name']] = new $buttonClass($button);
-        }
-        
-        $this->_buttonsList[$button['name']]->setGrid($this);
-    }
-    /**
-     * add grid actions
-     * @param array $action
-     *  
-     */
-    public function addActions(array $actions)
-    {
-        foreach ($actions as $action) {
-            $this->addAction($action);
-        }
-    }
-    /**
-     * Add grid action
-     * @param mixed $action - array or FinalView_Grid_Action_Abstract
-     * 
-     */
-    public function addAction($action)
-    {
-        if ($action instanceof FinalView_Grid_Action_Abstract) {
-            $this->_actionsList[] = $action;
-        } else {
-            $actionClass = 'FinalView_Grid_Action_Decorator_'.ucfirst($action['decorator']);
-            $this->_actionsList[] = new $actionClass($action);
-        }
+        return $this->_plugins;
     }
     
-    /**
-     * @deprecated - Now must use <b>addActions</b> and <b>addAction</b>
-     * @param object $actions
-     * @return 
-     */
-    public function setActions($actions)
+    public function getPlugin($name)
     {
-        $this->_actions = $actions;
-    }
-    /**
-     * @deprecated - Now must use <b>addButtons</b> and <b>addButton</b> 
-     * @param array $buttons
-     */
-    public function setButtons($buttons)
-    {
-        $this->_buttons = $buttons;
+        if (isset($this->_plugins[$name])) return $this->_plugins[$name]; 
     }
     
-    public function render()
+    public function setIterator(array $iterator)
     {
-        if (null === $this->_decorator) $this->getDecorator();
-        $this->_decorator->setUri($this->_uri);
-        $this->_decorator->preRender();
+        $this->_iterator = $iterator;        
+    }
+    
+    public function getIterator()
+    {
+        return $this->_iterator;
+    }
+    
+    public function setColumns(array $columns)
+    {
+        $this->getColumns()->resetColumns();
         
-        $this->_decorator->preRenderRow();
-        foreach ($this->_titlesList as $title) {
-            $title->render();
+        foreach ((array)$columns as $column) {
+        	$this->addColumn($column);
+        }        
+    }
+    
+    public function setColumnsFromIterator()
+    {        
+        $iterator = $this->getIterator();
+        if (is_null($iterator)) {
+        	throw new FinalView_Grid_Exception('not defined iterator');
         }
         
-        $this->_decorator->postRenderRow();
+        $row = reset($iterator);
+        if (!$row) {
+            throw new FinalView_Grid_Exception('cannot define columns from iterator');	
+        }
         
-        $fields = array_keys($this->_titlesList);
+        $columns = array_keys($row);
         
-        foreach ($this->_pager->execute() as $index => $row) {
-            $this->_decorator->preRenderRow($index);
-            foreach ($fields as $field) {
-                if ($field == '0') continue;
-                if (!isset($this->_fieldsDecorators[$field])) {
-                    $this->_fieldsDecorators[$field] = new FinalView_Grid_Field_Decorator_Standart();
-                }
+        foreach ($columns as $column) {
+            $_columns[] = new FinalView_Grid_Column_Iterator($column); 
+        }
+        
+        $this->setColumns($_columns);
+    }
+    
+    public function addColumn(FinalView_Grid_Column $column)
+    {
+        $this->getColumns()->addColumn($column);
+    }
+    
+    public function getColumns()
+    {
+        if (is_null($this->_columns)) {
+        	$this->_columns = new FinalView_Grid_ColumnsCollection;
+        }
+        
+        return $this->_columns;
+    }
+    
+    public function getRenderer()
+    {
+        if ($this->_renderer === null) {
+        	$this->_renderer = new FinalView_Grid_Renderer($this);        	
+        }
+        
+        return $this->_renderer;
+    }
+    
+    public function render($entity, $inputParams = array())
+    {
+        switch (true) {
+            case is_string($entity):
+                $entityName = $entity;
+            break;
+            case $entity instanceof FinalView_Grid_Entity_Abstract:
+                $entityName = $entity->getName();
+        	break;
+        	default:
+        	   throw new FinalView_Grid_Exception('Not valid entity for rendering');
+        	break;
+        }
+        $this->getRenderer()->clearScript();
+        $this->getRenderer()->useNamespace($entityName);
+        
+        $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
+        $customHandler = $filter->filter($entityName).'Handler';        
+              
+        if (method_exists($this, $customHandler)) {     
+            $this->$customHandler($inputParams, $this->getRenderer() );
+        }elseif(is_object($entity)){     
+            $entity->handler($inputParams, $this->getRenderer());
+        }else{       
+            $this->getRenderer()->assign($inputParams);
+        }        
+
+        if ($this->getRenderer()->getScript() === null) {
+        	if (is_object($entity)) {
+                $this->getRenderer()->setScript($entity->getScript());                 
+            }else{
+                $this->getRenderer()->setScript($entityName.'.phtml');    
+            }            
+        }
                 
-                $this->_fieldsDecorators[$field]->render($row, $field);
-            }
-            if (count($this->_actionsList) > 0) {
-                $this->_actionsList[0]->preRender();
-                foreach ($this->_actionsList as $action) {
-                    $action->render($row);
-                }
-                $this->_actionsList[0]->postRender();
-            }
-            $this->_decorator->postRenderRow();
-        }
-        $this->_decorator->postRender();
-        if (!empty($this->_buttonsList)) {
-            foreach ($this->_buttonsList as $button) {
-                $button->render();
-            }
-        }
-        
-        if (!is_null($this->_pager)) {
-            $this->_decorator->renderPager($this->_pager);
-        }
-        
-        $this->_decorator->endRender();
-        
-        echo $this->_highlight();
-    }
-    
-    protected function _highlight() 
-    {
-        $content = '<script type="text/javascript">'.PHP_EOL;
-        $content .= "$(document).ready(function () { ".PHP_EOL;
-        $content .= 
-        '
-            $(\'table.fv_gridtable tr:not(:first)\')
-            .hover(function()
-            {
-                $(this).addClass(\'hover\');
-            }, function()
-            {
-                $(this).removeClass(\'hover\');
-            });
-        ';
-        $content .= "});".PHP_EOL;
-        $content .= "</script>".PHP_EOL;
-        
-        return $content;
+        return $this->getRenderer()->renderScript();
     }
     
     public function __toString()
     {
-        try {
-            $this->_view->titles = $this->_titles;
-            $this->_view->uri = $this->_uri;
-            $this->_view->values = $this->_data;
-            $this->_view->rowActions = $this->_actions;
-            $this->_view->buttons = $this->_buttons;
-            $data = $this->_view->render($this->_viewScript);
-        }
-        catch(Exception $e) {
-            return $e->getMessage();
-        }
-        return $data;
-    }
+        $this->_initPlugins();
+        return $this->render($this);
+    }    
 }

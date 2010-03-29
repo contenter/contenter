@@ -1,0 +1,6 @@
+<?$plugin = $this->grid->getPlugin('sortable');?>
+<a href="<?=$this->addToUrl(array(
+    'sort'      =>  $this->column->getName(),
+    'direction' =>  $this->column->getName() == $plugin->columnName ? $plugin->direction : 'asc' 
+))
+?>"><?=$this->title;?></a>
