@@ -104,9 +104,10 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         $this->setColumns($_columns);
     }
     
-    public function addColumn(FinalView_Grid_Column $column)
+    public function addColumn(FinalView_Grid_Column $column, 
+        $appendType = FinalView_Grid_ColumnsCollection::APPEND_LAST, $relatedColumn = null)
     {
-        $this->getColumns()->addColumn($column);
+        $this->getColumns()->addColumn($column, $appendType, $relatedColumn);
     }
     
     public function getColumns()
@@ -163,6 +164,12 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         }
                 
         return $this->getRenderer()->renderScript();
+    }
+    
+    public function FormHeaderHandler($params, $view)
+    {
+        $view->url = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
+        $view->method = 'post';
     }
     
     public function __toString()

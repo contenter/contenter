@@ -1,4 +1,5 @@
 <?=$this->grid->render('_header');?>
+<?=$this->grid->render('_form_header');?>
 <table>
      <tr>        
         <?foreach($this->grid->getColumns() as $column):?>
@@ -17,4 +18,5 @@
     </tr>     
     <?endforeach;?>
 </table>
+<?=$this->grid->render('_form_footer');?>
 <?=$this->grid->render('_footer');?>
