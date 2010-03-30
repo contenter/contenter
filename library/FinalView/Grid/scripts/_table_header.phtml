@@ -1,0 +1,7 @@
+<tr <?=$this->htmlTagAttribs($this->tr_attribs);?>>        
+    <?foreach($this->grid->getColumns() as $column):?>
+        <th <?=$this->htmlTagAttribs($this->th_attribs);?>>                
+            <?=$this->grid->render($column->getTitle())?>
+        </th>            
+    <?endforeach;?>       
+</tr>

@@ -7,7 +7,7 @@ class FinalView_Grid_Renderer extends Zend_View
     
     public $grid;
     
-    private $data = array();   
+    public $data = array();   
     
     public function __construct(FinalView_Grid $grid)
     {
@@ -49,7 +49,7 @@ class FinalView_Grid_Renderer extends Zend_View
     public function useNamespace($name)
     {
         $this->_namespace = $name;
-        $this->data[$name] = array();
+        if (!isset($this->data[$name])) $this->data[$name] = array();
         return $this;
     }
     

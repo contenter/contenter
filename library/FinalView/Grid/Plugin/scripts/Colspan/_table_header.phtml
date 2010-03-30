@@ -1,0 +1,21 @@
+<?$colspanPlugin = $this->grid->getPlugin('colspan');?>
+<tr <?=$this->htmlTagAttribs($this->tr_attribs);?>>        
+    <?foreach($this->grid->getColumns() as $column):?>
+        <?if(!$colspanPlugin->isInJointColumn()):?>
+            <th <?if(isset($colspanPlugin->jointColumns[$column->getName()])):?> 
+                <?=$colspanPlugin->renderColspan($column->getName());?>
+                <?endif;?>
+                <?=$this->htmlTagAttribs($this->th_attribs);?>
+            >
+        <?endif;?>        
+            
+            <?=$this->grid->render($column->getTitle())?>
+            <?if($colspanPlugin->isInJointColumn()) $colspanPlugin->decJointColumn(); ?>
+            
+        <?if(!$colspanPlugin->isInJointColumn()):?>
+            </th>  
+        <?endif;?>
+        
+                    
+    <?endforeach;?>       
+</tr>

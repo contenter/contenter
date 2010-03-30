@@ -26,14 +26,8 @@ class FinalView_Grid_ColumnsCollection implements Iterator
     public function resetColumns()
     {
         $this->_columns = null;
-        $this->_columnsIndex = array(
-            '__begin__' =>  array(
-                'next'  =>  '__end__', 'prev'   =>  null
-            ),
-            '__end__' =>  array(
-                'next'  =>  null, 'prev'   =>  '__begin__'
-            ),        
-        );
+
+        $this->resetColumnsIndex();
         
         $this->_currentColumn = null;
     } 
@@ -131,6 +125,179 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         return $this->_columns[$lastColumnName];
     }
+    
+    public function isExistColumn($column)
+    {
+        if ($column == '__begin__' || $column == '__end__' || !isset($this->_columns[$column])) {
+        	return false;
+        }    
+        return true;
+    }
+    
+    public function removeColumn($column)
+    {
+        if (!$this->isExistColumn($column) ) {
+        	throw new FinalView_Grid_Exception('column doesn\'t exist');
+        }
+        
+        unset($this->_columns[$column]);
+        $prev = $this->_columnsIndex[$column]['prev'];
+        $next = $this->_columnsIndex[$column]['next'];
+        $this->_columnsIndex[$prev]['next'] = $next;
+        $this->_columnsIndex[$next]['prev'] = $prev;
+        
+        unset($this->_columnsIndex[$column]);     
+    }
+    
+    public function upColumn($column)
+    {
+        if (!$this->isExistColumn($column) ) {
+        	throw new FinalView_Grid_Exception('column doesn\'t exist');
+        }
+        
+        if ($this->_columnsIndex[$column]['prev'] == '__begin__') {
+        	return;
+        }
+        
+        $prevColumn = $this->_columnsIndex[$column]['prev'];
+        $nextColumn = $this->_columnsIndex[$column]['next'];
+
+        $prevPrevColumn = $this->_columnsIndex[$prevColumn]['prev'];
+        
+        $this->_columnsIndex[$prevColumn]['next'] = $nextColumn;        
+        $this->_columnsIndex[$prevColumn]['prev'] = $column;
+        
+        $this->_columnsIndex[$column]['prev'] = $prevPrevColumn;
+        $this->_columnsIndex[$column]['next'] = $prevColumn;
+        
+        $this->_columnsIndex[$prevPrevColumn]['next'] = $column;
+        $this->_columnsIndex[$nextColumn]['prev'] = $prevColumn;             
+    }
+    
+    public function downColumn($column)
+    {
+        if (!$this->isExistColumn($column) ) {
+        	throw new FinalView_Grid_Exception('column doesn\'t exist');
+        }
+        
+        if ($this->_columnsIndex[$column]['next'] == '__end__') {
+        	return;
+        }
+        
+        $nextColumn = $this->_columnsIndex[$column]['next'];
+        
+        $this->upColumn($nextColumn);               
+    }
+    
+    private function resetColumnsIndex()
+    {
+        $this->_columnsIndex = array(
+            '__begin__' =>  array(
+                'next'  =>  '__end__', 'prev'   =>  null
+            ),
+            '__end__' =>  array(
+                'next'  =>  null, 'prev'   =>  '__begin__'
+            ),        
+        );    
+    }
+    
+    public function move($column, 
+        $movingType = FinalView_Grid_ColumnsCollection::APPEND_LAST, $relationColumn = null)
+    {
+        switch ($movingType) {
+            case FinalView_Grid_ColumnsCollection::APPEND_LAST:
+                $columnName = $this->getLastColumn()?$this->getLastColumn()->getName():'__begin__';
+                $this->moveColumnAfter($column, $columnName);
+            break;
+            case FinalView_Grid_ColumnsCollection::APPEND_FIRST:
+                $columnName = $this->getFirstColumn()?$this->getFirstColumn()->getName():'__end__';
+                $this->moveColumnBefore($column, $columnName);
+            break;
+            case FinalView_Grid_ColumnsCollection::APPEND_AFTER_COLUMN:
+                if (!is_null($relatedColumn) && $this->getColumn($relatedColumn) ) {
+                    $this->moveColumnAfter($column, $relatedColumn);	
+                }                
+            break;
+            case FinalView_Grid_ColumnsCollection::APPEND_BEFORE_COLUMN:
+                if (!is_null($relatedColumn) && $this->getColumn($relatedColumn) ) {
+                    $this->moveColumnBefore($column, $relatedColumn);	
+                } 
+            break;                                    
+        }        
+    }
+    
+    public function setColumnsOrder(array $order)
+    {
+        $this->resetColumnsIndex();
+                
+        foreach ($order as $column) {
+            if (!isset($this->_columns[$column])) {
+            	continue;
+            }
+            
+            $this->move($column, FinalView_Grid_ColumnsCollection::APPEND_LAST);
+            
+            $newColumns[$column] = $this->_columns[$column];
+        }
+        
+        if (isset($newColumns)) {
+        	$this->_columns = $newColumns;
+        }        
+    }    
+    
+    private function moveColumnAfter($column, $relatedColumn)
+    {
+        if (!$this->isExistColumn($column)) {
+            throw new FinalView_Grid_Exception('column doesn\'t exist');
+        }
+        
+        if (!array_key_exists($relatedColumn, $this->_columnsIndex) || $relatedColumn == '__end__') {
+        	throw new FinalView_Grid_Exception('not found relation column');
+        }
+                
+        if (isset($this->_columnsIndex[$column])) {
+            $prev = $this->_columnsIndex[$column]['prev'];
+            $next = $this->_columnsIndex[$column]['next'];
+            $this->_columnsIndex[$prev]['next'] = $next;
+            $this->_columnsIndex[$next]['prev'] = $prev;        	
+        }
+        
+        $next = $this->_columnsIndex[$relatedColumn]['next'];
+        
+        $this->_columnsIndex[$relatedColumn]['next'] = $column;
+        
+        $this->_columnsIndex[$column]['next'] = $next;
+        $this->_columnsIndex[$column]['prev'] = $relatedColumn;
+        
+        $this->_columnsIndex[$next]['prev'] = $column;                
+    }
+    
+    private function moveColumnBefore($column, $relatedColumn)
+    {
+        if (!$this->isExistColumn($column)) {
+        	throw new FinalView_Grid_Exception('column doesn\'t exist');
+        }
+        
+        if (!array_key_exists($relatedColumn, $this->_columnsIndex) || $relatedColumn == '__begin__') {
+        	throw new FinalView_Grid_Exception('not found relation column');
+        }        
+        
+        if (isset($this->_columnsIndex[$column])) {
+            $prev = $this->_columnsIndex[$column]['prev'];
+            $next = $this->_columnsIndex[$column]['next'];
+            $this->_columnsIndex[$prev]['next'] = $next;
+            $this->_columnsIndex[$next]['prev'] = $prev;
+        }
+        
+        $prev = $this->_columnsIndex[$relatedColumn]['prev'];
+        
+        $this->_columnsIndex[$relatedColumn]['prev'] = $column;
+        
+        $this->_columnsIndex[$column]['next'] = $relatedColumn;
+        $this->_columnsIndex[$column]['prev'] = $prev;
+        
+        $this->_columnsIndex[$prev]['next'] = $column;             
+    }     
     
     public function current()
     {

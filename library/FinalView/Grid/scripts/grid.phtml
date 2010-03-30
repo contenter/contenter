@@ -1,22 +1,5 @@
 <?=$this->grid->render('_header');?>
 <?=$this->grid->render('_form_header');?>
-<table>
-     <tr>        
-        <?foreach($this->grid->getColumns() as $column):?>
-            <th>                
-                <?=$this->grid->render($column->getTitle())?>
-            </th>            
-        <?endforeach;?>       
-     </tr>
-    <?foreach($this->grid->getIterator() as $row):?>
-    <tr>
-        <?foreach($this->grid->getColumns() as $column):?>
-            <td>
-                <?=$this->grid->render($column, $row)?>
-            </td>
-        <?endforeach;?>        
-    </tr>     
-    <?endforeach;?>
-</table>
+<?=$this->grid->render('_table');?>
 <?=$this->grid->render('_form_footer');?>
 <?=$this->grid->render('_footer');?>
