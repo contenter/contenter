@@ -4,59 +4,82 @@
 * Pagination
 * 
 */
-class FinalView_View_Helper_SimplePager extends Zend_View_Helper_Abstract
+class FinalView_View_Helper_Paging extends Zend_View_Helper_Abstract
 {
-    private $page;
-    private $perPage;
-    private $total;
-    private $lastPage;
+    public static $script;
     
-    private $currentPage;
+    public $perPage;
+    public $total;
+    public $lastPage;
+    
+    public $currentPage;
+    
+    private $_pages = array();
     
     
-    public function simplePager($total, $perPage, $page) 
+    public static function setScript($script)
     {
-        
-        $this->page = $page;
-        
-        $this->perPage = $perPage;
-        
-        $this->total = $total;
-        
-        $this->currentPage = $this->page;
+        self::$script = $script; 
+    }
+    
+    public function paging($total, $perPage, $page) 
+    {      
+        $this->perPage = $perPage;        
+        $this->total = $total;        
+        $this->currentPage = is_null($page)?1:$page;        
         
         $this->lastPage = null;
+        $this->pages = array();
         
-        $i = 1;
-        $pages[1] = true;
-        //if($this->getLastPage() >= 2) $pages[2] = true;
-        if($this->prevPage() >= 1) $pages[$this->prevPage()] = true;
-        $pages[$this->currentPage] = true;
-        if($this->nextPage() <= $this->getLastPage()) $pages[$this->nextPage()] = true;
-        //if($this->getLastPage() > 1) $pages[$this->getLastPage() - 1] = true;
-        $pages[$this->getLastPage()] = true;
-        ksort($pages);      
+        $this->_setPages();
+        
+        if (!is_null(self::$script) ) {
+            return $this->view->partial(
+                self::$script, 
+                array('paging'    =>  $this)
+            );	
+        }
+        
+        return $this->_renderPages();
+    }
+    
+    private function _renderPages()
+    {
         $lastDrawPage = 0;
         
-        $html = '<div class="p-b"><ul>';
+        $html = '<div class="paging"><ul>';
         if ($this->currentPage > 1) {
             $html .= '<li class="prev"><a href="' . $this->_makeUrl($this->prevPage()) . '">previous</a></li>';
         }
 
-        foreach($pages as $pageNum => $val){
+        foreach($this->_pages as $pageNum => $val){
             if($pageNum > $lastDrawPage + 1){                
                 $html .= '<li>...</li>';
             }
-            $active = $pageNum == $this->page ? ' class="active"' : '';
+            $active = $pageNum == $this->currentPage ? ' class="active"' : '';
             $html .= '<li' . $active . '><a href="' . $this->_makeUrl($pageNum) . '">' . $pageNum . '</a></li>';
             $lastDrawPage = $pageNum;
         }
         if ($this->currentPage < $this->getLastPage()){
             $html .= '<li class="next"><a href="' . $this->_makeUrl($this->nextPage()) . '">next</a></li>';
         }
+        $html .= '</ul></div>';
         
-        return $html;
+        return $html;    
     }
+    
+    private function _setPages()
+    {
+        $this->_pages[1] = true;
+
+        if($this->prevPage() >= 1) $this->_pages[$this->prevPage()] = true;
+        $this->_pages[$this->currentPage] = true;
+        if($this->nextPage() <= $this->getLastPage()) $this->_pages[$this->nextPage()] = true;
+
+        $this->_pages[$this->getLastPage()] = true;
+        
+        ksort($this->_pages);
+    } 
   
     public function getLastPage()
     {
@@ -94,6 +117,6 @@ class FinalView_View_Helper_SimplePager extends Zend_View_Helper_Abstract
         
         
         return $path . '?' . $query;
-    }
+    }  
     
 }
