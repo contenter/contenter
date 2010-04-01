@@ -142,14 +142,14 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         	break;
         }
         $this->getRenderer()->clearScript();
+        $currNamespace = $this->getRenderer()->currentNamespace();
         $this->getRenderer()->useNamespace($entityName);
         
         $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
-        $customHandler = $filter->filter($entityName).'Handler';        
-              
+        $customHandler = $filter->filter($entityName).'Handler';              
         if (method_exists($this, $customHandler)) {     
             $this->$customHandler($inputParams, $this->getRenderer() );
-        }elseif(is_object($entity)){     
+        }elseif(is_object($entity)){             
             $entity->handler($inputParams, $this->getRenderer());
         }else{       
             $this->getRenderer()->assign($inputParams);
@@ -163,13 +163,50 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
             }            
         }
                 
-        return $this->getRenderer()->renderScript();
+        $content = $this->getRenderer()->renderScript();
+        $this->getRenderer()->useNamespace($currNamespace);
+        
+        return $content;
     }
     
     public function FormHeaderHandler($params, $view)
     {
         $view->url = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
         $view->method = 'post';
+    }
+    
+    public function TableHandler($params, $view)
+    {
+        $view->attribs = array(
+            'class' =>  'fv-grid-table'
+        );
+    }
+    
+    public function TableRowHandler($params, $view)
+    {
+        $view->tr_attribs = array(
+            'class' =>  'row'
+        );
+        $view->row = $params['row'];
+    }
+    
+    public function ColumnHandler($params, $view)
+    {
+        $view->td_attribs = array(
+            'class' =>  'column'
+        );
+        $view->row = $params['row'];
+        $view->column = $params['column'];           
+    }
+    
+    public function TableHeaderHandler($params, $view)
+    {
+        $view->tr_attribs = array(
+            'class' =>  'row-header'
+        );
+        $view->th_attribs = array(
+            'class' =>  'column-header'
+        );        
     }
     
     public function __toString()

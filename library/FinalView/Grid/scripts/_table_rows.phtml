@@ -1,10 +1,3 @@
 <?foreach($this->grid->getIterator() as $row):?>
-    <tr <?=$this->htmlTagAttribs($this->tr_attribs);?>>
-        <?foreach($this->grid->getColumns() as $column):?>
-            <?=$this->grid->render('_column', array(
-                'column'    =>  $column,
-                'row'       =>  $row
-            ) );?>
-        <?endforeach;?>        
-    </tr>     
+    <?=$this->grid->render('_table_row', array('row' => $row));?>  
 <?endforeach;?>

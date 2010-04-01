@@ -53,6 +53,11 @@ class FinalView_Grid_Renderer extends Zend_View
         return $this;
     }
     
+    public function currentNamespace()
+    {
+        return $this->_namespace;
+    }
+        
     public function __set($name, $value)
     {        
         $namespace = $this->_namespace;
