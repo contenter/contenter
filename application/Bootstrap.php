@@ -45,4 +45,9 @@ class Bootstrap extends FinalView_Bootstrap
         return $acl; 
     }
     
+    protected function _initRoles()
+    {
+        require_once APPLICATION_PATH.'/Roles.php';
+    }
+    
 }
