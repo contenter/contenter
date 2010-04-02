@@ -1,0 +1,19 @@
+User:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    email: 
+      type: string(128)
+      unique: true
+      notnull: true
+    password:
+      type: string(32)
+      notnull: true
+  actAs:
+    Timestampable:
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
