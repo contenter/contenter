@@ -5,7 +5,7 @@
 * 
 */
 class User_RegisterController extends FinalView_Controller_Action
-{
+{ 
     
     const SUCCESS_REGISTRATION_MESSAGE = 'SUCCESS_REGISTRATION_MESSAGE';
     
