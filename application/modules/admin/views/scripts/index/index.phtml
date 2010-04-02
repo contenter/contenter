@@ -1,0 +1,11 @@
+<? if (isset($this->form)) : ?>
+    
+    <?=$this->FormCommonErrors($this->form)?>
+    <?=$this->form->setAttrib('class', 'login')?>
+    
+<? else : ?>
+    
+    <h1>Welcome to admin area</h1>
+    
+<? endif; ?>
+
