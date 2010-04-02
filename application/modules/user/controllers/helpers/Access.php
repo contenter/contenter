@@ -1,5 +1,4 @@
 <?php
-
 class User_Controller_Helper_Access 
     extends FinalView_Controller_Action_Helper_Access
 {
