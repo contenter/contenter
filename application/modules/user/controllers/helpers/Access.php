@@ -13,28 +13,28 @@ class User_Controller_Helper_Access
     
     protected function _userIndexIndexAccess(array $params = array()) 
     {
-        if (!$this->users->requested && !$this->users->logged) {
+        if (!$this->users->requested && !$this->users->isLogged(Roles::USER)) {
             $this->_status_code = self::STATUS_FORBIDDEN;
         }
     }
     
     protected function _userRegisterRegisterAccess(array $params = array()) 
     {
-        if ($this->users->logged) {
+        if ($this->users->isLogged(Roles::USER) ) {
             $this->_status_code = self::STATUS_FORBIDDEN;
         }        
     }
     
     protected function _userAuthLoginAccess(array $params = array()) 
     {
-        if ($this->users->logged) {
+        if ($this->users->isLogged(Roles::USER)) {
             $this->_status_code = self::STATUS_FORBIDDEN;
         }        
     }
     
     protected function _userAuthLogoutAccess(array $params = array()) 
     {
-        if (!$this->users->logged) {
+        if (!$this->users->isLogged(Roles::USER)) {
             $this->_status_code = self::STATUS_FORBIDDEN;
         }        
     }    
