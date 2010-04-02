@@ -28,5 +28,10 @@ class User extends BaseUser
     public function passwordEncrypt($value)
     {
         $this->_set('password', User_Encrypt::encrypt($value));
+    }
+    
+    public function isRole($role)
+    {
+        return ($this->role & $role === $role);
     }    
 }
