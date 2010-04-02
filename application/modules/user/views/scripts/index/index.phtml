@@ -1,0 +1,8 @@
+logged In User: <br />
+<? dump($this->user()->toArray());?>
+
+Request User:
+<? if($this->user('requested')) {
+    dump($this->user('requested')->toArray());
+};?>
+
