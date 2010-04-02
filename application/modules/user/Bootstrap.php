@@ -15,8 +15,8 @@ class User_Bootstrap extends FinalView_Application_Module_Bootstrap
         );
     }
     
-     protected function _initAutoload() 
-     {        
+    protected function _initAutoload() 
+    {        
         $autoloader = new Zend_Application_Module_Autoloader(array(
             'namespace' => 'User',
             'basePath'  => APPLICATION_PATH . '/modules/user',
@@ -28,6 +28,5 @@ class User_Bootstrap extends FinalView_Application_Module_Bootstrap
                     'namespace' => 'Auth', 
                 ) 
         ));
-     }
-    
+    }
 }

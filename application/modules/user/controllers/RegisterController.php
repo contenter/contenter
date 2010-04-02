@@ -5,7 +5,7 @@
 * 
 */
 class User_RegisterController extends FinalView_Controller_Action
-{ 
+{
     
     const SUCCESS_REGISTRATION_MESSAGE = 'SUCCESS_REGISTRATION_MESSAGE';
     
@@ -33,6 +33,7 @@ class User_RegisterController extends FinalView_Controller_Action
                 
                 $newUser = Doctrine::getTable('User')->create($this->getForm()->getValues());
                 $newUser->role = Roles::USER;
+                
                 return $newUser;
             }
         }

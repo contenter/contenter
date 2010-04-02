@@ -6,6 +6,7 @@
 */
 class User_AuthController extends FinalView_Controller_Action
 {
+
     private $_loginForm;
     
     public $storage_params = array(

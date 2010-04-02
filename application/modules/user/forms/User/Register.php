@@ -1,9 +1,8 @@
 <?php
 
 class User_Form_User_Register extends User_Form_User_Abstract
-{
-    
-    const NOT_UNIQUE_PASSWORDS = 'NOT_UNIQUE_PASSWORDS';
+{    
+    const NOT_UNIQUE_PASSWORDS = 'NOT_UNIQUE_PASSWORDS';    
     
     /**
      * Initialize form (used by extending classes)
@@ -12,7 +11,7 @@ class User_Form_User_Register extends User_Form_User_Abstract
      */
     public function init()
     {
-        parent::init();
+        parent::init();     
         
         $element = new Zend_Form_Element_Text('email');
         $element
@@ -58,5 +57,4 @@ class User_Form_User_Register extends User_Form_User_Abstract
             ;
         $this->addElement($element);
     }
-    
 }
