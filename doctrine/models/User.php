@@ -27,7 +27,7 @@ class User extends BaseUser
     */
     public function passwordEncrypt($value)
     {
-        $this->_set('password', User_Encrypt::encrypt($value));
+        $this->_set('password', FinalView_Auth_Encrypt::encrypt($value));
     }
     
     public function isRole($role)
