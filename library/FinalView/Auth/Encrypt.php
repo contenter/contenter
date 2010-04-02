@@ -5,7 +5,7 @@
 * 
 */
 class FinalView_Auth_Encrypt 
-{
+{ 
     
     /**
     * Encrypt value
