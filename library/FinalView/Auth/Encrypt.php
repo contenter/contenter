@@ -1,5 +1,4 @@
 <?php
-
 /**
 * User encrypt utility
 * 
