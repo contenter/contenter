@@ -1,5 +1,4 @@
 <?php
-
 /**
 * Authentication
 * 
@@ -44,7 +43,7 @@ class Admin_AuthController extends FinalView_Controller_Action
                         $this->storage_params
                     )
                 );
-                
+
                 if ($result->getCode() !== Zend_Auth_Result::SUCCESS) {
                 	$this->getLoginForm()->addErrors($result->getMessages());
                 }
@@ -58,7 +57,7 @@ class Admin_AuthController extends FinalView_Controller_Action
     {
         return Doctrine::getTable('User')->findOneByParams(array(
             'email'     =>  $this->getLoginForm()->getValue('email'),
-            'role'      =>  User_Roles::ADMIN
+            'role'      =>  Roles::USER_ADMIN
         ));
     }
     
