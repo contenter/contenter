@@ -26,6 +26,11 @@ class Admin_Bootstrap extends FinalView_Application_Module_Bootstrap
                 (
                     'path' => 'grid', 
                     'namespace' => 'Grid', 
+                ),
+            'auth' => array
+                (
+                    'path' => 'auth', 
+                    'namespace' => 'Auth', 
                 ), 
         ));
         

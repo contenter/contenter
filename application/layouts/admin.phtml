@@ -15,21 +15,20 @@
 <div id="wrapper">
     <div id="header">
         <div id="view_site"><a href="/">View Site</a></a></div>
-        <? if (Admin_Namespace::isLogged()) : ?>
-        <div id="logout"><a href="<?=$this->url(array(), 'AdminLogout')?>">Log out</a></div>
+        <? if ($this->isAccessible('AdminAuthLogout') ) : ?>
+        <div id="logout"><a href="<?=$this->url(array(), 'AdminAuthLogout')?>">Log out</a></div>
         <? endif; ?>
     </div>
     <div id="middle">
         <div id="container">
             <div id="content">
                 <div class="clear" style="height: 10px;"></div>
-                    <?=$this->partial('_message.phtml')?>
                     <?=$this->layout()->content?>
                     <div class="clear" style="height: 10px;"></div>
             </div>
         </div>
         
-        <? if (Admin_Namespace::isLogged()) : ?>
+        <? if ($this->isAccessible('AdminIndexIndex')) : ?>
         <div class="sidebar sl mainMenu">
             <?=$this->navigation()->menu($this->navigation['admin']);?>
         </div>
