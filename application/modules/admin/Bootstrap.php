@@ -12,7 +12,14 @@ class Admin_Bootstrap extends FinalView_Application_Module_Bootstrap
         $layout = Zend_Layout::getMvcInstance();
         $layout->setLayoutPath(APPLICATION_PATH . '/layouts/');
         
-        $layout->setLayout('admin');  
+        $layout->setLayout('admin');
+        
+        Zend_Controller_Action_HelperBroker::addPath(
+            APPLICATION_PATH . '/modules/user/controllers/helpers', 
+            'Admin_Controller_Helper'
+        );
+        
+        Zend_Controller_Action_HelperBroker::getStaticHelper('Access');          
     }
     
     protected function _initAutoload() 
