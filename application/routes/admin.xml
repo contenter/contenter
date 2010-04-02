@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configdata>
+    <routes>
+        <AdminAuthLogin>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>admin/login.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>auth</controller>
+                <action>login</action>
+            </defaults>
+        </AdminLogin>
+        <AdminAuthLogout>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>admin/logout.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>auth</controller>
+                <action>logout</action>
+            </defaults>
+        </AdminLogout>
+    </routes>
+</configdata>

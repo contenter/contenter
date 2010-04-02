@@ -1,0 +1,396 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+div.olulPadding ul, div.olulPadding ol {padding-left: 2em;}
+
+body {
+    font: 14px/18px Arial, Tahoma, Verdana, sans-serif;
+    padding-left: 1000px;
+}
+a {
+    color: blue;
+    outline: none;
+    text-decoration: underline;
+}
+a:hover {
+    text-decoration: none;
+}
+a.extend {
+    width: 200px;
+    display: block;
+    margin: 10px 0 0;
+}
+p {margin: 0 0 18px}
+img {
+    border: none;
+}
+input {vertical-align: middle}
+#wrapper {
+    margin-left: -1000px;
+}
+* html #wrapper {float: right}
+#header {
+    height: 30px;
+    background: #A9A9A9;
+}
+    
+    #header #view_site {
+        float: left;
+        margin: 5px 20px;
+    }
+    
+    #header #logout {
+        float: right;
+        margin: 5px 20px;
+    }
+    
+    #header #view_site a, #header #logout a {
+        font-weight: bold;
+    }
+    
+#middle {
+    border-left: 200px solid #FFFFFF;
+    height: 1%;
+}
+#middle:after {
+    content: '.';
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+}
+#container {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+    margin-right: -100%;
+}
+#content {
+    padding: 0 10px;
+    margin: 10px;
+    border: 1px solid #A9A9A9;
+    min-height: 600px;
+}
+.sl {
+    float: left;
+    width: 200px;    
+    position: relative;
+    background: #FFFFFF;
+    left: -200px;
+}
+#footer {
+    height: 20px;
+    background: #A9A9A9;
+    text-align: center;
+    padding: 2px;
+}
+.mainMenu li {border: 1px solid #FFFFFF; padding: 1px 5px; margin: 3px 0 0 10px; list-style: none;}
+.mainMenu li span a {font-size: 12px; color: #000000; font-weight: normal; text-decoration: none; margin-left:20px;}
+.mainMenu a {display: block; border: 1px solid #FFFFFF; font-size: 12px; color: #000000; font-weight: bold; text-decoration: none;}
+.mainMenu li.active { border: 1px solid #A9A9A9;}
+.mainMenu li:hover { border: 1px solid #CFCFCF;}
+
+.tableList {border-top: 1px solid #A9A9A9; border-left: 1px solid #A9A9A9 }
+.tableList td, .tableList th {border-bottom: 1px solid #A9A9A9; border-right: 1px solid #A9A9A9; padding: 2px; }
+.tableList th a.up {background: url(/img/ua.gif) right center no-repeat; padding-right: 10px;}
+.tableList th a.down {background: url(/img/da.gif) right center no-repeat; padding-right: 10px;}
+
+.clear {clear:both; height:0;}
+.clear5 {clear:both; height:5px;}
+.clear10 {clear:both; height:10px;}
+.clear20 {clear:both; height:20px;}
+
+.zend_form .formTable {
+  width: 400px;
+  /*float: left;*/
+}
+
+.zend_form .formTable td label {
+    font-weight: bold;
+}
+
+.zend_form .formTable .hidden {
+    display: none;
+}
+
+.zend_form .element {
+    width: 250px;
+}
+.zend_form .element input {
+    width: 240px;
+}
+.zend_form .element select {
+    width: 244px;
+}
+
+.zend_form .element textarea{
+    width: 240px;
+    height: 80px;
+}
+.zend_form .element input.auto {
+    width: auto;
+}
+
+.zend_form ul.form-errors{
+	color:red;
+	display:block;
+	list-style-type:none;
+	padding: 0px;
+	margin: 0px;
+	width: 240px;
+	float: left;
+}
+.zend_form ul.form-errors li{
+	margin:0px;
+}
+.zend_form ul.form-errors ul.errors {
+    margin-bottom:7px;
+    padding: 0px;
+	  list-style-type: none;
+    color: red;
+    margin: 0px;
+}
+.zend_form ul.form-errors ul.errors li{
+    margin: 0px;
+}
+.strong{
+  font-weight: bold;
+}
+
+.required:before{content:'* '}
+
+
+table.fv_gridtable {
+    border-spacing: 2px;
+    width: 100%;
+}
+    table.fv_gridtable tr.odd {
+        background-color: #F4F4F4;
+    }
+    table.fv_gridtable tr.even {
+        background-color: #FFFFFF;
+    }
+    table.fv_gridtable tr.hover {
+        background-color: #EFF2F4;
+    }
+        table.fv_gridtable th {
+            background-color: #CCC;
+            font-weight: bold;
+            text-align: center;
+        }
+        table.fv_gridtable th.fv_checkall {
+            width: 10px;
+        }
+        table.fv_gridtable td {
+            text-align: left;
+        }
+        table.fv_gridtable th, table.fv_gridtable td {
+            border: 1px solid #CCC;
+            padding: 7px;
+        }
+            table.fv_gridtable td.fv_tdaction {
+                white-space: nowrap;
+                text-align: center;
+            }
+                table.fv_gridtable td.fv_tdaction a {
+                    margin: 0 3px;
+                }
+
+
+.fv_pager {float: right; font-weight: bold;} 
+.fv_pager a {text-decoration: none; padding: 1px; margin: 1px;}
+.fv_current_page { color: #000000; }
+
+.formEditCont {
+  border: 2px solid #8D779F; 
+  background-color: #E0DFFF; 
+  padding: 10px;
+}
+
+.elementThmb { 
+  padding: 3px 3px 3px 25px; 
+  border: 1px #8D779F solid;
+  cursor: pointer;
+} 
+.select { background: url(/images/form/select.png) no-repeat 3px 5px; }
+.textfield { background: url(/images/form/textfield.png) no-repeat 3px 5px; }
+.textarea { background: url(/images/form/textarea.png) no-repeat 3px 5px; }
+.checkboxes { background: url(/images/form/checkboxes.png) no-repeat 3px 5px; }
+.radios { background: url(/images/form/radios.png) no-repeat 3px 5px; }
+.location { background: url(/images/form/taxonomy.png) no-repeat 3px 5px; }
+
+.formEditCont .buttons {text-align: center; margin-top: 15px;}
+.formEditCont .buttons input{width: 100px;}
+
+#multiOptions {}
+#multiOptions .text{ width: 200px; margin-right: 10px; }
+#multiOptions .btn{ width: 70px; }
+
+#optionsList {overflow-y: auto;}
+#optionsList .optionItem {}
+#optionsList .active {background-color: #6883EF;}
+#optionsList .optionItem a {z-index: 100; float: right; font: bold 12px Arial; margin-right: 5px; color: #EF4A4A; text-decoration: none;}
+
+#validatorsList {background-color: #fff; height: 200px; width: 200px; overflow-y: auto;}
+#validatorsList .validatorItem {}
+#validatorsList .active {background-color: #6883EF;}
+#validatorsList .validatorItem a {z-index: 100; float: right; font: bold 12px Arial; margin-right: 5px; color: #EF4A4A; text-decoration: none;}
+
+.elementView textarea, .elementView select, .elementView .text {width: 100%}
+.elementView textarea {height: 50px;}
+.elementActions a {margin: 0 5px 0 5px;}
+
+
+h2 {
+    color: #0052D1;
+    font-size: 22px;
+    line-height: 24px;
+    margin: 30px 0 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+textarea {
+    width: 400px;
+    height: 250px;
+}
+
+ul.errors {
+    margin: 5px 0 10px 60px;
+}
+    ul.errors li { 
+        color: red;
+    }
+
+    
+/**
+* Login form
+* 
+*/
+form.login fieldset {
+    width: 400px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #0052D1;
+}
+
+form.login input {
+    width: 90%;
+    border: 1px solid #0052D1;
+}
+
+form.login input#submit {
+    width: 70px;
+    padding: 3px;
+}
+
+form.login label {
+    font-weight: bold;
+}
+
+
+/**
+* Message 
+* 
+*/
+ul#message-container {
+    color:#000000;
+    display:block;
+    
+    margin:10px 100px;
+    padding:10px 10px 10px 50px;
+    
+    
+}
+ul.info {
+    font-size:15px;
+    font-weight:bold;
+    
+    background-attachment:scroll;
+    background-color:#F9F9F9;
+    background: url(../images/message-container/info_icon.png) no-repeat 10px center;
+    border:1px solid #9DCA6F;
+}
+ul.error {
+    font-size:12px;
+    font-weight:bold;
+    
+    background-attachment:scroll;
+    background-color:#F9F9F9;
+    background: url(../images/message-container/error_icon.png) no-repeat 10px 10px;
+    border:1px solid #ED1C24;
+}
+
+ul.error li ul.common_errors {
+    margin-bottom: 15px;
+}
+
+ul.error li ul.errors li {
+    font-weight: normal;
+    margin: 0 0 5px 15px;
+    list-style: circle inside;
+}
+
+
+#venue_preferences ul {
+    float: left;
+    padding-right: 30px;
+}
+
+div.cleaner {
+    clear: both;
+    height: 1px;
+}
+
+
+form#mail-templates input.subject, 
+form#mail-templates textarea.text {
+    width: 570px;
+}
+
+
+.fv_gridtable ul {
+    margin-bottom: 10px;
+}
+    .fv_gridtable li {
+        list-style: disc;
+        list-style-position: inside;
+    }
+        .fv_gridtable ul ul {
+            margin-left: 20px;
+        }
+            .fv_gridtable li li {
+                list-style: circle;
+                list-style-position: inside;
+            }
+
+div.grid_filter, div.grid_num_results {
+    padding: 10px;
+    margin: 1px;
+    margin-bottom: 20px;
+    border: 1px solid #CCC;
+    background-color: #EFF2F4;
+}
+    div.grid_filter dt {
+        font-weight: bold;
+    }
+    div.grid_filter dd {
+        margin-bottom: 10px;
+    }
+    div.grid_filter select, div.grid_filter input {
+        min-width: 200px;
+        border: 1px solid #CCC;
+    }
+    div.grid_filter select#from_date, 
+    div.grid_filter select#to_date 
+    {
+        min-width: 64px;
+    }
+    
+
+#business_types ul#categories a.active {
+    font-weight: bold;
+}

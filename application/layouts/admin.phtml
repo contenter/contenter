@@ -1,0 +1,43 @@
+<?=$this->doctype()?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>  
+    <?=$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8')?>
+    <?=$this->headTitle('FinalView Adminarea')?>
+    <base href="<?=BASE_PATH?>" />
+    <?php $this->headLink()->appendStylesheet('css/admin.css'); ?>
+    <?=$this->headLink()?>
+    <?php $this->headScript()->prependFile('/scripts/jquery.min.js'); ?>
+    <?php $this->headScript()->appendFile('/scripts/backend.js'); ?>
+    <?=$this->headScript()?>
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="header">
+        <div id="view_site"><a href="/">View Site</a></a></div>
+        <? if (Admin_Namespace::isLogged()) : ?>
+        <div id="logout"><a href="<?=$this->url(array(), 'AdminLogout')?>">Log out</a></div>
+        <? endif; ?>
+    </div>
+    <div id="middle">
+        <div id="container">
+            <div id="content">
+                <div class="clear" style="height: 10px;"></div>
+                    <?=$this->partial('_message.phtml')?>
+                    <?=$this->layout()->content?>
+                    <div class="clear" style="height: 10px;"></div>
+            </div>
+        </div>
+        
+        <? if (Admin_Namespace::isLogged()) : ?>
+        <div class="sidebar sl mainMenu">
+            <?=$this->navigation()->menu($this->navigation['admin']);?>
+        </div>
+        <? endif; ?>
+    </div>
+    <div id="footer">
+        &copy; MVN 2009. All rights reserved.
+    </div>
+</div>
+</body>
+</html>
