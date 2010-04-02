@@ -38,3 +38,4 @@ class User_Controller_Helper_Access
         }        
     }    
 }
+
