@@ -19,7 +19,7 @@ class Admin_Bootstrap extends FinalView_Application_Module_Bootstrap
             'Admin_Controller_Helper'
         );
         
-        Zend_Controller_Action_HelperBroker::getStaticHelper('Access');          
+        Zend_Controller_Action_HelperBroker::getStaticHelper('Access');
     }
     
     protected function _initAutoload() 
