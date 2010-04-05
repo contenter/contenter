@@ -15,7 +15,7 @@ class Admin_Bootstrap extends FinalView_Application_Module_Bootstrap
         $layout->setLayout('admin');
         
         Zend_Controller_Action_HelperBroker::addPath(
-            APPLICATION_PATH . '/modules/user/controllers/helpers', 
+            APPLICATION_PATH . '/modules/admin/controllers/helpers', 
             'Admin_Controller_Helper'
         );
         
