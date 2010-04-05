@@ -18,8 +18,7 @@ class User_Bootstrap extends FinalView_Application_Module_Bootstrap
     }
     
      protected function _initAutoload() 
-     {
-        require_once APPLICATION_PATH . '/modules/user/Encrypt.php';         
+     {        
         $autoloader = new Zend_Application_Module_Autoloader(array(
             'namespace' => 'User',
             'basePath'  => APPLICATION_PATH . '/modules/user',
