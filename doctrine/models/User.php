@@ -32,6 +32,6 @@ class User extends BaseUser
     
     public function isRole($role)
     {
-        return ($this->role & $role === $role);
+        return (($this->role & $role) === $role);
     }    
 }
