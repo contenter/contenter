@@ -37,10 +37,10 @@ class FinalView_Controller_Action_Helper_User
     */
     public function isLogged($role = null) 
     {
-        $isLogged = Zend_Auth::getInstance()->hasIdentity()
+        $isLogged = Zend_Auth::getInstance()->hasIdentity();
         
         $isRole = true;
-        if (!is_null($role)) {
+        if ($isLogged && !is_null($role)) {
             $isRole = $this->logged->isRole($role);	
         }
         
