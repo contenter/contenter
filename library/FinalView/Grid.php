@@ -187,7 +187,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     
     public function TableRowHandler($params, $view)
     {
-        $className = ($params['key'] % 2) ? 'odd' ? 'event';
+        $className = (intval($params['key']) % 2) ? 'odd' : 'event';
         $view->tr_attribs = array(
             'class' =>  'row '.$className
         );
