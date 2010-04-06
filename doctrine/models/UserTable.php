@@ -4,7 +4,7 @@
  * UserTable
  */
 class UserTable extends FinalView_Doctrine_Table
-{
+{ 
     protected function emailSelector($email)
     {
         $this->_getQuery()->addWhere($this->getTableName().'.email = ?', $email);        
