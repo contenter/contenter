@@ -28,5 +28,14 @@
                 <action>logout</action>
             </defaults>
         </AdminAuthLogout>
+        <AdminUserIndex>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>admin/user.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>user</controller>
+                <action>index</action>
+            </defaults>
+        </AdminUserIndex>        
     </routes>
 </configdata>

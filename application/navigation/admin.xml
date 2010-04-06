@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Admin navigation -->
+<navigation>
+    <pages>
+        <page1>
+            <route>AdminUserIndex</route>
+            <label>Users</label>            
+            <class>first</class>            
+            <module>admin</module>
+            <controller>user</controller>
+            <action>index</action>
+        </page1>
+    </pages>
+</navigation>
