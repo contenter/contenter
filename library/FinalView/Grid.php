@@ -64,7 +64,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         if (isset($this->_plugins[$name])) return $this->_plugins[$name]; 
     }
     
-    public function setIterator(array $iterator)
+    public function setIterator($iterator)
     {
         $this->_iterator = $iterator;        
     }
@@ -90,12 +90,15 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         	throw new FinalView_Grid_Exception('not defined iterator');
         }
         
-        $row = reset($iterator);
-        if (!$row) {
-            throw new FinalView_Grid_Exception('cannot define columns from iterator');	
-        }
-        
-        $columns = array_keys($row);
+        if ($iterator instanceof Doctrine_Collection) {
+        	$columns = $iterator->getTable()->getColumnNames();
+        }else{
+            $row = reset($iterator);
+            if (!$row) {
+                throw new FinalView_Grid_Table_Exception('cannot define columns from iterator');	
+            }            
+            $columns = array_keys($row);            
+        }     
         
         foreach ($columns as $column) {
             $_columns[] = new FinalView_Grid_Column_Iterator($column); 

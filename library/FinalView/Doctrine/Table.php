@@ -45,10 +45,6 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     {
         $this->build($this->_getQuery(), $params);
         
-        if (!isset($params['pager']['page'], $params['pager']['per_page'])) {
-        	throw new FinalView_Table_Exception('findPageByParams: not specified pager params');
-        }
-        
         $query = clone($this->_getQuery());
         $pager = new Doctrine_Pager(
             $query,
@@ -96,5 +92,10 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() );
     
         return $tableObject->build(&$this->_query, $params);
-    }    
+    }
+    
+    protected function orderBySelector($sort)
+    {
+        $this->_getQuery()->addOrderBy($this->getTableName().'.'.$sort['field'].' '.$sort['direction'] );                
+    }        
 }
