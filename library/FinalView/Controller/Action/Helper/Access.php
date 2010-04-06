@@ -32,7 +32,7 @@ class FinalView_Controller_Action_Helper_Access
      * @return void
      */
     public function preDispatch()
-    {
+    {      
         $route = Zend_Controller_Front::getInstance()
             ->getRouter()->getCurrentRouteName();
             // @todo определить имя роута через связку модуль-контроллер-action
