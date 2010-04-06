@@ -161,46 +161,52 @@ input {vertical-align: middle}
 .required:before{content:'* '}
 
 
-table.fv_gridtable {
+table.fv-grid-table {
     border-spacing: 2px;
     width: 100%;
 }
-    table.fv_gridtable tr.odd {
-        background-color: #F4F4F4;
-    }
-    table.fv_gridtable tr.even {
-        background-color: #FFFFFF;
-    }
-    table.fv_gridtable tr.hover {
-        background-color: #EFF2F4;
-    }
-        table.fv_gridtable th {
-            background-color: #CCC;
-            font-weight: bold;
-            text-align: center;
-        }
-        table.fv_gridtable th.fv_checkall {
-            width: 10px;
-        }
-        table.fv_gridtable td {
-            text-align: left;
-        }
-        table.fv_gridtable th, table.fv_gridtable td {
-            border: 1px solid #CCC;
-            padding: 7px;
-        }
-            table.fv_gridtable td.fv_tdaction {
-                white-space: nowrap;
-                text-align: center;
-            }
-                table.fv_gridtable td.fv_tdaction a {
-                    margin: 0 3px;
-                }
+table.fv-grid-table tr.odd {
+    background-color: #F4F4F4;
+}
+table.fv-grid-table tr.even {
+    background-color: #FFFFFF;
+}
+table.fv-grid-table tr.hover {
+    background-color: #EFF2F4;
+}
+table.fv-grid-table th {
+    background-color: #CCC;
+    font-weight: bold;
+    text-align: center;
+}
+table.fv-grid-table th.fv_checkall {
+    width: 10px;
+}
+table.fv-grid-table td {
+    text-align: left;
+}
+table.fv-grid-table th, table.fv-grid-table td {
+    border: 1px solid #CCC;
+    padding: 7px;
+}
 
 
-.fv_pager {float: right; font-weight: bold;} 
-.fv_pager a {text-decoration: none; padding: 1px; margin: 1px;}
-.fv_current_page { color: #000000; }
+.paging {padding: 5px 0 8px 0;}
+.paging ul{text-align: right; font-size: 12px;}
+.paging ul li{display: inline; padding: 0 3px; height: 20px; color: #00549C;}
+.paging li a{color: #00549C;}
+.paging li.prev a, .paging li.next a {color: #3D3D3B; font-weight: bold;}
+.paging li.prev {padding: 0 20px 0 21px; background: url(../i/prev.gif) no-repeat 0 7px;}
+.paging li.next {padding: 0 21px 0 20px; background: url(../i/next.gif) no-repeat 100% 7px;}
+
+.paging li.active {
+    background: #FFF;
+    border-right: 1px solid #BFBFBF;
+    border-bottom: 1px solid #BFBFBF;
+}
+.paging li.active a {
+    text-decoration: none;
+}
 
 .formEditCont {
   border: 2px solid #8D779F; 
