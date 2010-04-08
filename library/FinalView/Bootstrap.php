@@ -136,6 +136,9 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initRouter() 
     {       
         $this->bootstrap('frontcontroller');
+        
+        Zend_Controller_Front::getInstance()->getRouter()->removeDefaultRoutes();             
+        
         // add all found routes 
         iterate_resursive(APPLICATION_PATH . '/routes/', 
             array(__CLASS__, 'addRoutes'));        
