@@ -19,6 +19,11 @@ class UserTable extends FinalView_Doctrine_Table
     {
         $this->_getQuery()->addWhere($this->getTableName().'.role & ? = ?', array($role, $role));
     }      
+    
+    protected function idsSelector($ids)
+    {
+        $this->_getQuery()->andWhereIn($this->getTableName().'.id', $ids);        
+    }         
 }
 
 
