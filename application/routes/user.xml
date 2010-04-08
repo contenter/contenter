@@ -29,8 +29,8 @@
             </defaults>
         </UserAuthLogout>
         <UserIndexIndex>
-            <type>Zend_Controller_Router_Route_Static</type>
-            <route>user/index.html</route>
+            <type>FinalView_Controller_Router</type>
+            <route>user/{:user_id/}index.html</route>
             <defaults>
                 <module>user</module>
                 <controller>index</controller>
