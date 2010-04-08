@@ -13,6 +13,11 @@ class User_Controller_Helper_Access
     
     protected function _userIndexIndexAccess(array $params = array()) 
     {
+        if (!$this->users->requested && !is_null($this->getRequest()->getParam('user_id', null))) {
+        	$this->_status_code = self::STATUS_NOT_FOUND;
+        	return;
+        }
+        
         if (!$this->users->requested && !$this->users->isLogged(Roles::USER)) {
             $this->_status_code = self::STATUS_FORBIDDEN;
         }
