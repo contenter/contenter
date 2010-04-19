@@ -1,5 +1,5 @@
 <?php
-class Application_AccessRules_User
+class Application_Rules_User
 {
 
     public function userInParamsRule($params)
