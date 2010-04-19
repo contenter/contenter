@@ -7,7 +7,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         $failedRule = $this->getResource()->getAccessRule();
         switch (true) {
             case $failedRule->isFailedRule('user_exist'): 
-                $this->_denyHandler();
+                $this->_notFoundHandler();
             break;
             case $failedRule->isFailedRule('logged_in'):
                 $this->_redirectToLogin();
