@@ -10,8 +10,10 @@ class Bootstrap extends FinalView_Bootstrap
     */
     protected function _initSecurePlugin() 
     {
-        require_once APPLICATION_PATH . '/plugins/SecureRequest.php';
+        $this->bootstrap('ApplicationAutoLoader');
+        
         $this->bootstrap('frontcontroller');
+        
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new Application_Plugin_SecureRequest, 3);
     }
@@ -24,30 +26,57 @@ class Bootstrap extends FinalView_Bootstrap
     {
         return parent::_initViewHelpers();
     }
-          
-    /**
-    * Init Acl engine
-    * 
-    */
-    protected function _initAcl() 
-    {
-        /*
-        * @todo: We need to create a container ACL that will receive as a parameter 
-        * Adapter (files, db), which will determine the method of storage Acl. 
-        * Basic adapters can be written to storage acl in files and storage acl in the database. 
-        *
-        */                
-        
-        
-        //Set here your project ACL. Your implementation might be a basic solution of Finalview  
-        
-        $acl = new Zend_Acl;
-        return $acl; 
-    }
     
+    protected function _initApplicationAutoLoader()
+    {
+        $loader = new Zend_Loader_Autoloader_Resource(array(
+            'namespace' => 'Application_',
+            'basePath'  => APPLICATION_PATH,
+        ));
+        
+        $loader->addResourceType('plugins', '/plugins', 'Plugin');
+        
+        return $loader;
+    }
+
     protected function _initRoles()
     {
         require_once APPLICATION_PATH.'/Roles.php';
     }
+        
+    protected function _initAccessRules()
+    {
+        $this->bootstrap('Doctrine');
+        
+        if (file_exists($filename = APPLICATION_PATH . '/configs/rules.yml')) {
+            $rulesSchema  = Doctrine_Parser::load(APPLICATION_PATH . '/configs/rules.yml', 'yml');
+            FinalView_Access_Rules::setSchema($rulesSchema);        	
+        }
+        
+        $accessRulesConfig = $this->getOption('rules');
+        if (!is_null($accessRulesConfig)) {
+            if (array_key_exists('default_behavior', $accessRulesConfig)) {
+                $accessRulesConfig['default_behavior'] = (bool)$accessRulesConfig['default_behavior'];
+            }
+            FinalView_Access_Rules::$options = $accessRulesConfig;	
+        }
+        
+        $this->bootstrap('ApplicationAutoLoader');
+        $loader = $this->getResource('ApplicationAutoLoader');
+        $loader->addResourceType('rules', '/rules', 'Rules'); 
+    }
+    
+    protected function _initResources()
+    {        
+        $this->bootstrap('Doctrine');
+        $resources = Doctrine_Parser::load(APPLICATION_PATH . '/configs/resources.yml', 'yml');
+        
+        FinalView_Application_Resources::setResources($resources);
+
+        $this->bootstrap('ApplicationAutoLoader');
+        $this->bootstrap('frontcontroller');
+        $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Application_Plugin_Access);       
+    }    
     
 }
