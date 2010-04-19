@@ -14,7 +14,7 @@ class User_Bootstrap extends FinalView_Application_Module_Bootstrap
             'User_Controller_Helper'
         );
         
-        Zend_Controller_Action_HelperBroker::getStaticHelper('Access');
+         Zend_Controller_Action_HelperBroker::getStaticHelper('User');
     }
     
      protected function _initAutoload() 
