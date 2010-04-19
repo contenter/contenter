@@ -61,13 +61,13 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
         return $this->_resource;
     }
     
-    protected function _denyHandler()
+    protected function _notFoundHandler()
     {
         dump('404');
         exit;
     }
     
-    protected function _forbidenHandler()
+    protected function _forbiddenHandler()
     {
         dump('403');
         exit;    
