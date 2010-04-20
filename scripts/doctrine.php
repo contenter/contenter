@@ -1,11 +1,11 @@
+#!/usr/bin/php
 <?php
 /**
  * Doctrine CLI script
  */
- 
-define('APPLICATION_ENV', 'development');
- 
+
 define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+require_once APPLICATION_PATH . '/configs/environment.php';
 define('LIBRARY_PATH', realpath(dirname(__FILE__) . '/../library'));
  
 // utilities
@@ -26,5 +26,5 @@ $application = new Zend_Application(
  
 $application->getBootstrap()->bootstrap('doctrine');
  
-$cli = new Doctrine_Cli($application->getOption('doctrine'));
+$cli = new FinalView_Doctrine_Cli($application->getOption('doctrine'));
 $cli->run($_SERVER['argv']);

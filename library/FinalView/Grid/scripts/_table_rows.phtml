@@ -1,0 +1,3 @@
+<?foreach($this->grid->getIterator() as $row):?>
+    <?=$this->grid->render('_table_row', array('row' => $row, 'key' => @$i++));?>  
+<?endforeach;?>

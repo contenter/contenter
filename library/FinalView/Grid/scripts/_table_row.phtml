@@ -1,0 +1,8 @@
+<tr <?=$this->htmlTagAttribs($this->tr_attribs);?>>
+    <?foreach($this->grid->getColumns() as $column):?>
+        <?=$this->grid->render('_column', array(
+            'column'    =>  $column,
+            'row'       =>  $this->row
+        ) );?>
+    <?endforeach;?>        
+</tr>   
