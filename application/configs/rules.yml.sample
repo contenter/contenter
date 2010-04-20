@@ -1,0 +1,16 @@
+User:
+  user_logged_in_or_in_params: 
+    type: OR
+    dependences: [real_user_in_params, no_user_in_params_and_logged_in]
+  real_user_in_params:
+    type: AND
+    dependences: [user_in_params, user_exist]
+  no_user_in_params_and_logged_in:
+    type: AND
+    dependences: [!user_in_params, logged_in]
+  user_in_params:
+    type: FUNC
+  user_exist:
+    type: FUNC
+  logged_in:
+    type: FUNC

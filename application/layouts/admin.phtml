@@ -15,7 +15,7 @@
 <div id="wrapper">
     <div id="header">
         <div id="view_site"><a href="/">View Site</a></a></div>
-        <? if ($this->isAccessible('AdminAuthLogout') ) : ?>
+        <? if ($this->isAllowed('admin-auth-logout') ) : ?>
         <div id="logout"><a href="<?=$this->url(array(), 'AdminAuthLogout')?>">Log out</a></div>
         <? endif; ?>
     </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         
-        <? if ($this->isAccessible('AdminIndexIndex')) : ?>
+        <? if ($this->isAllowed('admin-index-index')) : ?>
         <div class="sidebar sl mainMenu">
             <?=$this->navigation()->menu($this->navigation['admin']);?>
         </div>
