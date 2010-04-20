@@ -84,7 +84,19 @@ class FinalView_Access_Rules
         foreach ((array)$dependences as $checking_rule) {
             $checkingRule = self::getRule($checking_rule);
             $result = $checkingRule->check($params);
-            switch ($this->_getRule('type')) {
+            $rule_type = $this->_getRule('type');
+            if ($this->isInverted()) {
+                $result = !$result;
+            	switch ($this->_getRule('type')) {
+            	   case 'OR':
+            	       $rule_type = 'AND';            	       
+            	   break;
+            	   case 'AND':
+            	       $rule_type = 'OR';
+            	   break;
+            	}
+            }
+            switch ($rule_type) {
                 case 'OR':
                     if (true === $result) {
                     	return true;
