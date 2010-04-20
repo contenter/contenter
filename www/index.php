@@ -3,15 +3,13 @@
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+// Define application environment
+require_once APPLICATION_PATH . '/configs/environment.php';
 defined('LIBRARY_PATH')
     || define('LIBRARY_PATH', realpath(dirname(__FILE__) . '/../library'));
 defined('PUBLIC_PATH')
     || define('PUBLIC_PATH', realpath(dirname(__FILE__)));
-
-// Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
-            
+           
 // utilities
 require_once LIBRARY_PATH . '/utils.php';
 set_include_paths
