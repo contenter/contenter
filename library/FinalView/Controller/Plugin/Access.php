@@ -31,7 +31,7 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
     
     protected function _defaultHandler()
     {
-        $this->_denyHandler();
+        $this->_notFoundHandler();
     }   
     
     /**
