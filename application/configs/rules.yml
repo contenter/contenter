@@ -5,3 +5,8 @@ User:
     type: FUNC
   logged_in:
     type: FUNC
+
+Admin:
+  admin_logged_in:
+    type: AND
+    dependences: [logged_in] 
