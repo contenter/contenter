@@ -11,9 +11,6 @@ defined('PUBLIC_PATH')
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
-
-defined('MAGIC') or 
-    define('MAGIC', ('development' == APPLICATION_ENV ? 'D:\usr\local\php\extras' : '/usr/share/file/magic'));
             
 // utilities
 require_once LIBRARY_PATH . '/utils.php';
