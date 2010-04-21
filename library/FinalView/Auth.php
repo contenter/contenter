@@ -24,10 +24,10 @@ class FinalView_Auth extends Zend_Auth
     
     public function getAuthEntity($params = array())
     {
-        if (Zend_Auth::getInstance()->hasIdentity()) {
-            return Doctrine::getTable(self::$_table)->findOneByParams(array(
-                'auth'  =>  Zend_Auth::getInstance()->getStorage()->read()
-            ) + $params);        	
+        if ($this->hasIdentity()) {
+            return Doctrine::getTable(self::$_table)->findOneByParams($params + array(
+                'auth'  =>  $this->getStorage()->read()
+            ));        	
         }
         
         return null;
