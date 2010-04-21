@@ -10,25 +10,25 @@ class FinalView_Controller_Action_Helper_User
     * 
     * @return boolean
     */
-    public function isAutorized($role = null) 
+    public function isAuthorized($role = null) 
     {
-        $isAutorized = FinalView_Auth::getInstance()->hasIdentity();
+        $isAuthorized = FinalView_Auth::getInstance()->hasIdentity();
         
         $isRole = true;
-        if ($isAutorized && !is_null($role)) {
-            $isRole = $this->autorized->isRole($role);	
+        if ($isAuthorized && !is_null($role)) {
+            $isRole = $this->authorized->isRole($role);	
         }
         
-        return $isAutorized && $isRole;
+        return $isAuthorized && $isRole;
     }
     
     protected function _getUser($type)
     {
         if (!isset($this->users[$type])) {
             switch ($type) {
-                case 'autorized':
-                    if ($this->isAutorized()) {
-                        $this->_users['autorized'] = FinalView_Auth::getInstance()->getAuthEntity();	
+                case 'authorized':
+                    if ($this->isAuthorized()) {
+                        $this->_users['authorized'] = FinalView_Auth::getInstance()->getAuthEntity();	
                     }                       
             	break;
             	case 'contextual':
