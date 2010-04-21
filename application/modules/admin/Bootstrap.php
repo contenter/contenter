@@ -17,9 +17,7 @@ class Admin_Bootstrap extends FinalView_Application_Module_Bootstrap
         Zend_Controller_Action_HelperBroker::addPath(
             APPLICATION_PATH . '/modules/admin/controllers/helpers', 
             'Admin_Controller_Helper'
-        );
-        
-        Zend_Controller_Action_HelperBroker::getStaticHelper('User');          
+        );         
     }
     
     protected function _initAutoload() 
