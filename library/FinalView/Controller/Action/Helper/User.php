@@ -19,7 +19,7 @@ class FinalView_Controller_Action_Helper_User
             $isRole = $this->autorized->isRole($role);	
         }
         
-        return $isLogged && $isRole;
+        return $isAutorized && $isRole;
     }
     
     protected function _getUser($type)

@@ -46,6 +46,8 @@ class Bootstrap extends FinalView_Bootstrap
     
     protected function _initAuthUserTable()
     {
+        $this->bootstrap('Doctrine');
+        
         FinalView_Auth::setAuthEntityTable('User');
     }    
         
