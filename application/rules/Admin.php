@@ -4,18 +4,14 @@ class Application_Rules_Admin
     
     public function adminLoggedInRule($params)
     {        
-        $storage = Zend_Auth::getInstance()->getStorage()->read();
-        $user_id = $storage->id;        
-
-        $loggedInUser = Doctrine::getTable('User')->findOneByParams(array(
-            'id'    =>  $user_id,
+        $admin = FinalView_Auth::getInstance()->getAuthEntity(array(
             'role'  =>  Roles::USER_ADMIN 
         ));
         
-        if ($loggedInUser) {
+        if ($admin) {
         	return true;
         }
         
         return false;
-    }    
+    }   
 }

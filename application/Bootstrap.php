@@ -43,6 +43,13 @@ class Bootstrap extends FinalView_Bootstrap
     {
         require_once APPLICATION_PATH.'/Roles.php';
     }
+    
+    protected function _initAuthUserTable()
+    {
+        $this->bootstrap('Doctrine');
+        
+        FinalView_Auth::setAuthEntityTable('User');
+    }    
         
     protected function _initAccessRules()
     {

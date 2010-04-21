@@ -23,6 +23,11 @@ class UserTable extends FinalView_Doctrine_Table
     protected function idsSelector($ids)
     {
         $this->_getQuery()->andWhereIn($this->getTableName().'.id', $ids);        
+    }
+    
+    protected function authSelector($auth_object)
+    {
+        $this->idsSelector($auth_object->id);
     }         
 }
 

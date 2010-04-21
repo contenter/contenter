@@ -36,7 +36,7 @@ class Admin_AuthController extends FinalView_Controller_Action
         if ($this->getRequest()->isPost()) {
             if ($this->getLoginForm()->isValid($this->getRequest()->getPost())) {
                                 
-                $result = Zend_Auth::getInstance()
+                $result = FinalView_Auth::getInstance()
                     ->authenticate(new Admin_Auth_Adapter(
                         $this->getLoginForm()->getValues(), 
                         $this->getLoginAccount(), 
@@ -75,7 +75,7 @@ class Admin_AuthController extends FinalView_Controller_Action
     */
     public function logoutAction() 
     {
-        Zend_Auth::getInstance()->clearIdentity();
+        FinalView_Auth::getInstance()->clearIdentity();
         
         $this->_helper->redirector->gotoRoute(array(), 'AdminAuthLogin');
     }
