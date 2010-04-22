@@ -24,7 +24,8 @@ $application = new Zend_Application(
     APPLICATION_PATH . '/configs/application.ini'
 );
  
-$application->getBootstrap()->bootstrap('doctrine');
+$application->getBootstrap()->bootstrap('FinalViewNamespace');
+$application->getBootstrap()->bootstrap('Doctrine');
  
 $cli = new FinalView_Doctrine_Cli($application->getOption('doctrine'));
 $cli->run($_SERVER['argv']);

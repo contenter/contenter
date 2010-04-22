@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Exception.php 5798 2009-06-02 15:10:46Z piccoloprincipe $
+ *  $Id$
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,19 +16,32 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information, see
- * <http://www.phpdoctrine.org>.
+ * <http://www.doctrine-project.org>.
  */
 
 /**
- * Doctrine_Connection_Informix_Exception
+ * Returns the first row and first column single scalar value
  *
  * @package     Doctrine
- * @subpackage  Connection
+ * @subpackage  Hydrate
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        www.phpdoctrine.org
+ * @link        www.doctrine-project.org
  * @since       1.0
- * @version     $Revision: 5798 $
+ * @version     $Revision$
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Connection_Informix_Exception extends Doctrine_Connection_Exception
-{ }
+class Doctrine_Hydrator_SingleScalarDriver extends Doctrine_Hydrator_Abstract
+{
+    public function hydrateResultSet($stmt)
+    {
+        $result = array();
+        while (($val = $stmt->fetchColumn()) !== false) {
+            $result[] = $val;
+        }
+        if (count($result) === 1) {
+            return $result[0];
+        } else {
+            return $result;
+        }
+    }
+}
