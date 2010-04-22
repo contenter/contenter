@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Firebird.php 3884 2008-02-22 18:26:35Z jwage $
+ *  $Id: Hydrate.php 3192 2007-11-19 17:55:23Z romanb $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,22 +16,25 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information, see
- * <http://www.phpdoctrine.org>.
+ * <http://www.doctrine-project.org>.
  */
 
 /**
- * Doctrine_Export_Informix
+ * Get results directly and skip hydration. Uses PDO::FETCH_NUM
+ *
  *
  * @package     Doctrine
- * @subpackage  Export
- * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
- * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @author      Lorenzo Alberton <l.alberton@quipo.it> (PEAR MDB2 Interbase driver)
+ * @subpackage  Hydrate
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        www.phpdoctrine.org
- * @since       1.0
- * @version     $Revision: 3884 $
+ * @link        www.doctrine-project.org
+ * @since       1.2
+ * @version     $Revision: 3192 $
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-class Doctrine_Export_Informix extends Doctrine_Export
+class Doctrine_Hydrator_NoneDriver extends Doctrine_Hydrator_Abstract
 {
+    public function hydrateResultSet($stmt)
+    {
+        return $stmt->fetchAll(PDO::FETCH_NUM);
+    }
 }

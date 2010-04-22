@@ -14,6 +14,26 @@ if (get_magic_quotes_gpc()) {
 class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap 
 {
     
+    protected function _initFinalViewNamespace()
+    {
+        $autoloader = $this->getApplication()->getAutoloader();
+        $autoloader->registerNamespace('FinalView');    
+    }
+    
+    protected function _initAplicationAutoloader()
+    {        
+        $this->bootstrap('FinalViewNamespace');
+        
+        $autoloaderAppNamespace = new Zend_Loader_Autoloader_Resource(array(
+            'namespace' => 'Application_',
+            'basePath'  => APPLICATION_PATH,
+        ));
+        
+        $autoloaderAppNamespace->addResourceType('plugins', '/plugins', 'Plugin');        
+        
+        return $autoloaderAppNamespace;
+    }
+    
     protected function _initTimezone() 
     {
         if ($timezone = $this->getOption('timezone')) {
@@ -43,6 +63,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $this->bootstrap('view');
         $view = $this->getResource('view');
+        
         $view->addHelperPath('FinalView/View/Helper', 'FinalView_View_Helper');
     }
     
@@ -52,6 +73,8 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initControllerHelpers() 
     {
+        $this->bootstrap('FinalViewNamespace');
+        
         Zend_Controller_Action_HelperBroker::
             addPrefix('FinalView_Controller_Action_Helper');
     }
@@ -74,10 +97,11 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initDateFormat() 
     {
         $this->bootstrap('view');
+        
         $view = $this->getResource('view');
         $translator = $view->getHelper('Translate');
         
-        require_once LIBRARY_PATH . '/FinalView/View/Helper/DateFormat.php';
+        $this->bootstrap('AplicationAutoloader');
         FinalView_View_Helper_DateFormat::setFormat($translator->translate('DATE_FORMAT'));
     }
     
@@ -91,9 +115,10 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initApplication() 
     {
-        require_once LIBRARY_PATH . 
-            '/FinalView/Controller/Plugin/InitApplication.php';
-        $this->bootstrap('frontcontroller');
+        $this->bootstrap('AplicationAutoloader');
+        
+        $this->bootstrap('FrontController');
+        
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new FinalView_Controller_Plugin_InitApplication);
     }
@@ -106,8 +131,9 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {        
         require_once 'Doctrine.php';
         
-        $loader = Zend_Loader_Autoloader::getInstance();
-        $loader->pushAutoloader(array('Doctrine', 'autoload'));
+        $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'autoload'));
+        $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'modelsAutoload'));
+        $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
         
         $manager = Doctrine_Manager::getInstance();
         
@@ -121,6 +147,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         // Add models and generated base classes to Doctrine autoloader
         $doctrineConfig = $this->getOption('doctrine');
+        
         Doctrine::loadModels($doctrineConfig['models_path']);
         
         $manager->openConnection($doctrineConfig['connection_string']);
@@ -135,7 +162,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initRouter() 
     {       
-        $this->bootstrap('frontcontroller');
+        $this->bootstrap('FrontController');
         
         Zend_Controller_Front::getInstance()->getRouter()->removeDefaultRoutes();             
         
@@ -164,6 +191,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         // bootstrap view
         $this->bootstrap('view');
+        
         $view = $this->getResource('view');
         
         // assign all found navigations 
