@@ -9,7 +9,7 @@ class FinalView_Doctrine_Migration_Diff extends Doctrine_Migration_Diff
         $allModels = Doctrine::loadModels($from);
         
         $customModels = array_diff($allModels, $baseModels);
-        
+        $_fromModels = array();
         foreach ($customModels as $key => $modelName) {
         	if (in_array('Base'.$modelName, $baseModels)) {
                 $_fromModels[$key] = $modelName;

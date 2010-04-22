@@ -16,34 +16,24 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information, see
- * <http://www.phpdoctrine.org>.
+ * <http://www.doctrine-project.org>.
  */
- 
+
 /**
- * Doctrine_DataType
+ * Builds result sets in to the hierarchy graph using php arrays
  *
  * @package     Doctrine
- * @subpackage  DataType
+ * @subpackage  Hydrate
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        www.phpdoctrine.org
- * @since       1.0
- * @version     $Revision: 1986 $
- * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @link        www.doctrine-project.org
+ * @since       1.2
+ * @version     $Revision$
+ * @author      Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-class Doctrine_DataType
+class Doctrine_Hydrator_RecordHierarchyDriver extends Doctrine_Hydrator_RecordDriver
 {
-    public function __construct()
+    public function hydrateResultSet($stmt)
     {
-        
-    }
-    
-    public function getName()
-    {
-        
-    }
-    
-    public function getDefaultLength()
-    {
-        
+        return parent::hydrateResultSet($stmt)->toHierarchy();
     }
 }
