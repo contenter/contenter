@@ -73,7 +73,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initControllerHelpers() 
     {
-        $this->bootstrap('FinalViewNamespace');
+        $this->bootstrap('AplicationAutoloader');
         
         Zend_Controller_Action_HelperBroker::
             addPrefix('FinalView_Controller_Action_Helper');
@@ -129,6 +129,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initDoctrine()
     {        
+        $this->bootstrap('AplicationAutoloader');
         require_once 'Doctrine.php';
         
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'autoload'));
@@ -152,6 +153,9 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $manager->openConnection($doctrineConfig['connection_string']);
         Doctrine_Manager::connection()->setCharset('UTF8');
+        
+        Doctrine_Manager::getInstance()->registerHydrator(
+            'SimpleScalarHydrator','FinalView_Doctrine_Hydrator_SimpleScalarDriver');
         
         return $manager;
     }
