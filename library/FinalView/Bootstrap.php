@@ -73,7 +73,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initControllerHelpers() 
     {
-        $this->bootstrap('FinalViewNamespace');
+        $this->bootstrap('AplicationAutoloader');
         
         Zend_Controller_Action_HelperBroker::
             addPrefix('FinalView_Controller_Action_Helper');
@@ -129,31 +129,17 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initDoctrine()
     {        
+        $this->bootstrap('AplicationAutoloader');
+        
         require_once 'Doctrine.php';
         
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'autoload'));
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'modelsAutoload'));
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
         
-        $manager = Doctrine_Manager::getInstance();
-        
-        if (is_null($this->getOption('doctrine'))) return $manager;
-        
-        $manager->setAttribute(Doctrine::ATTR_USE_DQL_CALLBACKS, true);
-        $manager->setAttribute(Doctrine::ATTR_USE_NATIVE_ENUM, true);
-        $manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, 
-            Doctrine::MODEL_LOADING_CONSERVATIVE);
-        $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
-        
-        // Add models and generated base classes to Doctrine autoloader
-        $doctrineConfig = $this->getOption('doctrine');
-        
-        Doctrine::loadModels($doctrineConfig['models_path']);
-        
-        $manager->openConnection($doctrineConfig['connection_string']);
-        Doctrine_Manager::connection()->setCharset('UTF8');
-        
-        return $manager;
+        if (!is_null($doctrine_config = $this->getOption('doctrine'))) {
+            FinalView_Doctrine::init($doctrine_config);	
+        }
     }
     
     /**
