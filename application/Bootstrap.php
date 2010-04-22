@@ -10,35 +10,13 @@ class Bootstrap extends FinalView_Bootstrap
     */
     protected function _initSecurePlugin() 
     {
-        $this->bootstrap('ApplicationAutoLoader');
+        $this->bootstrap('AplicationAutoloader');
         
-        $this->bootstrap('frontcontroller');
+        $this->bootstrap('FrontController');
         
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new Application_Plugin_SecureRequest, 3);
     }
-    
-    /**
-    * Init your project View Helpers
-    * 
-    */        
-    protected function _initViewHelpers() 
-    {
-        return parent::_initViewHelpers();
-    }
-    
-    protected function _initApplicationAutoLoader()
-    {
-        $loader = new Zend_Loader_Autoloader_Resource(array(
-            'namespace' => 'Application_',
-            'basePath'  => APPLICATION_PATH,
-        ));
-        
-        $loader->addResourceType('plugins', '/plugins', 'Plugin');
-        
-        return $loader;
-    }
-    
     
     protected function _initAccessRules()
     {
@@ -57,20 +35,22 @@ class Bootstrap extends FinalView_Bootstrap
             FinalView_Access_Rules::$options = $accessRulesConfig;	
         }
         
-        $this->bootstrap('ApplicationAutoLoader');
-        $loader = $this->getResource('ApplicationAutoLoader');
+        $this->bootstrap('AplicationAutoloader');
+        $loader = $this->getResource('AplicationAutoloader');
         $loader->addResourceType('rules', '/rules', 'Rules'); 
     }
     
     protected function _initResources()
     {        
+        $this->bootstrap('AplicationAutoloader');
+        
         $this->bootstrap('Doctrine');
+        
         $resources = Doctrine_Parser::load(APPLICATION_PATH . '/configs/resources.yml', 'yml');
         
         FinalView_Application_Resources::setResources($resources);
 
-        $this->bootstrap('ApplicationAutoLoader');
-        $this->bootstrap('frontcontroller');
+        $this->bootstrap('FrontController');
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new Application_Plugin_Access);       
     }    
