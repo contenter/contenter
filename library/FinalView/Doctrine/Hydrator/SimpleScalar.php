@@ -4,7 +4,7 @@
 
 /**
  */
-class FinalView_Doctrine_Hydrator_SimpleScalarDriver extends Doctrine_Hydrator_ScalarDriver
+class FinalView_Doctrine_Hydrator_SimpleScalar extends Doctrine_Hydrator_ScalarDriver
 {
     public function hydrateResultSet($stmt)
     {
