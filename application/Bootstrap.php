@@ -49,15 +49,12 @@ class Bootstrap extends FinalView_Bootstrap
             FinalView_Access_Rules::$options = $accessRulesConfig;	
         }
         
-        $this->bootstrap('AplicationAutoloader');
         $loader = $this->getResource('AplicationAutoloader');
         $loader->addResourceType('rules', '/rules', 'Rules'); 
     }
     
     protected function _initResources()
     {        
-        $this->bootstrap('AplicationAutoloader');
-        
         $this->bootstrap('Doctrine');
         
         $resources = Doctrine_Parser::load(APPLICATION_PATH . '/configs/resources.yml', 'yml');
