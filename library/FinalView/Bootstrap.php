@@ -13,7 +13,7 @@ if (get_magic_quotes_gpc()) {
 
 class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap 
 {
-    
+        
     protected function _initFinalViewNamespace()
     {
         $autoloader = $this->getApplication()->getAutoloader();
@@ -137,7 +137,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'modelsAutoload'));
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
         
-        if (!is_null($doctrine_config = $this->getOption('doctrine'))) {
+        if (!is_null($doctrine_config = $this->getOption('doctrine'))) {            
             FinalView_Doctrine::init($doctrine_config);	
         }
     }
