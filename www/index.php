@@ -26,9 +26,10 @@ function dump($smth)
     Zend_Debug::dump($smth);
 }
 
-require_once 'Zend/Application.php';  
+require_once 'Zend/Application.php';
+require_once 'FinalView/Application.php';  
 // Create application, bootstrap, and run
-$application = new Zend_Application(
+$application = new FinalView_Application(
     APPLICATION_ENV, 
     APPLICATION_PATH . '/configs/application.ini'
 );

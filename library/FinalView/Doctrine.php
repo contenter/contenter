@@ -26,9 +26,13 @@ final class FinalView_Doctrine
         
         $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
                 
-        Doctrine::loadModels($config['models_path']);
+        if(array_key_exists('models_path', $config)) {
+            Doctrine::loadModels($config['models_path']);
+        }
         
-        $manager->openConnection($config['connection_string'])->setCharset('UTF8');
+        if(array_key_exists('connection_string', $config)) {
+            $manager->openConnection($config['connection_string'])->setCharset('UTF8');
+        }
 
         FinalView_Doctrine::registerHydratorsPath(
             FinalView_Doctrine::getPath() . DIRECTORY_SEPARATOR . 'Doctrine' . DIRECTORY_SEPARATOR . 'Hydrator',
