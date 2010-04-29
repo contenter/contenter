@@ -26,9 +26,13 @@ final class FinalView_Doctrine
         
         $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
                 
-        Doctrine::loadModels($config['models_path']);
+        if(array_key_exists('models_path', $config)) {
+            Doctrine::loadModels($config['models_path']);
+        }
         
-        $manager->openConnection($config['connection_string'])->setCharset('UTF8');
+        if(array_key_exists('connection_string', $config)) {
+            $manager->openConnection($config['connection_string'])->setCharset('UTF8');
+        }
 
         FinalView_Doctrine::registerHydratorsPath(
             FinalView_Doctrine::getPath() . DIRECTORY_SEPARATOR . 'Doctrine' . DIRECTORY_SEPARATOR . 'Hydrator',
@@ -83,21 +87,6 @@ final class FinalView_Doctrine
         Doctrine_Lib::removeDirectories($directory);
 
         return $result;
-    }
-    
-    /**
-     * Migrate database to specified $to version. Migrates from current to latest if you do not specify.
-     *
-     * @param string $migrationsPath Path to migrations directory which contains your migration classes
-     * @param string $to Version you wish to migrate to.
-     * @return bool true
-     * @throws new Doctrine_Migration_Exception
-     */
-    public static function migrate($migrationsPath, $to = null)
-    {
-        $migration = new FinalView_Doctrine_Migration($migrationsPath);
-
-        return $migration->migrate($to);
     }
     
     /**
