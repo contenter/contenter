@@ -18,7 +18,15 @@ class FinalView_Grid_Column_Action extends FinalView_Grid_Column
     public function handler($params, FinalView_Grid_Renderer $view)
     {
         $view->columnName = $this->getName();
-        $view->url_params = array_intersect_key($params, array_flip($this->iteratorFields) );
+        
+        $url_params = array();
+        foreach ($params as $key => $value) {
+            if (in_array($key, $this->iteratorFields)) {
+                $url_params[$key] = $value;
+            }         
+        }        
+        
+        $view->url_params = $url_params;
         $view->url = $this->url;
         $view->label = $this->label;
     }
