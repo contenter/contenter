@@ -24,7 +24,9 @@ class FinalView_View_Helper_AddToUrl extends Zend_View_Helper_Abstract
         $query = http_build_query(array_merge(
             $query_array, $params));
         
-        
-        return $path . '?' . $query; 
+        if (!empty($query)) {
+        	$query = '?' . $query;
+        }
+        return $path . $query; 
     }    
 }
