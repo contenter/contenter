@@ -36,6 +36,15 @@
                 <controller>user</controller>
                 <action>index</action>
             </defaults>
-        </AdminUserIndex>        
+        </AdminUserIndex>
+        <AdminUserEdit>
+            <type>Zend_Controller_Router_Route</type>
+            <route>admin/:user_id/edit-user.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>user</controller>
+                <action>edit</action>
+            </defaults>
+        </AdminUserEdit>                   
     </routes>
 </configdata>

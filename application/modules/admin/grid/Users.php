@@ -27,6 +27,17 @@ class Admin_Grid_Users extends FinalView_Grid
             FinalView_Grid_ColumnsCollection::APPEND_FIRST
         );
         
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        
+        $this->addColumn(
+            new FinalView_Grid_Column_Action(
+                'edit_action', 
+                'Edit',
+                $router->getRoute('AdminUserEdit'), 
+                array('user_id' => 'id')
+            )
+        );        
+        
         $this->addPlugin(new FinalView_Grid_Plugin_Pager(
             $iterator->getNumResults(),
             $iterator->getMaxPerPage(), 

@@ -35,4 +35,9 @@ class Admin_UserController extends FinalView_Controller_Action
             'ids' => $this->getRequest()->getParam('users_ids', array() )
         ))->delete();
     }
+    
+    public function editAction()
+    {
+        //edit action for user
+    }
 }
