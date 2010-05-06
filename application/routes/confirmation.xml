@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configdata>
+    <routes>
+        <ConfirmationReplyAccept>
+            <type>Zend_Controller_Router_Route</type>
+            <route>confirmation/:hash/accept.html</route>
+            <defaults>
+                <module>confirmation</module>
+                <controller>reply</controller>
+                <action>accept</action>
+                <reply>ACTION_ACCEPT</reply>
+            </defaults>
+        </ConfirmationReplyAccept>
+        <ConfirmationReplyDecline>
+            <type>Zend_Controller_Router_Route</type>
+            <route>confirmation/:hash/decline.html</route>
+            <defaults>
+                <module>confirmation</module>
+                <controller>reply</controller>
+                <action>decline</action>
+                <reply>ACTION_DECLINE</reply>
+            </defaults>
+        </ConfirmationReplyDecline>             
+    </routes>
+</configdata>

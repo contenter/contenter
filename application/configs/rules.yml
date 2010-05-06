@@ -1,0 +1,3 @@
+Confirmation:
+  hash_exist:
+    type: FUNC
