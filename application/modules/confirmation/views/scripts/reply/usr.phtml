@@ -1,0 +1,9 @@
+<?php
+    if ($this->reply_type === Confirmation_Controller::ACTION_ACCEPT) {
+    	?>You have accepted entity: <? dump($this->entity->toArray());?><?
+    }
+    
+    if ($this->reply_type === Confirmation_Controller::ACTION_DECLINE) {
+    	?>You have declined entity: <? dump($this->entity->toArray());?><?
+    }     
+?>

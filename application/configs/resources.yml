@@ -5,3 +5,6 @@ Request:
   user-auth-login: {rule: !logged_in, handler: forbidden}
   user-auth-logout: {rule: logged_in, handler: forbidden}
   user-register-register: {rule: !logged_in, handler: forbidden}  
+  
+  confirmation-reply-accept: {rule: hash_exist, handler: not_found}
+  confirmation-reply-decline: {rule: hash_exist, handler: not_found}

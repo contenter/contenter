@@ -14,3 +14,6 @@ User:
     type: FUNC
   logged_in:
     type: FUNC
+Confirmation:
+  hash_exist:
+    type: FUNC
