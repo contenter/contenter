@@ -1,8 +1,11 @@
 MailTemplates: 
   columns:
     id:
-      type: string(64)
+      type: integer(4)
       primary: true
+    template:
+      type: string(64)
+      notnull: true
     subject:
       type: string(255)
       notnull: true
