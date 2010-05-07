@@ -16,6 +16,9 @@ User:
       notnull: true
   actAs:
     Timestampable:
+    FinalView_Doctrine_Template_Confirmable:
+      confirmed: true
+      replied_at: true
   options:
     type: INNODB
     collate: utf8_general_ci
