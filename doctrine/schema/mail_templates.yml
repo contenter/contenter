@@ -1,0 +1,18 @@
+MailTemplates: 
+  columns:
+    id:
+      type: string(64)
+      primary: true
+    subject:
+      type: string(255)
+      notnull: true
+    text: 
+      type: clob(65532)
+      notnull: true
+    html: 
+      type: clob(65532)
+      notnull: true
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
