@@ -21,6 +21,8 @@ class FinalView_Doctrine_Listener_Confirmable extends Doctrine_Record_Listener
             ->createHash($invoker->getTable()->getComponentName(), $invoker->getIncremented())
             ->save()
         ;
+        
+        $invoker->refresh();        
     }
     
     public function preHydrate(Doctrine_Event $event)
