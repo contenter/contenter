@@ -2,6 +2,7 @@ MailTemplates:
   columns:
     id:
       type: integer(4)
+      autoincrement: true      
       primary: true
     template:
       type: string(64)
