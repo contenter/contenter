@@ -19,5 +19,15 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
         }
         
         $this->addListener($listener);
+    }
+    
+    public function hasConfirmed()
+    {
+        return $this->getOption('confirmed', false);
+    }
+    
+    public function hasRepliedAt()
+    {
+        return $this->getOption('replied_at', false);
     }    
 }
