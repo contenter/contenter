@@ -16,6 +16,7 @@ class Confirmation extends BaseConfirmation
     
     public function setUp()
     {
+        parent::setUp();
         $this->hasAccessor('Entity', '_getEntity');
     }
     
@@ -29,12 +30,12 @@ class Confirmation extends BaseConfirmation
     }
     
     public function accept()
-    {        
-        if ($this->Entity->getOption('confirmed', false)) {
+    {
+        if ($this->Entity->hasConfirmed()) {
             $this->Entity->confirmed = 1;
         }
         
-        if ($this->Entity->getOption('replied_at', false)) {
+        if ($this->Entity->hasRepliedAt()) {
             $this->Entity->replied_at = new Doctrine_Expression('NOW()');
         }
         
@@ -45,12 +46,12 @@ class Confirmation extends BaseConfirmation
     
     public function decline()
     {        
-        if (!$this->Entity->getOption('confirmed', false)) {
+        if (!$this->Entity->hasConfirmed()) {
             $this->Entity->delete(); //confirmation will be deleted in postDelete listener
         	return;
         }
         
-        if ($this->Entity->getOption('replied_at', false)) {
+        if ($this->Entity->hasRepliedAt()) {
         	$this->Entity->replied_at = new Doctrine_Expression('NOW()');
         }
                 
