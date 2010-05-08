@@ -8,3 +8,5 @@ Request:
   
   confirmation-reply-accept: {rule: hash_exist, handler: not_found}
   confirmation-reply-decline: {rule: hash_exist, handler: not_found}
+
+  confirmation-reply-User: {rule: !logged_in, handler: forbidden}

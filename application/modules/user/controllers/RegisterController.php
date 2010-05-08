@@ -16,6 +16,8 @@ class User_RegisterController extends FinalView_Controller_Action
         if ($newUser = $this->_register()) {
             $newUser->save();
             
+            $this->sendRegistrationConfirmationMail($newUser);
+            
             $this->_helper->redirector->gotoRoute(array(), 'UserAuthLogin');
         }
     }
@@ -33,6 +35,7 @@ class User_RegisterController extends FinalView_Controller_Action
                 
                 $newUser = Doctrine::getTable('User')->create($this->getForm()->getValues());
                 $newUser->role = Roles::USER;
+                   
                 return $newUser;
             }
         }
@@ -44,5 +47,14 @@ class User_RegisterController extends FinalView_Controller_Action
         	$this->_registerForm = new User_Form_User_Register;
         }
         return $this->_registerForm;
+    }
+    
+    protected function sendRegistrationConfirmationMail($new_user)
+    {
+        $mail = new FinalView_Mail('user/registration-confirmation', array(
+            'email' => $new_user->email, 
+            'hash'  => $new_user->Confirmation->hash,
+        ));
+        $mail->send($new_user->email, $new_user->email);     
     }
 }
