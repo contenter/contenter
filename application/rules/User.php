@@ -1,16 +1,16 @@
 <?php
-class Application_Rules_User
+class Application_Rules_User extends FinalView_Access_Rules_Abstract
 {
 
-    public function userInParamsRule($params)
+    public function userInParamsRule()
     {
-        return array_key_exists('user_id', $params);
+        return array_key_exists('user_id', $this->_params);
     }
     
-    public function userExistRule($params)
+    public function userExistRule()
     {        
         $contextualUser = Doctrine::getTable('User')->findOneByParams(array(
-            'id'    =>   $params['user_id']
+            'id'    =>   $this->_params['user_id']
         ));
         
         if ($contextualUser) return true;
@@ -18,8 +18,8 @@ class Application_Rules_User
         return false;
     }
     
-    public function loggedInRule($params)
+    public function loggedInRule()
     {
         return FinalView_Auth::getInstance()->hasIdentity();
-    }    
+    }   
 }

@@ -1,8 +1,8 @@
 <?php
-class Application_Rules_Admin
+class Application_Rules_Admin extends FinalView_Access_Rules_Abstract
 {    
     
-    public function adminLoggedInRule($params)
+    public function adminLoggedInRule()
     {        
         $admin = FinalView_Auth::getInstance()->getAuthEntity(array(
             'role'  =>  Roles::USER_ADMIN 
