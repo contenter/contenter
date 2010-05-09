@@ -1,10 +1,10 @@
 <?php
-class Application_Rules_Confirmation
+class Application_Rules_Confirmation extends FinalView_Access_Rules_Abstract
 {
-    public function hashExistRule($params)
+    public function hashExistRule()
     {
         $confirmation = Doctrine::getTable('Confirmation')->findOneByParams(array(
-            'hash'  =>  $params['hash']
+            'hash'  =>  $this->_params['hash']
         ));
         
         return (bool)$confirmation;
