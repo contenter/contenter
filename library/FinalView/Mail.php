@@ -160,10 +160,11 @@ class FinalView_Mail implements FinalView_Mail_Interface
         
         if (!array_key_exists($this->_template, $cach)) {
             
-            $table = Doctrine::getTable($this->_model);
-            $find = method_exists($table, 'findTemplate') ? 'findTemplate' : 'find';
+            $template = Doctrine::getTable($this->_model)->findOneByParams(array(
+                'template'  =>  $this->_template
+            ));
             
-            if (!$cach[$this->_template] = $table->{$find}($this->_template)) 
+            if (!$cach[$this->_template] = $template) 
             {
                 trigger_error('Template named "' . $this->_template . '" was not 
                     found', E_USER_ERROR);

@@ -10,6 +10,9 @@ class FinalView_Access_Rules
         'default_behavior'  =>  false
     );
     
+    private static $_rulesClasses = array();
+    private static $_params = array();
+    
     protected $_rule;
     protected $_failedRules = array(); 
     
@@ -29,7 +32,7 @@ class FinalView_Access_Rules
             }   
         }
     }
-    
+       
     public static function getRule($rule)
     {
         if ($rule == '_TRUE_' || $rule == '_FALSE_') {
@@ -45,7 +48,7 @@ class FinalView_Access_Rules
         if (!array_key_exists($rule, self::$_rules)) {
         	throw new FinalView_Access_Exception('can not find rule' . $rule . ' in schema ');
         } 
-        return new self($rule);
+        return new self($rule);    
     }
     
     public function isInverted()
@@ -60,6 +63,14 @@ class FinalView_Access_Rules
     
     public function check(array $params = array())
     {
+        self::$_rulesClasses = array();
+        self::$_params = $params;
+        
+        return $this->checkInContext();
+    }
+    
+    public function checkInContext()
+    {
         $this->_failedRules = array();
         
         switch ($this->_rule) {
@@ -72,7 +83,7 @@ class FinalView_Access_Rules
         }
         
         if ($this->_getRule('type') == 'FUNC') {
-            $result = $this->_check($params);
+            $result = $this->_check();
             if (false === $result) {
                 $this->_failedRules[$this->_rule] = $this;
             }
@@ -83,7 +94,7 @@ class FinalView_Access_Rules
        
         foreach ((array)$dependences as $checking_rule) {
             $checkingRule = self::getRule($checking_rule);
-            $result = $checkingRule->check($params);
+            $result = $checkingRule->checkInContext();
             $rule_type = $this->_getRule('type');
             if ($this->isInverted()) {
                 $result = !$result;
@@ -115,7 +126,7 @@ class FinalView_Access_Rules
             }
         }
 
-        $result = $this->_check($params);
+        $result = $this->_check();
         
         if ($result === null) {
             switch ($this->_getRule('type')) {
@@ -160,18 +171,22 @@ class FinalView_Access_Rules
         return $this->_failedRules;
     }
     
-    protected function _check(array $params = array())
+    protected function _check()
     {
         $className = $this->_getClassName();
         
-        $rules = new $className();        
+        if (!isset(self::$_rulesClasses[$className])) {
+        	self::$_rulesClasses[$className] = new $className(self::$_params);
+        }
+        
+        $rules = self::$_rulesClasses[$className];        
         
         $method = $this->_getMethodName();
         
         if (method_exists($rules, $method)) {
             return !$this->isInverted() 
-                ? $rules->$method($params)
-                : !$rules->$method($params);
+                ? $rules->$method()
+                : !$rules->$method();
         }
         
         return null;
