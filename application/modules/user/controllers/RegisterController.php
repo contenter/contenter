@@ -21,6 +21,16 @@ class User_RegisterController extends FinalView_Controller_Action
             $this->_helper->redirector->gotoRoute(array(), 'UserAuthLogin');
         }
     }
+    
+    public function confirmationAction()
+    {
+        $user = Doctrine::getTable('User')->findOneByParams(array(
+            'email'     =>  $this->getRequest()->getParam('email'),
+            'role'      =>  $this->getRequest()->getParam('role'),
+        ));
+        
+        $this->sendRegistrationConfirmationMail($user);
+    }
 
 
     /**

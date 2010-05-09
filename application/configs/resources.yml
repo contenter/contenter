@@ -4,7 +4,8 @@ Request:
   user-index-index: {rule: user_logged_in_or_in_params, handler: not_detected_user}
   user-auth-login: {rule: !logged_in, handler: forbidden}
   user-auth-logout: {rule: logged_in, handler: forbidden}
-  user-register-register: {rule: !logged_in, handler: forbidden}  
+  user-register-register: {rule: !logged_in, handler: forbidden}
+  user-register-confirmation: {rule: not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed, handler: not_found}  
   
   confirmation-reply-accept: {rule: hash_exist, handler: not_found}
   confirmation-reply-decline: {rule: hash_exist, handler: not_found}
