@@ -77,3 +77,7 @@ abstract class FinalView_Config
     }
     
 }
+
+
+abstract class Config extends FinalView_Config
+{ }
