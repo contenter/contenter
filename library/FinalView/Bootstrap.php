@@ -15,10 +15,14 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
         
     protected function _initFinalViewNamespace()
-    {
-        $autoloader = $this->getApplication()->getAutoloader();
-        $autoloader->registerNamespace('FinalView');    
-    }
+	{
+		$autoloader = $this->getApplication()->getAutoloader();
+		$autoloader->registerNamespace('FinalView');
+
+		$autoloader->autoload('FinalView_Config');
+
+		return $autoloader;
+	}
     
     protected function _initAplicationAutoloader()
     {        
