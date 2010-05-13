@@ -12,8 +12,8 @@ abstract class FinalView_Grid_Entity_Abstract
     
     public function setName($name)
     {
-        if (!preg_match('/^[a-zA-Z]{1,1}[a-zA-Z0-9]*$/', $name)) {
-            throw new FinalView_Grid_Exception($name.' must be /^[a-zA-Z]{1,1}[a-zA-Z0-9]*$/');   	
+        if (!preg_match('/^[a-zA-Z]{1,1}[a-zA-Z0-9_-]*$/', $name)) {
+            throw new FinalView_Grid_Exception($name.' must be /^[a-zA-Z]{1,1}[a-zA-Z0-9_-]*$/');   	
         }
         
         $this->_name = $name;
@@ -29,7 +29,7 @@ abstract class FinalView_Grid_Entity_Abstract
         $this->_script = $script;
     }
     
-    public function handler(array $params, FinalView_Grid_Renderer $view)
+    public function handler($params, FinalView_Grid_Renderer $view)
     {
         $view->assign($params);
     }

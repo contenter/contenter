@@ -7,8 +7,10 @@ class FinalView_Grid_Column_Iterator extends FinalView_Grid_Column
         parent::__construct($name, 'iterator.phtml');                
     }
     
-    public function handler(array $params, FinalView_Grid_Renderer $view)
+    public function handler($params, FinalView_Grid_Renderer $view)
     {
+//         dump($params->toArray());
+//         exit;
         $name = $this->getName();
         $view->value = $params[$name];
     }

@@ -1,6 +1,66 @@
 <?php
 final class FinalView_Doctrine
 {
+    private static $_path;    
+    
+    public static function getPath()
+    {
+        if ( ! self::$_path) {
+            self::$_path = realpath(dirname(__FILE__));
+        }
+
+        return self::$_path;
+    }
+
+    public static function init($config)
+    {
+        $manager = Doctrine_Manager::getInstance();        
+        
+        $manager->setAttribute(Doctrine::ATTR_USE_DQL_CALLBACKS, true);
+        $manager->setAttribute(Doctrine::ATTR_USE_NATIVE_ENUM, true);
+        
+        $manager->setAttribute(
+            Doctrine::ATTR_MODEL_LOADING, 
+            Doctrine::MODEL_LOADING_CONSERVATIVE
+        );
+        
+        $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
+                
+        if(array_key_exists('models_path', $config)) {
+            Doctrine::loadModels($config['models_path']);
+        }
+        
+        if(array_key_exists('connection_string', $config)) {
+            $manager->openConnection($config['connection_string'])->setCharset('UTF8');
+        }
+
+        FinalView_Doctrine::registerHydratorsPath(
+            FinalView_Doctrine::getPath() . DIRECTORY_SEPARATOR . 'Doctrine' . DIRECTORY_SEPARATOR . 'Hydrator',
+            'FinalView_Doctrine_Hydrator'
+        );
+    }
+    
+    public static function registerHydratorsPath($path, $prefix)
+    {
+        $manager = Doctrine_Manager::getInstance();
+        
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::LEAVES_ONLY);
+        	
+        foreach ($files as $file) {
+            $e = explode('.', $file->getFileName());
+
+            if (end($e) == 'php') {
+                $name = $e[0];
+                
+                $manager->registerHydrator(
+                    $name,
+                    $prefix . '_' . $name                    
+                );
+            }
+        }
+    }
+    
+    
     /**
      * Generates models from database to temporary location then uses those models to generate a yaml schema file.
      * This should probably be fixed. We should write something to generate a yaml schema file directly from the database.
@@ -27,21 +87,6 @@ final class FinalView_Doctrine
         Doctrine_Lib::removeDirectories($directory);
 
         return $result;
-    }
-    
-    /**
-     * Migrate database to specified $to version. Migrates from current to latest if you do not specify.
-     *
-     * @param string $migrationsPath Path to migrations directory which contains your migration classes
-     * @param string $to Version you wish to migrate to.
-     * @return bool true
-     * @throws new Doctrine_Migration_Exception
-     */
-    public static function migrate($migrationsPath, $to = null)
-    {
-        $migration = new FinalView_Doctrine_Migration($migrationsPath);
-
-        return $migration->migrate($to);
     }
     
     /**

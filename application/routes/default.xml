@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configdata>
+    <routes>
+        <DefaultIndexIndex>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route></route>
+            <defaults>
+                <module>default</module>
+                <controller>index</controller>
+                <action>index</action>
+            </defaults>
+        </DefaultIndexIndex>     
+    </routes>
+</configdata>

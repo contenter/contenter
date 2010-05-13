@@ -17,7 +17,7 @@ class FinalView_Grid_Column_Title_Standard extends FinalView_Grid_Entity_Abstrac
         return $this->_column;
     }
     
-    public function handler(array $params, FinalView_Grid_Renderer $view)
+    public function handler($params, FinalView_Grid_Renderer $view)
     {
         $view->title = $this->getColumn()->getName();
         $view->column = $this->getColumn();

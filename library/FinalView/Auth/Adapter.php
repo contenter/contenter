@@ -85,7 +85,7 @@ class FinalView_Auth_Adapter implements Zend_Auth_Adapter_Interface
                     Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
                 );
                 
-            case User_Encrypt::compare($this->_verifying_data['password'], 
+            case FinalView_Auth_Encrypt::compare($this->_verifying_data['password'], 
                 $this->_account->password) : 
                     throw new FinalView_Auth_Exception
                     (

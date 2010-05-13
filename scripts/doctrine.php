@@ -17,14 +17,15 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
  
 require_once 'Zend/Application.php';
- 
+require_once 'FinalView/Application.php';  
 // Create application, bootstrap, and run
-$application = new Zend_Application(
+$application = new FinalView_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
  
-$application->getBootstrap()->bootstrap('doctrine');
+$application->getBootstrap()->bootstrap('FinalViewNamespace');
+$application->getBootstrap()->bootstrap('Doctrine');
  
 $cli = new FinalView_Doctrine_Cli($application->getOption('doctrine'));
 $cli->run($_SERVER['argv']);

@@ -2,3 +2,4 @@
 /doctrine/migrations/*
 
 /application/configs/environment.php
+/application/configs/application.local.ini

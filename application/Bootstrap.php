@@ -10,39 +10,46 @@ class Bootstrap extends FinalView_Bootstrap
     */
     protected function _initSecurePlugin() 
     {
-        require_once APPLICATION_PATH . '/plugins/SecureRequest.php';
-        $this->bootstrap('frontcontroller');
+        $this->bootstrap('AplicationAutoloader');
+        
+        $this->bootstrap('FrontController');
+        
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new Application_Plugin_SecureRequest, 3);
     }
     
-    /**
-    * Init your project View Helpers
-    * 
-    */        
-    protected function _initViewHelpers() 
+    protected function _initAccessRules()
     {
-        return parent::_initViewHelpers();
+        $this->bootstrap('Doctrine');
+        
+        if (file_exists($filename = APPLICATION_PATH . '/configs/rules.yml')) {
+            $rulesSchema  = Doctrine_Parser::load(APPLICATION_PATH . '/configs/rules.yml', 'yml');
+            FinalView_Access_Rules::setSchema($rulesSchema);        	
+        }
+        
+        $accessRulesConfig = $this->getOption('rules');
+        if (!is_null($accessRulesConfig)) {
+            if (array_key_exists('default_behavior', $accessRulesConfig)) {
+                $accessRulesConfig['default_behavior'] = (bool)$accessRulesConfig['default_behavior'];
+            }
+            FinalView_Access_Rules::$options = $accessRulesConfig;	
+        }
+        
+        $loader = $this->getResource('AplicationAutoloader');
+        $loader->addResourceType('rules', '/rules', 'Rules'); 
     }
-          
-    /**
-    * Init Acl engine
-    * 
-    */
-    protected function _initAcl() 
-    {
-        /*
-        * @todo: We need to create a container ACL that will receive as a parameter 
-        * Adapter (files, db), which will determine the method of storage Acl. 
-        * Basic adapters can be written to storage acl in files and storage acl in the database. 
-        *
-        */                
+    
+    protected function _initResources()
+    {       
+        $this->bootstrap('Doctrine');
         
+        $resources = Doctrine_Parser::load(APPLICATION_PATH . '/configs/resources.yml', 'yml');
         
-        //Set here your project ACL. Your implementation might be a basic solution of Finalview  
-        
-        $acl = new Zend_Acl;
-        return $acl; 
-    }
+        FinalView_Application_Resources::setResources($resources);
+
+        $this->bootstrap('FrontController');
+        $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Application_Plugin_Access);       
+    }    
     
 }
