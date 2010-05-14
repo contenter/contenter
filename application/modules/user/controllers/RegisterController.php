@@ -16,6 +16,7 @@ class User_RegisterController extends FinalView_Controller_Action
         if ($newUser = $this->_register()) {
             $newUser->save();
             
+            $newUser->createConfirmation('registration');
             $this->sendRegistrationConfirmationMail($newUser);
             
             $this->_helper->redirector->gotoRoute(array(), 'UserAuthLogin');
@@ -63,7 +64,7 @@ class User_RegisterController extends FinalView_Controller_Action
     {
         $mail = new FinalView_Mail('user/registration-confirmation', array(
             'email' => $user->email, 
-            'hash'  => $user->Confirmation->hash,
+            'hash'  => $user->getConfirmation('registration')->hash,
         ));
         $mail->send($user->email, $user->email);     
     }

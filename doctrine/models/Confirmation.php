@@ -12,6 +12,9 @@
  */
 class Confirmation extends BaseConfirmation
 {
+    const ACTION_ACCEPT = 'ACTION_ACCEPT';
+    const ACTION_DECLINE = 'ACTION_DECLINE';    
+    
     protected $_entity;
     
     public function setUp()
