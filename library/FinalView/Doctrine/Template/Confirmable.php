@@ -13,15 +13,15 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
     
     public function createConfirmation($type)
     {
-        if ($this->getOption($type, false) === false) {
-            throw new FinalView_Doctrine_Exception('confirmation type: '. $type . ' is not defined for model: '. $this->getTable()->getComponentName());
+        if (!$this->isDefinedType($type)) {
+            throw new FinalView_Doctrine_Exception('Not defined confirmation type: ' . $type . 'for model: ' . $this->getTable()->getComponentName());        	
         }
         
         $self = $this->getInvoker();
         
         Doctrine::getTable('Confirmation')->createHash(
             $self->getTable()->getComponentName(), 
-            $self->getIdentifier(),
+            $self->getIncremented(),
             $type
         )->save();
         
@@ -30,8 +30,8 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
     
     public function getConfirmation($type)
     {
-        if ($this->getOption($type, false) === false) {
-            throw new FinalView_Doctrine_Exception('confirmation type: '. $type . ' is not defined for model: '. $this->getTable()->getComponentName());
+        if (!$this->isDefinedType($type)) {
+            throw new FinalView_Doctrine_Exception('Not defined confirmation type: ' . $type . 'for model: ' . $this->getTable()->getComponentName());        	
         }
         
         $self = $this->getInvoker();
@@ -40,12 +40,21 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
         	$this->_confirmations[$type] = Doctrine::getTable('Confirmation')->findOneByParams(array(
                 'entity' =>  array(
                     'model' =>  $self->getTable()->getComponentName(),
-                    'id'    =>  $self->getIdentifier(),
+                    'id'    =>  $self->getIncremented(),
                     'type'  =>  $type
                 )
             ) );
         }
         
         return $this->_confirmations[$type];
-    }   
+    }
+    
+    public function isDefinedType($type)
+    {
+        if (($types = $this->getOption('types', false)) === false) {
+            throw new FinalView_Doctrine_Exception('Confirmation types is not defined for model: ' . $this->getTable()->getComponentName());
+        }
+        
+        return in_array($type, $types);    
+    }
 }

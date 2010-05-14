@@ -2,5 +2,5 @@ Request:
   default-error-error: {rule: _TRUE_}
   default-index-index: {rule: _TRUE_}
   
-  confirmation-reply-accept: {rule: hash_exist, handler: not_found}
-  confirmation-reply-decline: {rule: hash_exist, handler: not_found}
+  confirmation-index-accept: {rule: hash_exist, handler: not_found}
+  confirmation-index-decline: {rule: hash_exist, handler: not_found}

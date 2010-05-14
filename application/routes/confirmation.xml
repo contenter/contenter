@@ -6,7 +6,7 @@
             <route>confirmation/:hash/accept.html</route>
             <defaults>
                 <module>confirmation</module>
-                <controller>reply</controller>
+                <controller>index</controller>
                 <action>accept</action>
                 <reply>ACTION_ACCEPT</reply>
             </defaults>
@@ -16,7 +16,7 @@
             <route>confirmation/:hash/decline.html</route>
             <defaults>
                 <module>confirmation</module>
-                <controller>reply</controller>
+                <controller>index</controller>
                 <action>decline</action>
                 <reply>ACTION_DECLINE</reply>
             </defaults>
