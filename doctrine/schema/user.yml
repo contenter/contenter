@@ -23,7 +23,8 @@ User:
   actAs:
     Timestampable:
     FinalView_Doctrine_Template_Confirmable: 
-      types: [registration]
+      types: 
+        - registration
   options:
     type: INNODB
     collate: utf8_general_ci
