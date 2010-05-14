@@ -28,35 +28,4 @@ class Confirmation extends BaseConfirmation
         
         return $this->_entity;
     }
-    
-    public function accept()
-    {
-        if ($this->Entity->hasConfirmed()) {
-            $this->Entity->confirmed = 1;
-        }
-        
-        if ($this->Entity->hasRepliedAt()) {
-            $this->Entity->replied_at = new Doctrine_Expression('NOW()');
-        }
-        
-        $this->Entity->save();
-        
-        $this->delete();
-    }
-    
-    public function decline()
-    {        
-        if (!$this->Entity->hasConfirmed()) {
-            $this->Entity->delete(); //confirmation will be deleted in postDelete listener
-        	return;
-        }
-        
-        if ($this->Entity->hasRepliedAt()) {
-        	$this->Entity->replied_at = new Doctrine_Expression('NOW()');
-        }
-                
-        $this->Entity->save();
-        
-        $this->delete();        
-    }
 }
