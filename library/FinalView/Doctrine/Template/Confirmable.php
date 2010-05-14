@@ -2,32 +2,50 @@
 class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
 {    
    
+    protected $_confirmations;
+    
     public function setTableDefinition()
-    {       
-        
+    {        
         $listener = new FinalView_Doctrine_Listener_Confirmable();
-        
-        if ($this->getOption('confirmed', null)) {
-            $this->hasColumn('confirmed', 'integer', 1, array(
-                 'notnull' => true,
-                 'default' => 0
-            ));                        	
-        }
-        
-        if ($this->getOption('replied_at', null)) {
-            $this->hasColumn('replied_at', 'timestamp');         	
-        }
         
         $this->addListener($listener);
     }
     
-    public function hasConfirmed()
+    public function createConfirmation($type)
     {
-        return $this->getOption('confirmed', false);
+        if ($this->getOption($type, false) === false) {
+            throw new FinalView_Doctrine_Exception('confirmation type: '. $type . ' is not defined for model: '. $this->getTable()->getComponentName());
+        }
+        
+        $self = $this->getInvoker();
+        
+        Doctrine::getTable('Confirmation')->createHash(
+            $self->getTable()->getComponentName(), 
+            $self->getIdentifier(),
+            $type
+        )->save();
+        
+        $self->getConfirmation($type);
     }
     
-    public function hasRepliedAt()
+    public function getConfirmation($type)
     {
-        return $this->getOption('replied_at', false);
-    }    
+        if ($this->getOption($type, false) === false) {
+            throw new FinalView_Doctrine_Exception('confirmation type: '. $type . ' is not defined for model: '. $this->getTable()->getComponentName());
+        }
+        
+        $self = $this->getInvoker();
+        
+        if (!isset($this->_confirmations[$type])) {
+        	$this->_confirmations[$type] = Doctrine::getTable('Confirmation')->findOneByParams(array(
+                'entity' =>  array(
+                    'model' =>  $self->getTable()->getComponentName(),
+                    'id'    =>  $self->getIdentifier(),
+                    'type'  =>  $type
+                )
+            ) );
+        }
+        
+        return $this->_confirmations[$type];
+    }   
 }

@@ -4,7 +4,8 @@ class ConfirmationTable extends FinalView_Doctrine_Table
     protected function entitySelector($data)
     {
         $this->_getQuery()->addWhere($this->getTableName().'.entity_model = ?', $data['model']);
-        $this->_getQuery()->addWhere($this->getTableName().'.entity_id = ?', $data['id']);    
+        $this->_getQuery()->addWhere($this->getTableName().'.entity_id = ?', $data['id']);
+        $this->_getQuery()->addWhere($this->getTableName().'.confirmation_type = ?', $data['type']);    
     }
     
     protected function hashSelector($hash)
@@ -12,11 +13,12 @@ class ConfirmationTable extends FinalView_Doctrine_Table
         $this->_getQuery()->addWhere($this->getTableName().'.hash = ?', $hash);    
     }    
         
-    public function createHash($entity_model, $entity_id)
+    public function createHash($entity_model, $entity_id, $type)
     {
         $data = array(
             'entity_model'      =>  $entity_model,
             'entity_id'         =>  $entity_id,
+            'confirmation_type' =>  $type,
             'hash'              =>  $this->_generateUniqueHash()
         );
         

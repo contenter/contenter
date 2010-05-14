@@ -16,7 +16,7 @@ class Confirmation_Controller extends FinalView_Controller_Action
     {
         $confirmation = $this->_getConfirmation();
 
-        $this->_forward($confirmation->entity_model, 'reply', 'confirmation', array(
+        $this->_forward($confirmation->confirmation_type, $confirmation->entity_model, 'confirmation', array(
             'hash'  =>  $this->getRequest()->getParam('hash'),
             'reply' =>  self::ACTION_ACCEPT
         ));
@@ -26,7 +26,7 @@ class Confirmation_Controller extends FinalView_Controller_Action
     {
         $confirmation = $this->_getConfirmation();
         
-        $this->_forward($confirmation->entity_model, 'reply', 'confirmation', array(
+        $this->_forward($confirmation->confirmation_type, $confirmation->entity_model, 'confirmation', array(
             'hash'  =>  $this->getRequest()->getParam('hash'),
             'reply' =>  self::ACTION_DECLINE
         ));
@@ -42,28 +42,5 @@ class Confirmation_Controller extends FinalView_Controller_Action
         }
         
         return $this->_confirmation;
-    }
-        
-    public function __call($func, $args)
-    {
-        if ('Action' == substr($func, -6)) {
-            $this->view->reply_type = $this->getRequest()->getParam('reply', null);
-            $this->view->entity = $this->_getConfirmation()->Entity;
-            
-            switch ($this->getRequest()->getParam('reply', null) ) {
-                case self::ACTION_ACCEPT:
-                    $this->_getConfirmation()->accept();    
-                break;
-                case self::ACTION_DECLINE:
-                    $this->_getConfirmation()->decline();
-                break;
-                default:
-                    parent::__call($func, $args);
-                break;
-            }
-        }else{
-            parent::__call($func, $args);
-        }
-    }
-    
+    }    
 }
