@@ -4,7 +4,7 @@
 * Confirmation_Controller 
 * 
 */
-class Confirmation_Controller extends FinalView_Controller_Action 
+class Confirmation_IndexController extends FinalView_Controller_Action 
 {
     
     const ACTION_ACCEPT = 'ACTION_ACCEPT';
@@ -14,7 +14,7 @@ class Confirmation_Controller extends FinalView_Controller_Action
         
     public function acceptAction()
     {
-        $confirmation = $this->_getConfirmation();
+        $confirmation = $this->_helper->confirmation;
 
         $this->_forward($confirmation->confirmation_type, $confirmation->entity_model, 'confirmation', array(
             'hash'  =>  $this->getRequest()->getParam('hash'),
@@ -24,23 +24,11 @@ class Confirmation_Controller extends FinalView_Controller_Action
     
     public function declineAction()
     {
-        $confirmation = $this->_getConfirmation();
+        $confirmation = $this->_helper->confirmation;
         
         $this->_forward($confirmation->confirmation_type, $confirmation->entity_model, 'confirmation', array(
             'hash'  =>  $this->getRequest()->getParam('hash'),
             'reply' =>  self::ACTION_DECLINE
         ));
-    }
-    
-    
-    protected function _getConfirmation()
-    {
-        if (is_null($this->_confirmation)) {
-        	$this->_confirmation = Doctrine::getTable('Confirmation')->findOneByParams(array(
-                'hash'  =>  $this->getRequest()->getParam('hash')
-            ));
-        }
-        
-        return $this->_confirmation;
     }    
 }
