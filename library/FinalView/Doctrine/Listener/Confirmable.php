@@ -12,31 +12,4 @@ class FinalView_Doctrine_Listener_Confirmable extends Doctrine_Record_Listener
             )
         ))->delete();
     }
-    
-    public function postInsert(Doctrine_Event $event)
-    {
-        $invoker = $event->getInvoker();
-
-        Doctrine::getTable('Confirmation')
-            ->createHash($invoker->getTable()->getComponentName(), $invoker->getIncremented())
-            ->save()
-        ;
-        
-        $invoker->refresh();        
-    }
-    
-    public function preHydrate(Doctrine_Event $event)
-    {        
-        $invoker = $event->getInvoker();        
-        $data = $event->data;
-
-        $data['Confirmation'] = Doctrine::getTable('Confirmation')->findOneByParams(array(
-            'entity' =>  array(
-                'model' =>  $invoker->getComponentName(),
-                'id'    =>  $data[$invoker->getIdentifier()]
-            )
-        ));
-
-        $event->data = $data;
-    }
 }
