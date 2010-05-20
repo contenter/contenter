@@ -30,6 +30,8 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->resetColumnsIndex();
         
         $this->_currentColumn = null;
+
+        return $this;
     } 
     
     public function addColumn(FinalView_Grid_Column $column, 
@@ -55,6 +57,8 @@ class FinalView_Grid_ColumnsCollection implements Iterator
                 } 
             break;                                    
         }
+
+        return $this;
     }
     
     public function getColumn($name)
@@ -84,6 +88,8 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$next]['prev'] = $columnName;
 
         $this->_currentColumn = $columnName;        
+        
+        return $this;
     }
     
     public function insertColumnBefore(FinalView_Grid_Column $column, $relatedColumn)
@@ -105,7 +111,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         $this->_columnsIndex[$prev]['next'] = $columnName;
         
-        $this->_currentColumn = $columnName;              
+        $this->_currentColumn = $columnName;
+
+        return $this;
     }
     
     public function getFirstColumn()
@@ -147,8 +155,30 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$next]['prev'] = $prev;
         
         unset($this->_columnsIndex[$column]);     
+        
+        return $this;
     }
-    
+
+    public function removeColumns(array $columns)
+    {
+        foreach ($columns as $c) {
+            $this->removeColumn($c);
+        }
+
+        return $this;
+    }
+
+    public function removeAllExcept(array $columns)
+    {
+        $_cols = array_keys($this->_columns);
+
+        foreach ( array_diff($_cols, $columns) as $c) {
+            $this->removeColumn($c);
+        }
+
+        return $this;
+    }
+
     public function upColumn($column)
     {
         if (!$this->isExistColumn($column) ) {
@@ -171,7 +201,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$column]['next'] = $prevColumn;
         
         $this->_columnsIndex[$prevPrevColumn]['next'] = $column;
-        $this->_columnsIndex[$nextColumn]['prev'] = $prevColumn;             
+        $this->_columnsIndex[$nextColumn]['prev'] = $prevColumn;
+
+        return $this;
     }
     
     public function downColumn($column)
@@ -186,7 +218,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         $nextColumn = $this->_columnsIndex[$column]['next'];
         
-        $this->upColumn($nextColumn);               
+        $this->upColumn($nextColumn);
+
+        return $this;
     }
     
     private function resetColumnsIndex()
@@ -198,7 +232,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
             '__end__' =>  array(
                 'next'  =>  null, 'prev'   =>  '__begin__'
             ),        
-        );    
+        );
+
+        return $this;
     }
     
     public function move($column, 
@@ -223,7 +259,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
                     $this->moveColumnBefore($column, $relatedColumn);	
                 } 
             break;                                    
-        }        
+        }
+
+        return $this;
     }
     
     public function setColumnsOrder(array $order)
@@ -242,7 +280,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         if (isset($newColumns)) {
         	$this->_columns = $newColumns;
-        }        
+        }
+
+        return $this;
     }    
     
     private function moveColumnAfter($column, $relatedColumn)
@@ -269,7 +309,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$column]['next'] = $next;
         $this->_columnsIndex[$column]['prev'] = $relatedColumn;
         
-        $this->_columnsIndex[$next]['prev'] = $column;                
+        $this->_columnsIndex[$next]['prev'] = $column;
+
+        return $this;
     }
     
     private function moveColumnBefore($column, $relatedColumn)
@@ -296,7 +338,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$column]['next'] = $relatedColumn;
         $this->_columnsIndex[$column]['prev'] = $prev;
         
-        $this->_columnsIndex[$prev]['next'] = $column;             
+        $this->_columnsIndex[$prev]['next'] = $column;
+
+        return $this;
     }     
     
     public function current()
