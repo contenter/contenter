@@ -22,7 +22,7 @@ class FinalView_View_Helper_Thumbnail extends Zend_View_Helper_HtmlElement
 		$this->_imgPath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . $this->_src;
 		if (!is_file($this->_src)) {
 			$umask = umask(0);
-			@mkdir($_SERVER['DOCUMENT_ROOT'] . $pathinfo['dirname'], 0777, true);
+			@mkdir($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . $pathinfo['dirname'], 0777, true);
 			umask($umask);
 
             require_once LIBRARY_PATH . '/asido/class.asido.php';
