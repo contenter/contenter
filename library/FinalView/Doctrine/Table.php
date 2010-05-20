@@ -55,6 +55,17 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $this->_resetQuery();
         
         return $pager;
+    }
+    
+    final public function countByParams($params = array())
+    {
+        $this->build($this->_getQuery(), $params);
+        
+        $result = $this->_getQuery()->count(array());
+        
+        $this->_resetQuery();
+        
+        return $result;        
     }    
     
     public function build($query, $params)
@@ -97,5 +108,10 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     protected function orderBySelector($sort)
     {
         $this->_getQuery()->addOrderBy($this->getTableName().'.'.$sort['field'].' '.$sort['direction'] );                
-    }        
+    }
+    
+    protected function fieldsSelector($fields)
+    {
+        $this->_getQuery()->select( implode(', ', $fields) );
+    }            
 }
