@@ -5,6 +5,10 @@ Request:
   user-auth-login: {rule: !logged_in, handler: forbidden}
   user-auth-logout: {rule: logged_in, handler: forbidden}
   user-register-register: {rule: !logged_in, handler: forbidden}  
+  user-auth-forgot-password: {rule: !logged_in, handler: forbidden}
+  user-auth-forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, handler: not_found}
   
   confirmation-index-accept: {rule: hash_exist, handler: not_found}
   confirmation-index-decline: {rule: hash_exist, handler: not_found}
+  
+  confirmation-user-forgot-password: {rule: not_logged_in_and_forgot_pswd_hash_exist, handler: not_found}

@@ -14,6 +14,15 @@ User:
     type: FUNC
   logged_in:
     type: FUNC
+  not_logged_in_and_forgot_pswd_hash:
+    type: AND
+    dependences: [!logged_in, forgot_pswd_hash]
+  forgot_pswd_hash:
+    type: FUNC    
+
 Confirmation:
   hash_exist:
     type: FUNC
+  not_logged_in_and_forgot_pswd_hash_exist:
+    type: AND
+    dependences: [!logged_in, forgot_pswd_hash] 

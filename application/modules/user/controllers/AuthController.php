@@ -8,6 +8,7 @@ class User_AuthController extends FinalView_Controller_Action
 {
 
     private $_loginForm;
+    private $_forgotPswdForm;
     
     public $storage_params = array(
         'id'
@@ -84,6 +85,60 @@ class User_AuthController extends FinalView_Controller_Action
         FinalView_Auth::getInstance()->clearIdentity();
         
         $this->_helper->redirector->gotoRoute(array(), 'UserAuthLogin');
+    }
+
+    /**
+    * Forgot Password
+    * 
+    */
+    
+    public function forgotPasswordAction()
+    {        
+        
+        if ($this->getRequest()->isPost()) {
+            if ($this->getForgotPswdForm()->isValid($this->getRequest()->getPost())) {
+                
+                $user = $this->getForgotPswdAccount();
+                $user->createConfirmation('forgot-password');                
+                $this->_sendForgotPasswordLetter($user);
+                
+                $this->_helper->redirector->gotoRoute(array(
+                    'hash'  =>  $user->getConfirmation('forgot-password')->hash  
+                ), 'UserAuthForgotPasswordMailSent');
+            }            
+        }        
+        
+        $this->view->forgotPswdForm = $this->getForgotPswdForm();
+    }
+    
+    protected function getForgotPswdAccount()
+    {
+        return Doctrine::getTable('User')->findOneByParams(array(
+            'email'     =>  $this->getForgotPswdForm()->getValue('email'),
+            'role'      =>  Roles::USER
+        ));    
+    }
+    
+    protected function getForgotPswdForm()
+    {
+        if (is_null($this->_forgotPswdForm)) {
+        	$this->_forgotPswdForm = new User_Form_ForgotPswd;
+        }
+        return $this->_forgotPswdForm;          
+    }
+    
+    public function forgotPasswordMailSentAction()
+    {
+        
+    }
+    
+    protected function _sendForgotPasswordLetter($user)
+    {
+        $mail = new FinalView_Mail('user/forgot-password', array(
+            'email' => $user->email, 
+            'hash'  => $user->getConfirmation('forgot-password')->hash,
+        ));
+        $mail->send($user->email, $user->email); 
     }
     
 }

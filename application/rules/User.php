@@ -21,5 +21,15 @@ class Application_Rules_User extends FinalView_Access_Rules_Abstract
     public function loggedInRule()
     {
         return FinalView_Auth::getInstance()->hasIdentity();
+    }
+    
+    public function forgotPswdHashRule()
+    {
+        $hash = Doctrine::getTable('Confirmation')->findOneByParams(array(
+            'hash'  =>  $this->_params['hash'],
+            'type'  =>  'forgot-password'
+        ));
+        
+        return (bool)$hash;
     }   
 }
