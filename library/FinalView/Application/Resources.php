@@ -26,6 +26,8 @@ class FinalView_Application_Resources
     
     public static function get($resource, $section = null)
     {
+        $resource = strtolower($resource);
+        
         if ($section === null) {
         	if (!array_key_exists($resource, self::$_resources[0])) {
                 foreach (self::$_resources as $sectionName => $resources) {

@@ -29,62 +29,19 @@ abstract class FinalView_Validate_Db_Abstract extends Zend_Validate_Abstract
     /**
      * @var string
      */    
-    protected $_field = '';    
-       
-    /**
-     * @var mixed
-     */   
-    protected $_exclude = null;   
-   
-    /**
-     * Setting $exclude allows a single record to be excluded from matching.
-     * Exclude can either be a String containing a where clause, or an array with `field` and `value` keys
-     * to define the where clause added to the sql.  
-     * A database adapter may optionally be supplied to avoid using the registered default adapter. 
-     * 
-     * @param string $model The database model to validate against
-     * @param string $field The field to check for a match
-     * @param array $exclude An optional where clause or field/value pair to exclude from the query
-     */   
-    public function __construct($model, $field, array $exclude = array())    
-    {    
-        $this->_exclude = $exclude;   
-        $this->_model   = (string) $model;    
-        $this->_field   = (string) $field;   
-    }
-    
-    /**
-    * Set exclude values
-    * 
-    * @param array $exclude
-    */
-    public function setExclude(array $exclude) 
+    protected $_selector = array(); 
+     
+    public function __construct($model, $selector)    
     {
-        $this->_exclude = $exclude;
-        return $this;
+        $this->_model   = (string) $model;    
+        $this->_selector   = (string) $selector;   
     }
      
-    /**
-     * Run query.
-     *
-     * @param  String $value
-     * @return boolean
-     */ 
-    protected function _query($value) 
+    
+    protected function _getRecordsCount($value)
     {
-        $query = Doctrine_Query::create()
-             ->select('COUNT(*)')
-             ->from($this->_model)
-             ->where($this->_field . ' = ?', $value)
-             ->limit(1)
-             ;
-        if (is_array($this->_exclude)) {
-            foreach ($this->_exclude as $field => $value) {
-                $query->andWhere($field . ' != ?', $value);
-            }
-        }
-        
-        return $query->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR) > 0;
-    } 
-	
+        return Doctrine::getTable($this->_model)->countByParams(array(
+            $this->_selector => $value
+        ));
+    }	
 }
