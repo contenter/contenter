@@ -41,4 +41,9 @@ class ConfirmationTable extends FinalView_Doctrine_Table
             }
         } while (true);        
     }
+    
+    protected function typeSelector($type)
+    {
+        $this->_getQuery()->addWhere($this->getTableName().'.confirmation_type = ?', $type);    
+    }
 }
