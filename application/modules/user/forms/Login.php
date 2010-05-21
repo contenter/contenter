@@ -37,6 +37,10 @@ class User_Form_Login extends Zend_Form
             ->setIgnore(true)
             ;
         $this->addElement($element);
+        $this->loadDefaultDecorators();
+        $this->addDecorator('Errors');
+        
+        $this->getDecorator('Errors')->setOption('placement', Zend_Form_Decorator_Abstract::PREPEND);      
     }
     
 }
