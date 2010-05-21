@@ -72,6 +72,18 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
     
     /**
+    * Add zend filters in filter path (zend doesn't make it by default)
+    * 
+    */
+    protected function _initZendFilters() 
+    {
+        $this->bootstrap('view');
+        $view = $this->getResource('view');
+        
+        $view->addFilterPath('Zend/Filter', 'Zend_Filter');
+    }      
+    
+    /**
     * Register finalview action helpers
     * 
     */
