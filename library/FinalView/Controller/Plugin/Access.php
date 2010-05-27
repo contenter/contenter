@@ -63,13 +63,11 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
     
     protected function _notFoundHandler()
     {
-        dump('404');
-        exit;
+        Zend_Controller_Action_HelperBroker::getStaticHelper('Error')->abort();
     }
     
     protected function _forbiddenHandler()
     {
-        dump('403');
-        exit;    
+        Zend_Controller_Action_HelperBroker::getStaticHelper('Error')->deny();
     }
 }
