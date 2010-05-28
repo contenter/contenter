@@ -3,24 +3,29 @@
 class FinalView_Controller_Action_Helper_Error
     extends Zend_Controller_Action_Helper_Abstract
 {
-    const ABORT_MESSAGE = 'ABORT_MESSAGE';
-    const DENY_MESSAGE = 'DENY_MESSAGE';
+    const PAGE_NOT_FOUND_MESSAGE = 'PAGE_NOT_FOUND_MESSAGE';
+    const PAGE_FORBIDDEN_MESSAGE = 'PAGE_FORBIDDEN_MESSAGE';
     
-    public function abort($message = null)
+    public function notFound($message = null)
     {
         if (is_null($message)) {
-        	$message = __(self::ABORT_MESSAGE);
+        	$message = __(self::PAGE_NOT_FOUND_MESSAGE);
         }
         
-        throw new FinalView_Exception($message, 404);
+        $e = new FinalView_Application_Exception($message, 404);
+        throw $e;
+        
+        return $e;
     }
     
-    public function deny($message = null)
+    public function forbidden($message = null)
     {
         if (is_null($message)) {
-        	$message = __(self::DENY_MESSAGE);
+        	$message = __(self::PAGE_FORBIDDEN_MESSAGE);
         }
+        $e = new FinalView_Application_Exception($message, 403);
+        throw $e;
         
-        throw new FinalView_Exception($message, 403);
+        return $e;
     }    
 }
