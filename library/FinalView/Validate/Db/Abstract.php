@@ -29,19 +29,45 @@ abstract class FinalView_Validate_Db_Abstract extends Zend_Validate_Abstract
     /**
      * @var string
      */    
-    protected $_selector = array(); 
+    protected $_selector = '';
+    
+    protected $_selectors = array();
      
-    public function __construct($model, $selector)    
+    public function __construct($model, $selector, $selectors = array())    
     {
         $this->_model   = (string) $model;    
-        $this->_selector   = (string) $selector;   
+        $this->_selector   = (string) $selector;
+        
+        $this->_selectors = $selectors;
     }
      
+    public function setSelectors(array $selectors = array())
+    {
+        $this->_selectors = $selectors;
+    } 
+    
+    public function addSelector($selector, $value)
+    {
+        $this->_selectors[$selector] = $value;
+    }
+    
+    public function removeSelector($selector)
+    {
+        unset($this->_selectors[$selector]);
+    }
+    
+    public function getSelectorValue($selector)
+    {
+        return array_key_exists($selector, $this->_selectors) ? $this->_selectors[$selector] : null;
+    }
     
     protected function _getRecordsCount($value)
     {
-        return Doctrine::getTable($this->_model)->countByParams(array(
-            $this->_selector => $value
-        ));
+        if (empty($this->_model) || empty($this->_selector)) {
+        	trigger_error('Model and selector must be defined'); 
+        }
+        
+        $selectors = $this->_selectors + array($this->_selector => $value);
+        return Doctrine::getTable($this->_model)->countByParams($selectors);
     }	
 }

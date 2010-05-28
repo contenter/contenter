@@ -28,56 +28,22 @@ class ErrorController extends FinalView_Controller_Action
         switch ($errors->type) { 
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-
-                // 404 error -- controller or action not found
-                /*$this->getResponse()->setHttpResponseCode(404);
-                $this->view->message = 'Page not found';*/
-                $this->abortAction($errors->exception->getMessage());
-                break;
-            default:
-                // application error 
-                //$this->getResponse()->setHttpResponseCode(500);
-                //$this->view->message = 'Application error';
-                $this->internalErrorAction($errors->exception->getMessage());
-                break;
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
+                $this->getResponse()->setHttpResponseCode(404);
+                $this->view->message = $errors->exception->getMessage();
+            break;
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER:
+                $this->getResponse()->setHttpResponseCode($errors->exception->getCode());
+                $this->view->message = $errors->exception->getMessage();
+            break;
+            default:                 
+                $this->getResponse()->setHttpResponseCode(500);
+                $this->view->message = 'Application error';
+            break;
         }
 
-        /*$this->view->exception = $errors->exception;
-        $this->view->request   = $errors->request;*/
-    }
-    
-    /**
-    * 404
-    * 
-    * @param string $message
-    */
-    public function abortAction($message) 
-    {
-        $this->getResponse()->setHttpResponseCode(404);
-        $this->view->message = $message;
-    }
-    
-    /**
-    * 403
-    * 
-    * @param string $message
-    */
-    public function denyAction($message) 
-    {
-        $this->getResponse()->setHttpResponseCode(403);
-        $this->view->message = $message;
-    }
-    
-    /**
-    * 500
-    * 
-    * @param string $message
-    */
-    public function internalErrorAction($message) 
-    {
-        $this->getResponse()->setHttpResponseCode(500);
-        $this->view->message = $message;
-    }
-    
+        $this->view->exception = $errors->exception;
+        $this->view->request   = $errors->request;
+    }    
 }
 
