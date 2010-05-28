@@ -62,14 +62,40 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
     }
     
     protected function _notFoundHandler()
-    {
-        dump('404');
-        exit;
+    {        
+        $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
+        
+        $error->exception = new FinalView_Application_Exception(
+            __(FinalView_Controller_Action_Helper_Error::PAGE_NOT_FOUND_MESSAGE), 
+            404
+        );
+        $error->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER;
+        $error->request = clone $this->_request;
+        
+        $this->_request
+            ->setModuleName('default')
+            ->setControllerName('error')
+            ->setActionName('error')
+            ->setParam('error_handler', $error)
+            ->setDispatched(true);
     }
     
     protected function _forbiddenHandler()
     {
-        dump('403');
-        exit;    
+        $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
+        
+        $error->exception = new FinalView_Application_Exception(
+            __(FinalView_Controller_Action_Helper_Error::PAGE_FORBIDDEN_MESSAGE), 
+            403
+        );
+        $error->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER;
+        $error->request = clone $this->_request;
+        
+        $this->_request
+            ->setModuleName('default')
+            ->setControllerName('error')
+            ->setActionName('error')
+            ->setParam('error_handler', $error)
+            ->setDispatched(true);
     }
 }
