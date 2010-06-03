@@ -4,13 +4,6 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
    
     protected $_confirmations;
     
-    public function setTableDefinition()
-    {        
-        $listener = new FinalView_Doctrine_Listener_Confirmable();
-        
-        $this->addListener($listener);
-    }
-    
     public function createConfirmation($type)
     {
         if (!$this->isDefinedType($type)) {
