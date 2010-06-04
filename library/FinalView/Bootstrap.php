@@ -101,7 +101,8 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initTranslator()
     {
-        $translator = new Zend_Translate('Gettext', APPLICATION_PATH . '/lang');
+		$locale = Zend_Registry::isRegistered('locale') ? Zend_Registry::get('locale') : null;
+        $translator = new Zend_Translate('Gettext', APPLICATION_PATH . '/lang', $locale);
         Zend_Registry::set('Zend_Translate', $translator);
         
         // init view helper "Translate" to get static instance for short alias __()
