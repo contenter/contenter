@@ -16,8 +16,7 @@ abstract class Utils
         if ((bool)$system) {
             $dir = PUBLIC_PATH . DIRECTORY_SEPARATOR . $dir;
 			if (!is_dir($dir)) {
-				mkdir($dir);
-				chmod($dir, 0777);
+				mkdir($dir, 0777, true);
 			}
         }
 

@@ -70,4 +70,4 @@ abstract class FinalView_Validate_Db_Abstract extends Zend_Validate_Abstract
         $selectors = $this->_selectors + array($this->_selector => $value);
         return Doctrine::getTable($this->_model)->countByParams($selectors);
     }	
-} 
+}
