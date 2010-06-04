@@ -82,25 +82,33 @@ class FinalView_Doctrine_Table extends Doctrine_Table
             }
             
             $this->$method($value);
-        }
+        }        
         
         return $this->_getQuery();      
     }
     
-    protected function innerJoin($relation, $params)
+    protected function innerJoin($relation, $params, $on = '')
     {    
         $tableObject = $this->getRelation($relation)->getTable();
         
-        $this->_getQuery()->innerJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() );
+        if (!empty($on)) {
+        	$on = ' ON (' . $on . ')';
+        }
+        
+        $this->_getQuery()->innerJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on);
       
         return $tableObject->build(&$this->_query, $params);
     }
     
-    protected function LeftJoin($relation, $params)
+    protected function LeftJoin($relation, $params, $on = '')
     {    
         $tableObject = $this->getRelation($relation)->getTable();
         
-        $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() );
+        if (!empty($on)) {
+        	$on = ' ON (' . $on . ')';
+        }
+
+        $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on );
     
         return $tableObject->build(&$this->_query, $params);
     }
