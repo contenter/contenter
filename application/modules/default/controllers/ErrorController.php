@@ -33,8 +33,15 @@ class ErrorController extends FinalView_Controller_Action
                 $this->view->message = $errors->exception->getMessage();
             break;
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER:
-                $error_code = $errors->exception->getCode() ? $errors->exception->getCode() : 500;
-                $this->getResponse()->setHttpResponseCode($error_code);
+                switch ($errors->exception->getCode()) {
+                    case 403:
+                    case 404:
+                        $this->getResponse()->setHttpResponseCode($errors->exception->getCode());                                                            	   
+                	break;
+                	default:
+                        $this->getResponse()->setHttpResponseCode(500);                  	
+                	break;
+                }
                 $this->view->message = $errors->exception->getMessage();
             break;
             default:                 
