@@ -23,6 +23,8 @@ class ErrorController extends FinalView_Controller_Action
 
     public function errorAction()
     {
+        Zend_Layout::getMvcInstance()->disableLayout();
+        
         $errors = $this->_getParam('error_handler');
 
         switch ($errors->type) { 
