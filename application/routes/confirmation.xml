@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configdata>
     <routes>
-        <ConfirmationReplyAccept>
+        <ConfirmationIndexAccept>
             <type>Zend_Controller_Router_Route</type>
             <route>confirmation/:hash/accept.html</route>
             <defaults>
@@ -10,8 +10,8 @@
                 <action>accept</action>
                 <reply>ACTION_ACCEPT</reply>
             </defaults>
-        </ConfirmationReplyAccept>
-        <ConfirmationReplyDecline>
+        </ConfirmationIndexAccept>
+        <ConfirmationIndexDecline>
             <type>Zend_Controller_Router_Route</type>
             <route>confirmation/:hash/decline.html</route>
             <defaults>
@@ -20,6 +20,6 @@
                 <action>decline</action>
                 <reply>ACTION_DECLINE</reply>
             </defaults>
-        </ConfirmationReplyDecline>             
+        </ConfirmationIndexDecline>             
     </routes>
 </configdata>
