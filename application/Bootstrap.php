@@ -52,4 +52,38 @@ class Bootstrap extends FinalView_Bootstrap
         $front->registerPlugin(new Application_Plugin_Access);       
     }    
     
+    /**
+     * Initializes ZFDebug console if application environment isn't production
+     */
+    protected function _initZFDebug()
+    {
+        if ($this->getOption('zf_debug')) {
+            // Setup autoloader with namespace
+            $autoloader = Zend_Loader_Autoloader::getInstance();
+            $autoloader->registerNamespace('ZFDebug');
+
+            // Ensure the front controller is initialized
+            $this->bootstrap('FrontController');
+
+            // Retrieve the front controller from the bootstrap registry
+            $front = $this->getResource('FrontController');
+
+            $options = array(
+                'plugins' => array(
+                    'Variables',
+                    'FinalView_Controller_Plugin_Debug_Plugin_Doctrine',
+                    'File' => array('base_path' => APPLICATION_PATH . '/../'),
+                    'Memory',
+                    'Time',
+                    'Registry',
+                    'Exception',
+                    'Html',
+                ),
+                'jquery_path' => '/scripts/jquery.js'
+            );
+
+            $debug = new ZFDebug_Controller_Plugin_Debug($options);
+            $front->registerPlugin($debug);
+        }
+    }
 }
