@@ -1,2 +1,3 @@
 [development]
 ;doctrine.connection_string = "mysql://root:@localhost/user_module"
+;zf_debug = 1
