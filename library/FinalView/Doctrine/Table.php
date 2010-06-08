@@ -78,7 +78,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
             
             $method = $filter->filter($param).'Selector';            
             if (!method_exists($this, $method)) {
-            	throw new FinalView_Doctrine_Table_Exception('undefined condition in findByParams');
+            	throw new FinalView_Doctrine_Table_Exception('there is no selector' . $param . 'in model ' . get_class($this) );
             }
             
             $this->$method($value);
