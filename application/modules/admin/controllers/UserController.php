@@ -13,7 +13,7 @@ class Admin_UserController extends FinalView_Controller_Action
                 break;
             }
             
-            $this->_helper->redirector->gotoUrl($this->_request_uri);
+            $this->_helper->redirector->gotoUrl($this->getRequest()->getRequestUri());
         }
         
         $this->view->grid = new Admin_Grid_Users();
