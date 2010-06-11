@@ -4,7 +4,11 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     private $_queryParams;
     private $_query;
     
+    private $_joinedTables = array();    
     
+    /**
+     * @return Doctrine_Query
+     */
     final public function _getQuery()
     {
         if ($this->_query === null) {
@@ -14,9 +18,12 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         return $this->_query;
     }
     
-    private function _resetQuery()
+    public function resetQuery()
     {
         $this->_query = null;
+        foreach ($this->_joinedTables as $table) {
+        	$table->resetQuery();
+        }    
     } 
     
     final public function findByParams($params = array(), $hydrationMode = null)
@@ -25,7 +32,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
 
         $result = $this->_getQuery()->execute(array(), $hydrationMode);
         
-        $this->_resetQuery();
+        $this->resetQuery();
         
         return $result;
     }
@@ -36,7 +43,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
 
         $result = $this->_getQuery()->limit(1)->fetchOne(array(), $hydrationMode);
         
-        $this->_resetQuery();
+        $this->resetQuery();
         
         return $result;
     }
@@ -52,7 +59,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
             $perPage
         );
         
-        $this->_resetQuery();
+        $this->resetQuery();
         
         return $pager;
     }
@@ -63,7 +70,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         
         $result = $this->_getQuery()->count(array());
         
-        $this->_resetQuery();
+        $this->resetQuery();
         
         return $result;        
     }    
@@ -71,7 +78,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     public function build($query, $params)
     {
         $this->_queryParams = $params;
-        $this->_query = &$query;
+        $this->_query = $query;
          
         $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
         foreach ($params as $param=>$value) {
@@ -96,8 +103,9 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         }
         
         $this->_getQuery()->innerJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on);
-      
-        return $tableObject->build(&$this->_query, $params);
+        $this->_joinedTables[] = $tableObject;
+              
+        return $tableObject->build($this->_query, $params);
     }
     
     protected function LeftJoin($relation, $params, $on = '')
@@ -109,8 +117,17 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         }
 
         $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on );
-    
-        return $tableObject->build(&$this->_query, $params);
+        $this->_joinedTables[] = $tableObject;
+            
+        return $tableObject->build($this->_query, $params);
+    }
+
+    protected function limitSelector($params)
+    {
+        $this->_getQuery()
+            ->limit($params['per_page'])
+            ->offset($params['per_page']*$params['page'])
+            ;
     }
     
     protected function orderBySelector($sort)
