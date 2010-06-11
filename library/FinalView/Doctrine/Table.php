@@ -4,7 +4,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     private $_queryParams;
     private $_query;
     
-    private $_joinedTables = array();    
+    private $_joinedTables = array();
     
     /**
      * @return Doctrine_Query
@@ -72,9 +72,35 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         
         $this->resetQuery();
         
-        return $result;        
+        return $result;
     }    
     
+    final public function updateByParams($params = array(), $values = array())
+    {
+        foreach ( $values as $key=>$value ) {
+            $this->_getQuery()->set($key, $value);
+        }
+
+        $this->build($this->_getQuery()->update(), $params);
+
+        $result = $this->_getQuery()->execute(array());
+
+        $this->resetQuery();
+
+        return $result;
+    }
+
+    final public function deleteByParams($params = array())
+    {
+        $this->build($this->_getQuery()->delete(), $params);
+
+        $result = $this->_getQuery()->execute(array());
+
+        $this->resetQuery();
+
+        return $result;
+    }
+
     public function build($query, $params)
     {
         $this->_queryParams = $params;
@@ -83,9 +109,9 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
         foreach ($params as $param=>$value) {
             
-            $method = $filter->filter($param).'Selector';            
+            $method = $filter->filter($param).'Selector';
             if (!method_exists($this, $method)) {
-            	throw new FinalView_Doctrine_Table_Exception('there is no selector' . $param . 'in model ' . get_class($this) );
+                throw new FinalView_Doctrine_Table_Exception('there is no selector ' . $param . ' in model ' . get_class($this) );
             }
             
             $this->$method($value);
@@ -138,5 +164,5 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     protected function fieldsSelector($fields)
     {
         $this->_getQuery()->select( implode(', ', $fields) );
-    }            
+    }
 }
