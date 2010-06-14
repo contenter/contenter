@@ -4,6 +4,7 @@ class FinalView_Grid_Renderer extends Zend_View
     private $_scriptToRender;
     
     private $_namespace;
+    private $_view;
     
     public $grid;
     
@@ -12,13 +13,12 @@ class FinalView_Grid_Renderer extends Zend_View
     public function __construct(FinalView_Grid $grid)
     {
         $this->grid = $grid;
-
+        $this->_view = Zend_Layout::getMvcInstance()->getView();
         $this->addScriptPath(dirname(__FILE__).'/scripts');
         
         foreach ($this->getPlugins() as $plugin) {
         	$this->addScriptPath($plugin->getScriptsPath());
-        }
-        $this->addHelperPath('FinalView/View/Helper', 'FinalView_View_Helper');
+        }        
     }
     
     public function getPlugins()
@@ -76,5 +76,10 @@ class FinalView_Grid_Renderer extends Zend_View
     public function renderScript()
     {
         return parent::render($this->getScript() );
+    }
+    
+    public function __call($name, $args)
+    {
+        return call_user_func_array(array($this->_view, $name), $args);
     }    
 }
