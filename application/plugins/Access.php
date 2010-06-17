@@ -28,6 +28,16 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
     
     protected function _redirectToLogin()
     {
-        Zend_Controller_Action_HelperBroker::getStaticHelper('Redirector')->gotoRoute(array(), 'UserAuthLogin');
+        $option = isset($_SERVER['REQUEST_URI']) 
+            ? array('back_url' => $_SERVER['REQUEST_URI'])
+            : array();
+        
+        $urlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('Url');
+        $addToUrlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('AddToUrl');
+        
+        $url = $addToUrlHelper->addToUrl($option, $urlHelper->url(array(), 'UserAuthLogin'));
+        
+        Zend_Controller_Action_HelperBroker::getStaticHelper('Redirector')->gotoUrl($url);
+        
     }
 }

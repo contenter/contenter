@@ -2,7 +2,35 @@
 
 class User_Form_Login extends Zend_Form 
 {
+    public $backUrl;
     
+    public function setBackUrl($val) 
+    {
+        $this->backUrl = $val;
+    }
+    
+    public function getBackUrl($val) 
+    {
+        
+        return $this->backUrl;
+    }
+    
+    /**
+     * Set form action
+     *
+     * @param  string $action
+     * @return Zend_Form
+     */
+    public function setAction($action) 
+    {
+        if ($this->backUrl) {
+            $addToUrlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('AddToUrl');
+            $action = $addToUrlHelper->addToUrl(array('back_url' => $this->backUrl), $action);
+        }
+        
+        parent::setAction($action);
+    }
+        
     /**
      * Initialize form (used by extending classes)
      * 
