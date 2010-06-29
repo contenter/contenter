@@ -99,7 +99,9 @@ class User_AuthController extends FinalView_Controller_Action
             if ($this->getForgotPswdForm()->isValid($this->getRequest()->getPost())) {
                 
                 $user = $this->getForgotPswdAccount();
-                $user->createConfirmation('forgot-password');                
+                if (false == $user->getConfirmation('forgot-password')) {
+                      $user->createConfirmation('forgot-password');
+                }                
                 $this->_sendForgotPasswordLetter($user);
                 
                 $this->_helper->redirector->gotoRoute(array(
