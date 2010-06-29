@@ -5,8 +5,7 @@
 * 
 */
 class User_AuthController extends FinalView_Controller_Action
-{     
-    
+{
     private $_loginForm;
     
     public $storage_params = array(
@@ -19,8 +18,11 @@ class User_AuthController extends FinalView_Controller_Action
     */
     public function loginAction() 
     {
-        if ($this->_login() == Zend_Auth_Result::SUCCESS){
-            $this->_helper->redirector->gotoRoute(array(), 'UserIndexIndex');            
+        if ($this->_login() == Zend_Auth_Result::SUCCESS) {
+            $url = $this->getRequest()
+                ->getParam('back_url', $this->view->url(array(), 'UserIndexIndex'));
+            
+            $this->_redirect($url);
         }
     }
     
@@ -37,7 +39,7 @@ class User_AuthController extends FinalView_Controller_Action
         if ($this->getRequest()->isPost()) {
             if ($this->getLoginForm()->isValid($this->getRequest()->getPost())) {
                                 
-                $result = Zend_Auth::getInstance()
+                $result = FinalView_Auth::getInstance()
                     ->authenticate(new User_Auth_Adapter(
                         $this->getLoginForm()->getValues(), 
                         $this->getLoginAccount(), 
@@ -65,9 +67,11 @@ class User_AuthController extends FinalView_Controller_Action
     protected function getLoginForm()
     {
         if (is_null($this->_loginForm)) {
-        	$this->_loginForm = new User_Form_Login;
+            $this->_loginForm = new User_Form_Login(
+                array('backUrl' => $this->getRequest()->getParam('back_url')));
+            $this->_loginForm->setAction($this->view->url(array(), 'UserAuthLogin'));
         }
-        return $this->_loginForm;        
+        return $this->_loginForm;
     } 
     
     /**
@@ -76,7 +80,7 @@ class User_AuthController extends FinalView_Controller_Action
     */
     public function logoutAction() 
     {
-        Zend_Auth::getInstance()->clearIdentity();
+        FinalView_Auth::getInstance()->clearIdentity();
         
         $this->_helper->redirector->gotoRoute(array(), 'UserAuthLogin');
     }
