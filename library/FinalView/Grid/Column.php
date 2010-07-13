@@ -13,9 +13,13 @@ class FinalView_Grid_Column extends FinalView_Grid_Entity_Abstract
         $this->setTitle();                    
     }
     
-    public function setTitle()
-    {
-        $this->_title = new FinalView_Grid_Column_Title_Standard($this);
+    public function setTitle(FinalView_Grid_Column_Title_Standard $title = null)
+    {        
+        if ($title === null) {
+            $this->_title = new FinalView_Grid_Column_Title_Standard($this);	
+        }else{
+            $this->_title = $title;
+        }        
     }
     
     public function getTitle()
