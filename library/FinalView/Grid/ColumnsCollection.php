@@ -250,13 +250,13 @@ class FinalView_Grid_ColumnsCollection implements Iterator
                 $this->moveColumnBefore($column, $columnName);
             break;
             case FinalView_Grid_ColumnsCollection::APPEND_AFTER_COLUMN:
-                if (!is_null($relatedColumn) && $this->getColumn($relatedColumn) ) {
-                    $this->moveColumnAfter($column, $relatedColumn);	
+                if (!is_null($relationColumn) && $this->getColumn($relationColumn) ) {
+                    $this->moveColumnAfter($column, $relationColumn);	
                 }                
             break;
             case FinalView_Grid_ColumnsCollection::APPEND_BEFORE_COLUMN:
-                if (!is_null($relatedColumn) && $this->getColumn($relatedColumn) ) {
-                    $this->moveColumnBefore($column, $relatedColumn);	
+                if (!is_null($relationColumn) && $this->getColumn($relationColumn) ) {
+                    $this->moveColumnBefore($column, $relationColumn);	
                 } 
             break;                                    
         }

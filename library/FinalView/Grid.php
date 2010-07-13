@@ -95,7 +95,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         }else{
             $row = reset($iterator);
             if (!$row) {
-                throw new FinalView_Grid_Table_Exception('cannot define columns from iterator');	
+                throw new FinalView_Grid_Exception('cannot define columns from iterator');	
             }            
             $columns = array_keys($row);            
         }     
