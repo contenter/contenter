@@ -17,7 +17,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         $failedRule = $this->getResource()->getAccessRule();
         
         if ($failedRule->isFailedRule('admin_logged_in')) {
-        	$this->_redirectToLogin();
+        	$this->_redirectToAdminLogin();
         }
         
         $this->_notFoundHandler();
@@ -28,7 +28,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         $failedRule = $this->getResource()->getAccessRule();
         
         if ($failedRule->isFailedRule('admin_logged_in')) {
-        	$this->_redirectToLogin();
+        	$this->_redirectToAdminLogin();
         }
         
         $this->_forbiddenHandler();

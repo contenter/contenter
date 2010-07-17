@@ -8,4 +8,4 @@ Request:
   
   admin-cms-index: {rule: admin_logged_in, handler: not_detected_admin}
   admin-cms-add-page: {rule: admin_logged_in, handler: not_detected_admin}
-  admin-cms-edit-page: {rule: allowed_edit_cms_page, handler: not_detected_admin} 
+  admin-cms-edit-page: {rule: allowed_edit_cms_page, handler: not_found_if_admin_authorized} 
