@@ -14,7 +14,7 @@
 
 <div id="wrapper">
     <div id="header">
-        <div id="view_site"><a href="/">View Site</a></a></div>
+        <div id="view_site"><a href="/">View Site</a></div>
         <? if ($this->isAllowed('admin-auth-logout') ) : ?>
         <div id="logout"><a href="<?=$this->url(array(), 'AdminAuthLogout')?>">Log out</a></div>
         <? endif; ?>
