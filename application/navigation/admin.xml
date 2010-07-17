@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Admin navigation -->
+<navigation>
+    <pages>
+        <page1>
+            <route>AdminCmsIndex</route>
+            <label>Cms</label>            
+            <module>admin</module>
+            <controller>cms</controller>
+            <action>index</action>
+        </page1>
+    </pages>
+</navigation>

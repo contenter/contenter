@@ -13,5 +13,12 @@ class Application_Rules_Admin extends FinalView_Access_Rules_Abstract
         }
         
         return false;
+    }
+    
+    public function cmsPageExistsRule()
+    {        
+        return (bool)Doctrine::getTable('CmsPage')->countByParams(array(
+            'page_name' =>  $this->_params['page_name']
+        ));
     }   
 }

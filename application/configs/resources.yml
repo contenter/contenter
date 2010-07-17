@@ -4,4 +4,8 @@ Request:
   
   admin-index-index: {rule: admin_logged_in, handler: not_detected_admin}
   admin-auth-login: {rule: !admin_logged_in, handler: forbidden}
-  admin-auth-logout: {rule: admin_logged_in, handler: forbidden} 
+  admin-auth-logout: {rule: admin_logged_in, handler: forbidden}
+  
+  admin-cms-index: {rule: admin_logged_in, handler: not_detected_admin}
+  admin-cms-add-page: {rule: admin_logged_in, handler: not_detected_admin}
+  admin-cms-edit-page: {rule: allowed_edit_cms_page, handler: not_detected_admin} 

@@ -9,4 +9,9 @@ User:
 Admin:
   admin_logged_in:
     type: AND
-    dependences: [logged_in] 
+    dependences: [logged_in]
+  allowed_edit_cms_page:
+    type: AND
+    dependences: [admin_logged_in, cms_page_exists]
+  cms_page_exists:
+    type: FUNC
