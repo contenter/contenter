@@ -12,7 +12,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         Zend_Controller_Action_HelperBroker::getStaticHelper('Redirector')->gotoRoute(array(), 'AdminAuthLogin' );
     }
         
-    protected function _notFoundIfAdminAuthorized()
+    protected function _notFoundIfAdminAuthorizedHandler()
     {
         $failedRule = $this->getResource()->getAccessRule();
         
@@ -23,7 +23,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         $this->_notFoundHandler();
     }
 
-    protected function _forbiddenIfAdminAuthorized()
+    protected function _forbiddenIfAdminAuthorizedHandler()
     {
         $failedRule = $this->getResource()->getAccessRule();
         
