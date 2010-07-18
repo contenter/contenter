@@ -130,12 +130,12 @@ class FinalView_Form_Wizard
 	 * Save current step form data and redirect to the next one
 	 * 
 	 */
-	public function save(Zend_Form $form)
+	public function save(array $data)
 	{
 		$this->_session_helper->set(
 			$this->_session_key,
 			$this->_getCurrentStep(), 
-			$form->getValues()
+			$data
 			);
 
 		if ($step = $this->_getNextStep()) {
