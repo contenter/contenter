@@ -17,7 +17,12 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
         }else{
             $this->setResource($resource);        
             
-            $requestAllowed = $resource->getAccessRule()->check($request->getParams());
+            try{
+                $requestAllowed = $resource->getAccessRule()->check($request->getParams());
+            }catch(Exception $e){
+                $this->_throwException($e);
+                return;
+            }            
 
             if (!$requestAllowed) {            
                 if ($handler = $resource->getResource('handler')) {
@@ -63,39 +68,33 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
     
     protected function _notFoundHandler()
     {        
-        $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
-        
-        $error->exception = new FinalView_Application_Exception(
+        $this->_throwException(new FinalView_Application_Exception(
             __(FinalView_Controller_Action_Helper_Error::PAGE_NOT_FOUND_MESSAGE), 
             404
-        );
-        $error->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER;
-        $error->request = clone $this->_request;
-        
-        $this->_request
-            ->setModuleName('default')
-            ->setControllerName('error')
-            ->setActionName('error')
-            ->setParam('error_handler', $error)
-            ->setDispatched(true);
+        ));
     }
     
     protected function _forbiddenHandler()
     {
-        $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
-        
-        $error->exception = new FinalView_Application_Exception(
+        $this->_throwException(new FinalView_Application_Exception(
             __(FinalView_Controller_Action_Helper_Error::PAGE_FORBIDDEN_MESSAGE), 
             403
-        );
+        ));
+    }
+    
+    protected function _throwException(Exception $e)
+    {
+        $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
+        
+        $error->exception = $e;
         $error->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER;
         $error->request = clone $this->_request;
-        
+
         $this->_request
             ->setModuleName('default')
             ->setControllerName('error')
             ->setActionName('error')
             ->setParam('error_handler', $error)
-            ->setDispatched(true);
+            ->setDispatched(true);    
     }
 }
