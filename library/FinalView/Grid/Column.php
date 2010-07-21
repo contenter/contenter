@@ -3,6 +3,7 @@ class FinalView_Grid_Column extends FinalView_Grid_Entity_Abstract
 {
            
     protected $_title;
+    protected $_filter;
     
     public function __construct($name, $script)
     {        
@@ -25,5 +26,15 @@ class FinalView_Grid_Column extends FinalView_Grid_Entity_Abstract
     public function getTitle()
     {
         return $this->_title;
+    }
+    
+    public function setFilter($filter)
+    {
+        $this->_filter = $filter;
+    }
+    
+    public function getFilter()
+    {
+        return $this->_filter;
     }    
 }
