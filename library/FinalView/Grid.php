@@ -156,7 +156,9 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
             $entity->handler($inputParams, $this->getRenderer());
         }else{       
             $this->getRenderer()->assign($inputParams);
-        }        
+        }
+        
+        $this->getRenderer()->entity = $entity;        
 
         if ($this->getRenderer()->getScript() === null) {
         	if (is_object($entity)) {
