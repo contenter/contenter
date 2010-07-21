@@ -10,6 +10,9 @@ class Admin_Grid_CmsPages extends Admin_Grid_Base
         $router = Zend_Controller_Front::getInstance()->getRouter();
         
         $this->getColumns()->removeColumn('ids');
+        $this->getColumns()->removeColumn('id');
+        
+        $this->getColumns()->contents->setFilter('StripTags|substr:0:50');
         
         $access = Zend_Controller_Action_HelperBroker::getStaticHelper('isAllowed');
         
