@@ -34,8 +34,17 @@ class Admin_CmsController extends FinalView_Controller_Action
         if ($page = $this->_savePage()) {
             $page->save();
             
-            $this->_helper->redirector->gotoRoute(array(), 'AdminCmsIndex' );            
+            $this->_helper->redirector->gotoRoute(array(), 'AdminCmsIndex' );
         }
+    }
+    
+    public function deletePageAction()
+    {
+        $page = Doctrine::getTable('CmsPage')->findOneByParams(array(
+            'page_name' =>  $this->_getParam('page_name')
+        ))->delete();
+        
+        $this->_helper->redirector->gotoRoute(array(), 'AdminCmsIndex' );
     }
     
     private function _getPageForm()

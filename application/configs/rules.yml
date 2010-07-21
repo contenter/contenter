@@ -13,5 +13,22 @@ Admin:
   allowed_edit_cms_page:
     type: AND
     dependences: [admin_logged_in, cms_page_exists]
+  allowed_add_cms_page:
+    type: AND
+    dependences: [admin_logged_in, add_page_allowed]
+  allowed_delete_cms_page:
+    type: AND
+    dependences: [admin_logged_in, delete_page_allowed, cms_page_exists]  
   cms_page_exists:
     type: FUNC
+  add_page_allowed:
+    type: FUNC
+  edit_page_allowed:
+    type: FUNC
+  delete_page_allowed:
+    type: FUNC
+  change_page_name_allowed:
+    type: FUNC
+  change_page_route_allowed:
+    type: FUNC
+    

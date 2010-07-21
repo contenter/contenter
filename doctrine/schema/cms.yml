@@ -8,6 +8,9 @@ CmsPage:
       type: string(128)
       unique: true
       notnull: true
+    route:
+      type: string(128)
+      unique: true
     title:
       type: string(256)
       notnull: true

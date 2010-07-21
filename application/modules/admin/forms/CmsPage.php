@@ -10,14 +10,27 @@ class Admin_Form_CmsPage extends Zend_Form
      */
     public function init()
     {
-        $element = new Zend_Form_Element_Text('name');
-        $element
-            ->setLabel('Name')
-            ->setRequired()
-            ->addFilters(array('StringTrim'))
-            ->addValidator('Alpha')
-            ;
-        $this->addElement($element);
+        $access = Zend_Controller_Action_HelperBroker::getStaticHelper('isAllowed');
+        
+        if ($access->isAllowed('change-cms-page-name', array(), 'Cms') ) {
+            $element = new Zend_Form_Element_Text('name');
+            $element
+                ->setLabel('Name')
+                ->setRequired()
+                ->addFilters(array('StringTrim'))
+                ->addValidator('Alpha')
+                ;
+            $this->addElement($element);        	
+        }
+        
+        if ($access->isAllowed('change-cms-page-route', array(), 'Cms') ) {        
+            $element = new Zend_Form_Element_Text('route');
+            $element
+                ->setLabel('Route')
+                ->addFilters(array('StringTrim'))
+                ;
+            $this->addElement($element);
+        }
         
         $element = new Zend_Form_Element_Text('title');
         $element
