@@ -11,6 +11,7 @@ CmsPage:
     route:
       type: string(128)
       unique: true
+      default: null
     title:
       type: string(256)
       notnull: true

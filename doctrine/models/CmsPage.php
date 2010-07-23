@@ -12,5 +12,14 @@
  */
 class CmsPage extends BaseCmsPage
 {
-
+    
+    public function setUp()
+    {
+        $this->hasMutator('route', 'emptyStringToNull');
+    }
+    
+    public function emptyStringToNull($route)
+    {
+        $this->_set('route', empty($route) ? null : $route);
+    }
 }
