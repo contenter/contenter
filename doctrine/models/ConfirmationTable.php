@@ -39,11 +39,11 @@ class ConfirmationTable extends FinalView_Doctrine_Table
             if (0 == $query->fetchOne()->num) {
                 return $hash;
             }
-        } while (true);        
+        } while (true);
     }
     
     protected function typeSelector($type)
     {
-        $this->_getQuery()->addWhere($this->getTableName().'.confirmation_type = ?', $type);    
+        $this->_getQuery()->addWhere($this->getTableName().'.confirmation_type = ?', $type);
     }
 }
