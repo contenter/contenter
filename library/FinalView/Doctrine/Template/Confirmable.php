@@ -17,8 +17,6 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
             $self->getIncremented(),
             $type
         )->save();
-        
-        $self->getConfirmation($type);
     }
     
     public function getConfirmation($type)
@@ -29,17 +27,13 @@ class FinalView_Doctrine_Template_Confirmable extends Doctrine_Template
         
         $self = $this->getInvoker();
         
-        if (!isset($this->_confirmations[$type])) {
-        	$this->_confirmations[$type] = Doctrine::getTable('Confirmation')->findOneByParams(array(
-                'entity' =>  array(
-                    'model' =>  $self->getTable()->getComponentName(),
-                    'id'    =>  $self->getIncremented(),
-                    'type'  =>  $type
-                )
-            ) );
-        }
-        
-        return $this->_confirmations[$type];
+        return Doctrine::getTable('Confirmation')->findOneByParams(array(
+            'entity' =>  array(
+                'model' =>  $self->getTable()->getComponentName(),
+                'id'    =>  $self->getIncremented(),
+                'type'  =>  $type
+            )
+        ));
     }
     
     public function isDefinedType($type)
