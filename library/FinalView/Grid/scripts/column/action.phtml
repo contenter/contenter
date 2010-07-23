@@ -1,1 +1,3 @@
-<a href="<?=$this->addToUrl($this->url_params, $this->url)?>"><?=$this->escape($this->label);?></a>
+<a href="<?=$this->addToUrl($this->url_params, $this->url)?>">
+    <?=$this->escape($this->modify($this->label, $this->entity->getFilter() ));?>
+</a>

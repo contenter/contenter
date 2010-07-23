@@ -1,0 +1,22 @@
+Pages:
+  -
+    type: FinalView_Navigation_Page_Cms
+    page_name: qwerty
+    label: Qwerty Page
+    Pages:
+      -
+        type: FinalView_Navigation_Page
+        route: AdminCmsEditPage
+        label: Edit Page
+      -
+        type: FinalView_Navigation_Page
+        route: AdminCmsDeletePage
+        label: Delete Page          
+  -
+    type: FinalView_Navigation_Page
+    route: AdminCmsAddPage
+    label: Add Page    
+  -
+    type: FinalView_Navigation_Page
+    route: AdminCmsIndex
+    label: Index Page
