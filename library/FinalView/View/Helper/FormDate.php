@@ -8,7 +8,7 @@ class FinalView_View_Helper_FormDate extends Zend_View_Helper_FormElement
     public function formDate ($name, $value = null, $attribs = null)
     {
         if($value) {
-            list($year, $month, $day) = split('-', $value);
+            list($year, $month, $day) = explode('-', $value);
         } else {
             $year = $month = $day = 0;
         }

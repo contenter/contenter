@@ -8,7 +8,7 @@ class FinalView_View_Helper_FormCcExpDate extends Zend_View_Helper_FormElement
     public function formCcExpDate($name, $value = null, $attribs = null)
     {
         $value 
-            ? list($month, $year) = split('-', $value) 
+            ? list($month, $year) = explode('-', $value)
             : $month = $year = 0;
         
         $separator = $this->_getSeparator($attribs);
