@@ -40,5 +40,18 @@ class FinalView_Acl extends Zend_Acl
         }
         
         return $this->_assertion;
-    }    
+    }
+    
+    public function isAllowed($role = null, $resource = null, $privilege = null)
+    {
+        if (!$resource instanceof FinalView_Acl_Resource) {
+        	throw new FinalView_Acl_Exception('resource must be an instance of FinalView_Acl_Resource');
+        }
+
+        if (!$this->has($resource) ) {
+            $this->addResource($resource);	
+        }        
+        
+        return parent::isAllowed($role, $resource, $privilege);
+    }        
 }
