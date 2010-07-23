@@ -3,6 +3,7 @@ class FinalView_Navigation_Page extends Zend_Navigation_Page_Mvc
 {   
     
     protected $_params = null;
+    protected $_activeForRoutes = array();
     
     public function isActive($recursive = false)
     {
@@ -10,6 +11,10 @@ class FinalView_Navigation_Page extends Zend_Navigation_Page_Mvc
             $front = Zend_Controller_Front::getInstance();
             
             $routerName = $front->getRouter()->getCurrentRouteName();
+            
+            if ($this->isActiveForRoute($routerName) ){
+                return true;
+            }
             
             if ($routerName != $this->getRoute()) {
             	return parent::isActive($recursive);
@@ -43,8 +48,7 @@ class FinalView_Navigation_Page extends Zend_Navigation_Page_Mvc
     public function getResource()
     {
         if (is_null($this->_resource)) {
-        	$this->attachAclResource();
-        	FinalView_Acl::getInstance()->addResource($this->_resource);
+        	$this->attachAclResource();        	
         }
         
         return parent::getResource();
@@ -56,5 +60,15 @@ class FinalView_Navigation_Page extends Zend_Navigation_Page_Mvc
         	$this->setParams($this->getParent()->getParams());
         }
         return (array)parent::getParams();
-    } 
+    }
+    
+    public function setActiveForRoutes($routes)
+    {
+        $this->_activeForRoutes = $routes;
+    }
+    
+    public function isActiveForRoute($route)
+    {
+        return in_array($route, $this->_activeForRoutes);
+    }
 }
