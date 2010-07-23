@@ -15,8 +15,8 @@ User:
       type: integer(10)
       notnull: true
     confirmed:
-      type: tinyint
-      default: 0,
+      type: integer(1)
+      default: 0
       notnull: true
     replied_at:
       type: timestamp
