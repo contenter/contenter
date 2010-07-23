@@ -10,6 +10,10 @@ class FinalView_Acl_Resource implements Zend_Acl_Resource_Interface
      */
     private $_resource_id;
     
+    private $_params = array();
+    
+    private $_resourceName = array();
+    
     /**
     * Sets the Resource identifier
     * 
@@ -17,9 +21,11 @@ class FinalView_Acl_Resource implements Zend_Acl_Resource_Interface
     * @param string $controller
     * @param string $action
     */
-    public function __construct($module, $controller, $action)
+    public function __construct($resource, array $params = array())
     {
-        $this->_resource_id = sprintf('%s:%s:%s', $module, $controller, $action);
+        $this->_params = $params;
+        $this->_resourceName = $resource;
+        $this->_resource_id = $resource.'_'.base64_encode(serialize($params));
     }
 
     /**
@@ -30,6 +36,16 @@ class FinalView_Acl_Resource implements Zend_Acl_Resource_Interface
     public function getResourceId()
     {
         return $this->_resource_id;
+    }
+    
+    public function getParams()
+    {
+        return $this->_params;
+    }
+    
+    public function getResourceName()
+    {
+        return $this->_resourceName;
     }
     
 }

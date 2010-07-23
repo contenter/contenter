@@ -200,6 +200,8 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         // assign all found navigations 
         iterate_resursive(APPLICATION_PATH . '/navigation/', 
             array(__CLASS__, 'assignNavigation'), $view);
+        
+        $view->navigation()->setAcl(FinalView_Acl::getInstance())->setUseAcl(false);        
     }
     
     /**
@@ -210,14 +212,25 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     static public function assignNavigation($file, $view) 
     {
-        if (pathinfo($file, PATHINFO_EXTENSION) != 'xml') return;
+        $ext = pathinfo($file, PATHINFO_EXTENSION); 
+        
+        if (!in_array($ext, array('xml', 'yml'))) return;
         if (!isset($view->navigation)) {
             $view->navigation = array();
         }
         
-        $navigation = new Zend_Config_Xml($file);
-        $view->navigation[pathinfo($file, PATHINFO_FILENAME)] = 
-            new Zend_Navigation($navigation->pages->toArray());
+        switch ($ext) {
+            case 'xml':
+                $navigation = new Zend_Config_Xml($file);
+                $view->navigation[pathinfo($file, PATHINFO_FILENAME)] = 
+                    new Zend_Navigation($navigation->pages->toArray());                
+            break;
+            case 'yml':
+                $navigation = Doctrine_Parser::load($file, 'yml');  
+                $view->navigation[pathinfo($file, PATHINFO_FILENAME)] = 
+                    new FinalView_Navigation($navigation['Pages']);                
+            break;
+        }
     }
     
     /**
