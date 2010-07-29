@@ -1,0 +1,23 @@
+GeoCountry:
+  columns:
+    code:
+      type: char(2)
+      primary: true
+    name:
+      char(64)
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
+
+GeoState:
+  columns:
+    code:
+      type: char(2)
+      primary: true
+    name:
+      char(64)
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
