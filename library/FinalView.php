@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Библиотека функций ядра.
+ * Core functions
  *
  */
 abstract class FinalView 
 {
 
     /**
-     * Абстрактная фабрика. Создает объект указанного типа из указанного "пэкиджа".
+     * Abstract factory. Create object of specified type from specified package.
      *
      * @param   string  $package
      * @param   string  $type
@@ -27,9 +27,7 @@ abstract class FinalView
             throw new FinalView_Exception($e->getMessage());
         }
         $args = array_slice(func_get_args(), 2);
-        // ReflectionClass::newInstanceArgs() появился только в PHP 5.1.3, плюс
-        // ко всему, он ругается при создании объекта класса, у которого явно не
-        // объявлен конструктор. это — более универсальный вариант :|
+        // ReflectionClass::newInstanceArgs() supported only in  PHP 5.1.3
         return call_user_func_array(array(new ReflectionClass($class), 'newInstance'), $args);
     }
     
