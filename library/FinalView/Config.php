@@ -10,7 +10,8 @@ define('QUOTE', '"');
 abstract class FinalView_Config 
 {
     
-    const CONFIG_FILENAME = 'config.ini';
+    const CONFIG_FILENAME_INI  = 'config.ini';
+    const CONFIG_FILENAME_YAML = 'config.yml';
     
     /**
     * Modules config params
@@ -69,10 +70,15 @@ abstract class FinalView_Config
     static private function _load($module) 
     {
         if (file_exists($file = APPLICATION_PATH . '/modules/' . $module . '/' . 
-            self::CONFIG_FILENAME)) 
+            self::CONFIG_FILENAME_INI)) 
         {
             $config = new Zend_Config_Ini($file);
             self::$_cach[$module] = $config->toArray();
+        }elseif (file_exists($file = APPLICATION_PATH . '/modules/' . $module . '/' . 
+            self::CONFIG_FILENAME_YAML)) 
+        {
+            $config = Doctrine_Parser::load($file, 'yml');
+            self::$_cach[$module] = $config;
         }
     }
     

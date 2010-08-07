@@ -1,0 +1,12 @@
+-
+  module: default
+  controller: index
+  action: index
+-
+  module: default
+  controller: index
+  action: index-a
+-
+  module: default
+  controller: index
+  action: index-b
