@@ -15,15 +15,6 @@ class FinalView_Grid_Renderer extends Zend_View
         $this->grid = $grid;
         $this->_view = Zend_Layout::getMvcInstance()->getView();
         $this->addScriptPath(dirname(__FILE__).'/scripts');
-        
-        foreach ($this->getPlugins() as $plugin) {
-        	$this->addScriptPath($plugin->getScriptsPath());
-        }        
-    }
-    
-    public function getPlugins()
-    {
-        return $this->grid->getPlugins();
     }
     
     public function getPlugin($name)
