@@ -50,7 +50,11 @@ class FinalView_Grid_Column_Action extends FinalView_Grid_Column
                     }
                 }
                 
-                return $this->_url->assemble($route_params);
+                try {
+                    return $this->_url->assemble($route_params);
+                } catch (Zend_Controller_Router_Exception $exception) {
+                    trigger_error($exception->getMessage(), E_USER_ERROR);
+                }
             break;
             case is_string($this->_url):
                 return $this->_url;
