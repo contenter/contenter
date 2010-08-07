@@ -217,7 +217,12 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     
     public function __toString()
     {
-        $this->_initPlugins();
-        return $this->render($this);
+        try{
+            $this->_initPlugins();
+            return $this->render($this);        
+        }catch(Exception $e){
+            trigger_error($e->getMessage(), E_USER_ERROR);        
+        }
+        return '';
     }    
 }
