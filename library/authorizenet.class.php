@@ -101,7 +101,7 @@ class authorizenet_class {
       
       curl_setopt($ch, CURLOPT_HEADER, 0);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-       // это надо убрать!!!
+       // It's must be eliminated
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
       curl_setopt($ch, CURLOPT_POSTFIELDS, rtrim( $this->field_string, "& " ));
       $this->response_string = urldecode(curl_exec($ch));
