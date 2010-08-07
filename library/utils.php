@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Добавляет указанные пути в include_path. Делаем так, потому что в режиме CGI
- * директива в .htaccess будет проигнорирована, и к тому же ее нельзя написать
- * независимой от платформы.
+ * Add paths to include_path. Doing such way because in CGI mode .htaccess directive will be ignored
+ * and also there's no way to do it platform independent   
  *
  * @access  public
  * @param   string  $path1[, string …]
@@ -66,8 +65,8 @@ function array_keys_recursive($input)
 }
 
 /**
- * Разворачивает сложный массив в плоский. Может быть использован для методов,
- * которые принимают переменное число аргументов как в массиве, так и по отдельности.
+ * Expands the complex array of flat. Can be used for methods
+ * that accept a variable number of arguments as in the array, as well as separately
  *
  * @param   array   $input
  * @return  array
@@ -319,19 +318,19 @@ if (!function_exists('http_build_url')) {
             $url = '';
         }
         
-        // Задан пароль или имя пользователя?
+        // Isn't password or user name defined?
         if (isset($parsed['pass'])) {
             $url .= "$parsed[user]:$parsed[pass]@";
         } elseif (isset($parsed['user'])) {
             $url .= "$parsed[user]@";
         }
-        // QUERY_STRING представлена в виде массива?
+        // QUERY_STRING represented as array?
         if (@!is_scalar($parsed['query'])) {
-            // Преобразуем в строку.
+            // Convert to the string.
             $parsed['query'] = http_build_query($parsed['query']);
         }
         
-        // Дальше составляем URL.
+        // Assemble Url.
         if (isset($parsed['host']))     $url .= $parsed['host'];
         if (isset($parsed['port']))     $url .= ":".$parsed['port'];
         if (isset($parsed['path']))     $url .= $parsed['path'];

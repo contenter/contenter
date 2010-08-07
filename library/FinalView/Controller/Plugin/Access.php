@@ -13,7 +13,9 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
         );
 
         if (is_null($resource)) {
-        	$this->_defaultHandler();
+            $this->setResource($resource);
+        	
+            $this->_defaultHandler();
         }else{
             $this->setResource($resource);        
             

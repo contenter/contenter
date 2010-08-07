@@ -29,5 +29,27 @@ class FinalView_Doctrine_Migration_Diff extends Doctrine_Migration_Diff
         $this->_cleanup();
 
         return $changes;    
-    }       
+    }
+    
+    /**
+     * Generate an array of changes found between the from and to schema information.
+     *
+     * @return array $changes
+     */
+    public function generateChanges()
+    {
+        $this->_cleanup();
+
+        $from = $this->_tmpPath . DIRECTORY_SEPARATOR . strtolower(self::$_fromPrefix) . '_doctrine_tmp_dirs';
+    	Doctrine_Lib::copyDirectory($this->_from, $from);
+        
+    	$to = $this->_tmpPath . DIRECTORY_SEPARATOR . strtolower(self::$_toPrefix) . '_doctrine_tmp_dirs';
+    	$options = array(
+            'classPrefix' => self::$_toPrefix,
+            'generateBaseClasses' => false
+        );
+        Doctrine_Core::generateModelsFromYaml($this->_to, $to, $options);       
+
+        return $this->_diff($from, $to);
+    }
 }
