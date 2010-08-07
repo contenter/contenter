@@ -31,6 +31,10 @@ abstract class FinalView_Grid_Entity_Abstract
     
     public function handler($params, FinalView_Grid_Renderer $view)
     {
-        $view->assign($params);
+        if (is_object($params)) {
+            $view->value = $params;
+        }elseif(is_array($params) || is_string($params)){
+            $view->assign($params);
+        }
     }
 }
