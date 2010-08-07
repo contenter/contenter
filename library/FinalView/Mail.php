@@ -1,138 +1,160 @@
 <?php
 
-class FinalView_Mail implements FinalView_Mail_Interface 
+/**
+ * Parse and send mail templates
+ *
+ * @author dV
+ */
+class FinalView_Mail implements FinalView_Mail_Interface
 {
-    
+
     /**
     * Zend_Mail
-    * 
+    *
     * @var Zend_Mail
     */
     protected $_mailer;
-    
+
     /**
     * Template name
-    * 
+    *
     * @var string
     */
     private $_template;
-    
+
     /**
     * Vars to parse in template
-    * 
+    *
     * @var array
     */
     private $_vars = array();
-    
+
     /**
-    * Db model
-    * 
+    * Db table to get templates from
+    *
     * @var string
     */
-    private $_model = 'MailTemplates';
-    
+    private $_table = 'MailTemplates';
+
     /**
      * Mail character set
      * @var string
      */
     private $_charset = 'utf-8';
-    
-    
-    public function __construct($template = null, array $vars = array(), 
-        $model = null) 
+
+
+    public function __construct($template = null, array $vars = array(), $table = null)
     {
+		Zend_Mail::setDefaultFrom('no-reply@' . $_SERVER['HTTP_HOST']);
+
         $this->_mailer = new Zend_Mail($this->_charset);
-        $this->_mailer->setFrom('no-reply@' . $_SERVER['HTTP_HOST']);
         $this->_mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
-        
+
         if (!is_null($template)) {
             $this->_template = $template;
         }
-        
+
         if (!empty($vars)) {
             $this->_vars = $vars;
         }
         $this->_setVarsDefault();
-        
-        if (!is_null($model)) {
-            $this->_model = $model;
+
+        if (!is_null($table)) {
+            $this->_table = $table;
         }
     }
-    
+
     /**
     * Set template
-    * 
+    *
     * @param string $template
     */
-    public function setTemplate($template) 
+    public function setTemplate($template)
     {
         $this->_template = $template;
+		return $this;
     }
-    
+
     /**
     * Set template vars
-    * 
+    *
     * @param array $vars
     */
-    public function setVars(array $vars) 
+    public function setVars(array $vars)
     {
         $this->_vars = $vars;
+		return $this;
     }
-    
+
     /**
     * Set default vars set
-    * 
+    *
     */
-    protected function _setVarsDefault() 
+    protected function _setVarsDefault()
     {
         if (defined('BASE_PATH')) {
             $this->_vars['BASE_PATH'] = BASE_PATH;
         }
     }
-    
+
     /**
     * Set Mail character charset
-    * 
+    *
     * @param string $charset
     */
-    public function setCharset($charset) 
+    public function setCharset($charset)
     {
         $this->_charset = $charset;
+		return $this;
     }
-    
+
     /**
-    * Set model
-    * 
-    * @param string $model
-    */
-    public function setModel($model) 
+	 * @deprecated Set table
+	 *
+	 * @param string $table
+	 * @return $this
+	 */
+    public function setModel($table)
     {
-        $this->_model = $model;
+        $this->setTable($table);
+		return $this;
     }
-    
+
+	/**
+	 * Set table
+	 *
+	 * @param string $table
+	 * @return $this
+	 */
+	public function setTable($table) {
+		$this->_table = $table;
+		return $this;
+	}
+
     /**
      * Magic method for calling Zend_Mail methods
-     * 
+     *
      * @param string $method_name
      * @param array $arguments
+	 * @return mixed
      */
     public function __call($method_name, $arguments)
     {
-        call_user_func_array(array($this->_mailer, $method_name), $arguments);
+        return call_user_func_array(array($this->_mailer, $method_name), $arguments);
     }
-    
+
     /**
     * Send email
-    * 
+    *
     * @param string|array $email
     * @param string $name
     */
-    public function send($email = null, $name = '') 
+    public function send($email = null, $name = '')
     {
         if (!is_null($email)) {
             if (is_array($email)) {
                 foreach ($email as $_email => $_name) {
-                    is_string($_email) 
+                    is_string($_email)
                         ? $this->_mailer->addTo($_email, $_name)
                         : $this->_mailer->addTo($_name);
                 }
@@ -140,60 +162,60 @@ class FinalView_Mail implements FinalView_Mail_Interface
                 $this->_mailer->addTo($email, $name);
             }
         }
-        
+
         $this->_mailer->setSubject($this->_parse($this->_template()->subject));
-        
-        trim($this->_template()->html) 
+
+        trim($this->_template()->html)
             ? $this->setBodyHtml($this->_parse($this->_template()->html))
             : $this->_mailer->setBodyText($this->_parse($this->_template()->text));
         $this->_mailer->send();
     }
-    
+
     /**
     * Return template
-    * 
+    *
     * @return Doctrine_Record
     */
-    protected function _template() 
+    protected function _template()
     {
         static $cach = array();
-        
+
         if (!array_key_exists($this->_template, $cach)) {
-            
-            $template = Doctrine::getTable($this->_model)->findOneByParams(array(
+
+            $template = Doctrine::getTable($this->_table)->findOneByParams(array(
                 'template'  =>  $this->_template
             ));
-            
-            if (!$cach[$this->_template] = $template) 
+
+            if (!$cach[$this->_template] = $template)
             {
-                trigger_error('Template named "' . $this->_template . '" was not 
+                trigger_error('Template named "' . $this->_template . '" was not
                     found', E_USER_ERROR);
             }
-            
+
         }
-        
+
         return $cach[$this->_template];
     }
-    
+
     /**
     * Parse vars in text
-    * 
+    *
     * @param string $string
     * @return string
     */
-    private function _parse($string) 
+    private function _parse($string)
     {
         return strtr($string, array_combine(
                 array_map
                 (
-                    create_function('$var', 'return \'{$\' . $var . \'}\';'), 
+                    create_function('$var', 'return \'{$\' . $var . \'}\';'),
                     array_keys($this->_vars)
-                ), 
+                ),
                 $this->_vars
             ));
     }
-    
-    
+
+
     /**
      * Sets the HTML body for the message
      *
@@ -202,7 +224,7 @@ class FinalView_Mail implements FinalView_Mail_Interface
      * @param  string    $encoding
      * @return Zend_Mail Provides fluent interface
      */
-    public function setBodyHtml($html, $charset = null, 
+    public function setBodyHtml($html, $charset = null,
         $encoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE)
     {
         $this->_mailer->setType(Zend_Mime::MULTIPART_RELATED);
@@ -211,13 +233,13 @@ class FinalView_Mail implements FinalView_Mail_Interface
         @$dom->loadHTML($html);
 
         $images = $dom->getElementsByTagName('img');
-        
+
         for ($i = 0; $i < $images->length; $i++) {
             $url = $images->item($i)->getAttribute('src');
-            
+
             $image_http = new Zend_Http_Client($url);
             $response = $image_http->request(Zend_Http_Client::GET);
-            
+
             if (200 == $response->getStatus())
             {
                 $mime = new Zend_Mime_Part($response->getBody());
@@ -231,8 +253,8 @@ class FinalView_Mail implements FinalView_Mail_Interface
                 $this->_mailer->addAttachment($mime);
             }
         }
-        
+
         return $this->_mailer->setBodyHtml($html, $charset, $encoding);
     }
-    
+
 }
