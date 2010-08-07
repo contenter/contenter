@@ -1,5 +1,5 @@
-/doctrine/models/generated/*
-/doctrine/migrations/*
+/doctrine/models/generated/*.php
+/doctrine/migrations/*.php
 
 /application/configs/environment.php
 /application/configs/application.local.ini
