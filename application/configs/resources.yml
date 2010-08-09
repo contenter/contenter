@@ -2,9 +2,10 @@ Request:
   default-error-error: {rule: _TRUE_}
   default-index-index: {rule: _TRUE_}
   user-index-index: {rule: user_logged_in_or_in_params, handler: not_detected_user}
-  user-auth-login: {rule: !logged_in, handler: forbidden}
-  user-auth-logout: {rule: logged_in, handler: forbidden}
-  user-register-register: {rule: !logged_in, handler: forbidden}  
+  user-auth-login: {rule: allowed_to_auth, handler: redirect_to_user_index}
+  user-auth-logout: {rule: _TRUE_}
+  user-register-register: {rule: !logged_in, handler: redirect_to_user_index}
+
   user-auth-forgot-password: {rule: !logged_in, handler: forbidden}
   user-auth-forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, handler: not_found}
   
