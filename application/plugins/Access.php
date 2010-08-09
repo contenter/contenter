@@ -41,7 +41,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         
     }
     
-    protected function _redirectToUserIndex()
+    protected function _redirectToUserIndexHandler()
     {
         $urlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('Url');
         
