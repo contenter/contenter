@@ -14,3 +14,8 @@ User:
     type: FUNC
   logged_in:
     type: FUNC
+  allowed_to_auth:
+    type: OR
+    dependences: [!logged_in, is_post]
+  is_post:
+    type: FUNC
