@@ -5,11 +5,10 @@
 div.olulPadding ul, div.olulPadding ol {padding-left: 2em;}
 
 body {
-    font: 14px/18px Arial, Tahoma, Verdana, sans-serif;
-    padding-left: 1000px;
-}
+    font: 13px Arial, Tahoma, Verdana, sans-serif;text-align:center;background:url(../images/grid/bg.gif) left top repeat-x;color:#363636;}
+h1 {font:normal 25px Arial Narrow, Arial, Helvetica, sans-serif;text-transform:uppercase;}
 a {
-    color: blue;
+    color: #1b4b00;
     outline: none;
     text-decoration: underline;
 }
@@ -27,31 +26,19 @@ img {
 }
 input {vertical-align: middle}
 #wrapper {
-    margin-left: -1000px;
+    margin:0 auto;text-align:left;
 }
 * html #wrapper {float: right}
-#header {
-    height: 30px;
-    background: #A9A9A9;
-}
-    
-    #header #view_site {
-        float: left;
-        margin: 5px 20px;
-    }
-    
-    #header #logout {
-        float: right;
-        margin: 5px 20px;
-    }
-    
-    #header #view_site a, #header #logout a {
-        font-weight: bold;
-    }
+#header {height: 40px;position:relative;}
+#header a {color:#a9d130;font-size:18px;font-weight:normal;}
+#header .logo {position:absolute;top:8px;left:19px;}
+#header #view_site {position:absolute;top:7px;left:230px;}
+#header #logout {position:absolute;top:7px;right:20px;}
     
 #middle {
-    border-left: 200px solid #FFFFFF;
+    border-left: 280px solid #FFFFFF;
     height: 1%;
+	margin-top:20px;
 }
 #middle:after {
     content: '.';
@@ -67,29 +54,35 @@ input {vertical-align: middle}
     margin-right: -100%;
 }
 #content {
-    padding: 0 10px;
-    margin: 10px;
-    border: 1px solid #A9A9A9;
+    padding: 0 50px 0 35px;
     min-height: 600px;
 }
 .sl {
     float: left;
-    width: 200px;    
+    width: 250px;    
     position: relative;
     background: #FFFFFF;
-    left: -200px;
+    left: -250px;
+	padding:38px 0;
 }
 #footer {
-    height: 20px;
-    background: #A9A9A9;
+	padding-top:40px;
+    height: 65px;
+    background:url(../images/grid/bg.gif) left top;
     text-align: center;
-    padding: 2px;
+	color:#fff;
 }
-.mainMenu li {border: 1px solid #FFFFFF; padding: 1px 5px; margin: 3px 0 0 10px; list-style: none;}
+.mainMenu li {border-bottom: 1px dotted #cdcdcd; padding: 0 0 4px 20px; margin: 0 0 4px 0;list-style: none;background:url(../images/grid/arrow.gif) left 5px no-repeat;}
 .mainMenu li span a {font-size: 12px; color: #000000; font-weight: normal; text-decoration: none; margin-left:20px;}
-.mainMenu a {display: block; border: 1px solid #FFFFFF; font-size: 12px; color: #000000; font-weight: bold; text-decoration: none;}
-.mainMenu li.active { border: 1px solid #A9A9A9;}
-.mainMenu li:hover { border: 1px solid #CFCFCF;}
+.mainMenu a {display: block; font-size: 13px; color: #363636; font-weight: bold; text-decoration: none;}
+.mainMenu li.active {}
+.mainMenu li.active a {color:#a9d130;}
+.mainMenu li.active li a {color:#363636;}
+.mainMenu li.active li.active a {color:#a9d130;}
+.mainMenu li:hover {}
+.mainMenu li ul {padding-top:7px;}
+.mainMenu li li {border:0;margin-bottom:0;}
+.mainMenu a:hover {text-decoration:underline;}
 
 .tableList {border-top: 1px solid #A9A9A9; border-left: 1px solid #A9A9A9 }
 .tableList td, .tableList th {border-bottom: 1px solid #A9A9A9; border-right: 1px solid #A9A9A9; padding: 2px; }
@@ -100,6 +93,18 @@ input {vertical-align: middle}
 .clear5 {clear:both; height:5px;}
 .clear10 {clear:both; height:10px;}
 .clear20 {clear:both; height:20px;}
+
+.zend_form dt {float:left;width:170px;text-align:right;font-size:14px;}
+.zend_form input[type="text"] {background:url(../images/grid/login-input.png) left top no-repeat;width:235px;height:25px;border:0px;padding:0 5px;line-height:25px;}
+.zend_form input[type="password"] {background:url(../images/grid/login-input.png) left top no-repeat;width:235px;height:25px;border:0px;padding:0 5px;line-height:25px;}
+.zend_form dd {padding-left:180px;padding-bottom:10px;min-height:25px;}
+.zend_form dd#message_admin-element {height:35px;}
+.zend_form .description {color:#a7a7a7;font-style:italic;}
+.zend_form dt#submit-label {display:none;}
+.zend_form dd#submit-element input {border:0;background:url(../images/grid/submit-button.png) left top no-repeat;width:105px;height:20px;color:#363636;font:12px Arial, Helvetica, sans-serif;cursor:pointer;line-height:20px;}
+
+.content-editor .zend_form dt {float:none;width:auto;text-align:left;padding-bottom:5px;}
+.content-editor .zend_form dd {padding-left:0;padding-bottom:20px}
 
 .zend_form .formTable {
   width: 400px;
@@ -130,7 +135,12 @@ input {vertical-align: middle}
 }
 .zend_form .element input.auto {
     width: auto;
-}
+}                   
+
+.zend_form dd input[type="text"], .zend_form dd input[type="password"] {}
+.zend_form dd select {width:245px;}
+.zend_form dd textarea { width: 578px; height: 200px; background:url(../images/grid/textarea.png) left top no-repeat;border:0;font: 12px Arial, Helvetica, sans-serif;}
+.zend_form dd .autowidth { width: auto; }                       
 
 .zend_form ul.form-errors{
 	color:red;
@@ -162,7 +172,6 @@ input {vertical-align: middle}
 
 
 table.fv-grid-table {
-    border-spacing: 2px;
     width: 100%;
 }
 table.fv-grid-table tr.odd {
@@ -175,7 +184,7 @@ table.fv-grid-table tr.hover {
     background-color: #EFF2F4;
 }
 table.fv-grid-table th {
-    background-color: #CCC;
+    background-color: #e4efc4;
     font-weight: bold;
     text-align: center;
 }
@@ -185,27 +194,25 @@ table.fv-grid-table th.fv_checkall {
 table.fv-grid-table td {
     text-align: left;
 }
-table.fv-grid-table th, table.fv-grid-table td {
-    border: 1px solid #CCC;
-    padding: 7px;
-}
+
+table.fv-grid-table th {padding: 7px;}
+table.fv-grid-table td {border: 1px solid #CCC;border-top:0;padding: 7px;}
 
 
 .paging {padding: 5px 0 8px 0;}
-.paging ul{text-align: right; font-size: 12px;}
-.paging ul li{display: inline; padding: 0 3px; height: 20px; color: #00549C;}
-.paging li a{color: #00549C;}
+.paging ul{text-align: right; font-size: 13px;}
+.paging ul li{display: inline; padding: 0 5px; height: 20px; color: #00549C;}
+.paging li a{color: #363636;}
 .paging li.prev a, .paging li.next a {color: #3D3D3B; font-weight: bold;}
 .paging li.prev {padding: 0 20px 0 21px; background: url(../i/prev.gif) no-repeat 0 7px;}
 .paging li.next {padding: 0 21px 0 20px; background: url(../i/next.gif) no-repeat 100% 7px;}
 
 .paging li.active {
-    background: #FFF;
-    border-right: 1px solid #BFBFBF;
-    border-bottom: 1px solid #BFBFBF;
+    background: #a6c93d;
 }
 .paging li.active a {
     text-decoration: none;
+	color:#fff;
 }
 
 .formEditCont {
@@ -221,7 +228,7 @@ table.fv-grid-table th, table.fv-grid-table td {
 } 
 .select { background: url(/images/form/select.png) no-repeat 3px 5px; }
 .textfield { background: url(/images/form/textfield.png) no-repeat 3px 5px; }
-.textarea { background: url(/images/form/textarea.png) no-repeat 3px 5px; }
+.textarea { background: url(../images/grid/textarea.png) no-repeat 3px 5px; }
 .checkboxes { background: url(/images/form/checkboxes.png) no-repeat 3px 5px; }
 .radios { background: url(/images/form/radios.png) no-repeat 3px 5px; }
 .location { background: url(/images/form/taxonomy.png) no-repeat 3px 5px; }
@@ -248,12 +255,7 @@ table.fv-grid-table th, table.fv-grid-table td {
 .elementActions a {margin: 0 5px 0 5px;}
 
 
-h2 {
-    color: #0052D1;
-    font-size: 22px;
-    line-height: 24px;
-    margin: 30px 0 10px;
-}
+h2 {font-size:18px;font-weight:normal;padding-bottom:20px;}
 
 ul {
     list-style: none;
@@ -276,27 +278,31 @@ ul.errors {
 * Login form
 * 
 */
-form.login fieldset {
-    width: 400px;
-    margin: auto;
-    padding: 30px;
-    border: 1px solid #0052D1;
-}
+.auth {background:url(../images/grid/auth-block-top.png) left top no-repeat;width:325px;padding-top:10px;margin:auto;position:relative;left:-225px;top:50px;}
+.auth_botbg {background:url(../images/grid/auth-block-bot.png) left bottom no-repeat;padding:0 35px 20px;}
 
-form.login input {
-    width: 90%;
-    border: 1px solid #0052D1;
-}
+form.login .zend_form fieldset {border:0;}
 
-form.login input#submit {
+form.login .zend_form input {border: 0;background:url(../images/grid/login-input.png) left top no-repeat;width:225px;height:25px;padding:0 10px;line-height:25px;}
+
+form.login .zend_form input#submit {
+	background:url(../images/grid/login-button.png) left top no-repeat;
     width: 70px;
-    padding: 3px;
+	height:20px;
+	color:#363636;
+	font:12px Arial, Helvetica, sans-serif;cursor:pointer;
+	line-height:20px;
+	margin-left:175px;
 }
-
+form.login legend {
+    font-size:25px;
+}
 form.login label {
-    font-weight: bold;
+    font-size:14px;
+	display:block;padding-top:13px;padding-bottom:5px;
 }
-
+form.login .zend_form dt {float:none;width:auto;text-align:left;font-size:14px;}
+form.login .zend_form dd {padding-left:0;padding-bottom:10px;min-height:0;}
 
 /**
 * Message 
@@ -340,11 +346,6 @@ ul.error li ul.errors li {
     list-style: circle inside;
 }
 
-
-#venue_preferences ul {
-    float: left;
-    padding-right: 30px;
-}
 
 div.cleaner {
     clear: both;
@@ -400,3 +401,45 @@ div.grid_filter, div.grid_num_results {
 #business_types ul#categories a.active {
     font-weight: bold;
 }
+
+.article-categories { width: 550px;}
+.empty-clear { clear: both; height: 1px;}
+.article-categories label { display: block; width: 250px; float: left;}
+
+
+ul.details span.title {
+	font-weight: bold;
+}
+
+fieldset#fieldset-social_media {
+	padding: 20px;
+}
+	fieldset#fieldset-social_media dd input {
+		margin-right: 10px;
+	}
+
+#facebook_connect {
+	margin-top: 20px;
+}
+
+/* rounded block */
+.rounded {margin-top:30px;margin-bottom:30px;max-width:995px;}
+.rounded .left-top {background:url(../images/grid/left-top.gif) left top no-repeat;}
+.rounded .right-top {background:url(../images/grid/right-top.gif) right top no-repeat;padding-top:5px;}
+.rounded .left-bot {background:url(../images/grid/left-bot.gif) left bottom no-repeat;}
+.rounded .right-bot {background:url(../images/grid/right-bot.gif) right bottom no-repeat;padding-bottom:5px;}
+.rounded .bot-bg {background:url(../images/grid/corners-bot.gif) left bottom no-repeat;padding-bottom:5px;}
+.rounded .borders {border-left:2px solid #cdcdcd;border-right:2px solid #cdcdcd;padding:20px 40px 20px 10px;}
+.rounded .userpic {padding-left:180px;}
+.rounded .userpic img, .rounded .userpic object {margin:0 0 20px;}
+
+.content-editor .rounded {background-image:url(../images/grid/corners-top-wide.gif);width:615px;padding-top:4px;}
+.content-editor .rounded  .bot-bg {background-image:url(../images/grid/corners-bot-wide.gif);padding-bottom:4px;}
+
+/* */
+
+.grid_actions input[type="submit"] {margin-top:10px;border:0;background:url(../images/grid/submit-button.png) left top no-repeat;width:105px;height:20px;color:#363636;font:12px Arial, Helvetica, sans-serif;cursor:pointer;line-height:20px;}
+.grid_actions a {position:relative;top:5px;margin-left:10px;}
+
+.column-header .desc a {background:url(../images/grid/sort-desc.gif) left 2px no-repeat;padding-left:15px;}
+.column-header .asc a {background:url(../images/grid/sort-asc.gif) left 2px no-repeat;padding-left:15px;}
