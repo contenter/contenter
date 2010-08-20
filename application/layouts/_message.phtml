@@ -1,0 +1,10 @@
+<?php
+    $messanger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+    if ($messanger->hasMessages()) :
+?>
+    <ul id="message-container" class="info">
+        <?php foreach ($messanger->getMessages() as $message): ?>
+            <li><?=$message?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
