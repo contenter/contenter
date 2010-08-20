@@ -1,5 +1,6 @@
 <?$plugin = $this->grid->getPlugin('gridactions');?>
 
+<div class="grid_actions">
 <?foreach($plugin->getActions() as $action ):?>
     <?
         switch (@$action['type']) {
@@ -7,21 +8,22 @@
                 $act = $action;
                 unset($act['type']);
                 unset($act['label']);
-                ?>                    
+                ?>
                     <a <?=$this->htmlTagAttribs($act);?>><?=$action['label']?></a>
                 <?
             break;
             case 'button':
                 ?>
-                    <input <?=$this->htmlTagAttribs($action);?>>                    
+                    <input <?=$this->htmlTagAttribs($action);?>>
                 <?
             break;
             case 'submit':
                 ?>
-                    <input <?=$this->htmlTagAttribs($action);?>>                    
+                    <input <?=$this->htmlTagAttribs($action);?>>
                 <?
             break;
         }
-    ?>    
+    ?>
 <?endforeach;?>
+</div>
 </form>
