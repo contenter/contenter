@@ -42,6 +42,16 @@ class FinalView_Controller_Action_Helper_User
                         }
                     }            	
             	break;
+            	case 'current':
+                    switch (true) {
+                        case !is_null($this->contextual):
+                            $this->_users['current'] = $this->contextual;
+                        break;
+                        case !is_null($this->authorized):
+                            $this->_users['current'] = $this->authorized;
+                        break;
+                    }
+            	break;
             	default:
             	   return null;
             	break;
