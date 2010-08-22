@@ -1,5 +1,5 @@
 User:
-  user_logged_in_or_in_params: 
+  user_logged_in_or_in_params:
     type: OR
     dependences: [real_user_in_params, no_user_in_params_and_logged_in]
   real_user_in_params:

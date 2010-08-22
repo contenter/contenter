@@ -19,7 +19,7 @@ class FinalView_Acl extends Zend_Acl
         $this->allow(null, null, null, $this->getAssertion());
     }
     
-    public function addResource($resource, array $params = array())
+    public function addResource($resource, $params = array())
     {
         if (is_string($resource)) {
             $resource = new FinalView_Acl_Resource($resource, $params);
