@@ -45,7 +45,9 @@ class FinalView_Mail implements FinalView_Mail_Interface
 
     public function __construct($template = null, array $vars = array(), $table = null)
     {
-		Zend_Mail::setDefaultFrom('no-reply@' . $_SERVER['HTTP_HOST']);
+		if (is_null(Zend_Mail::getDefaultFrom())) {
+			Zend_Mail::setDefaultFrom('no-reply@' . $_SERVER['HTTP_HOST']);
+		}
 
         $this->_mailer = new Zend_Mail($this->_charset);
         $this->_mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
@@ -109,7 +111,7 @@ class FinalView_Mail implements FinalView_Mail_Interface
     }
 
     /**
-	 * @deprecated Set table
+	 * @deprecated Use setTable() method instead
 	 *
 	 * @param string $table
 	 * @return $this

@@ -65,19 +65,26 @@ function array_keys_recursive($input)
 }
 
 /**
- * Expands the complex array of flat. Can be used for methods
- * that accept a variable number of arguments as in the array, as well as separately
+ * Expands complex array to the plain one.
  *
+ * @param   array   &$values
  * @param   array   $input
+ * @param	boolean $preserve_keys
  * @return  array
  */
-function array_values_recursive($input) 
+function array_values_recursive(array &$values, array $input, $preserve_keys = false)
 {
-    $values = array();
-    foreach ($input as $value) {
-        $values = array_merge($values, is_array($value) ? array_values_recursive($value) : array($value));
-    }
-    return $values;
+    foreach ($input as $key => $value) {
+		if (is_array($value)) {
+			array_values_recursive($values, $value, $preserve_keys);
+		} else {
+			if ($preserve_keys) {
+				$values[$key] = $value;
+			} else {
+				$values[] = $value;
+			}
+		}
+	}
 }
 
 /**

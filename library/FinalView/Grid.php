@@ -51,7 +51,9 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     {        
         $plugin->setGrid($this);
         
-        $this->_plugins[$plugin->name] = $plugin;        
+        $this->_plugins[$plugin->name] = $plugin;
+        
+        $this->getRenderer()->addScriptPath($plugin->getScriptsPath());
     }
     
     public function getPlugins()
@@ -154,7 +156,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
             $this->$customHandler($inputParams, $this->getRenderer() );
         }elseif(is_object($entity)){             
             $entity->handler($inputParams, $this->getRenderer());
-        }else{       
+        }else{
             $this->getRenderer()->assign($inputParams);
         }
         
