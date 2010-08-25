@@ -13,6 +13,10 @@ class Admin_Grid_Base extends FinalView_Grid
                 'direction' =>  (@$params['direction'] == 'asc') ? 'asc' : 'desc'  
             );
         }
+
+		if (isset($params['filter'])) {
+            $_params = array_merge($params['filter'], $_params);
+        }
         
         $iterator = Doctrine::getTable($params['model'])->findPageByParams(
             $_params,
