@@ -14,13 +14,9 @@ class Admin_Grid_Base extends FinalView_Grid
             );
         }
 
-		$iterator = Doctrine::getTable($params['model'])->findPageByParams(
-            $_params,
-            intval(@$params['page']) ? intval(@$params['page']) : 1,
-            array_key_exists('entries_per_page', $params)
-				? $params['entries_per_page']
-				: FinalView_Config::get('admin', 'entries_per_page')
-        );
+		if (isset($params['filter'])) {
+            $_params = array_merge( $params['filter'], $_params );
+        }
         
         $iterator = Doctrine::getTable($params['model'])->findPageByParams(
             $_params,
