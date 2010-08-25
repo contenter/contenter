@@ -21,7 +21,9 @@ class Admin_Grid_Base extends FinalView_Grid
         $iterator = Doctrine::getTable($params['model'])->findPageByParams(
             $_params,
             intval(@$params['page']) ? intval(@$params['page']) : 1,
-            FinalView_Config::get('admin', 'entries_per_page')           
+            array_key_exists('entries_per_page', $params)
+				? $params['entries_per_page']
+				: FinalView_Config::get('admin', 'entries_per_page')
         );        
         
         $this->setIterator($iterator->execute());
