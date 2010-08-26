@@ -10,7 +10,7 @@ class Admin_Grid_Base extends FinalView_Grid
         if (isset($params['sort'])) {
             $_params['order_by'] = array(
                 'field'     =>  $params['sort'],
-                'direction' =>  (@$params['direction'] == 'asc') ? 'asc' : 'desc'  
+                'direction' =>  isset($params['direction']) ? $params['direction'] : 'ASC'
             );
         }
 
