@@ -36,7 +36,6 @@ input {vertical-align: middle}
 #header #logout {position:absolute;top:7px;right:20px;}
     
 #middle {
-    border-left: 280px solid #FFFFFF;
     height: 1%;
 	margin-top:20px;
 }
@@ -50,19 +49,19 @@ input {vertical-align: middle}
 #container {
     width: 100%;
     float: left;
-    overflow: hidden;
     margin-right: -100%;
 }
 #content {
-    padding: 0 50px 0 35px;
+    padding: 0 50px 0 320px;
     min-height: 600px;
+	min-width:730px;
 }
 .sl {
     float: left;
     width: 250px;    
     position: relative;
     background: #FFFFFF;
-    left: -250px;
+    left: 20px;
 	padding:38px 0;
 }
 #footer {
@@ -94,14 +93,13 @@ input {vertical-align: middle}
 .clear10 {clear:both; height:10px;}
 .clear20 {clear:both; height:20px;}
 
-.zend_form dt {float:left;width:170px;text-align:right;font-size:14px;}
+.zend_form dt {float:left;width:130px;text-align:right;font-size:14px;}
 .zend_form input[type="text"] {background:url(../images/grid/login-input.png) left top no-repeat;width:235px;height:25px;border:0px;padding:0 5px;line-height:25px;}
 .zend_form input[type="password"] {background:url(../images/grid/login-input.png) left top no-repeat;width:235px;height:25px;border:0px;padding:0 5px;line-height:25px;}
-.zend_form dd {padding-left:180px;padding-bottom:10px;min-height:25px;}
-.zend_form dd#message_admin-element {height:35px;}
+.zend_form dd {padding-left:140px;*padding-left:18px;padding-bottom:10px;min-height:25px;}
 .zend_form .description {color:#a7a7a7;font-style:italic;}
 .zend_form dt#submit-label {display:none;}
-.zend_form dd#submit-element input {border:0;background:url(../images/grid/submit-button.png) left top no-repeat;width:105px;height:20px;color:#363636;font:12px Arial, Helvetica, sans-serif;cursor:pointer;line-height:20px;}
+.zend_form dd#submit-element input {height:25px;color:#363636;font:12px Arial, Helvetica, sans-serif;cursor:pointer;line-height:20px;padding:0 10px;}
 
 .content-editor .zend_form dt {float:none;width:auto;text-align:left;padding-bottom:5px;}
 .content-editor .zend_form dd {padding-left:0;padding-bottom:20px}
@@ -278,21 +276,21 @@ ul.errors {
 * Login form
 * 
 */
-.auth {background:url(../images/grid/auth-block-top.png) left top no-repeat;width:325px;padding-top:10px;margin:auto;position:relative;left:-225px;top:50px;}
+.auth {background:url(../images/grid/auth-block-top.png) left top no-repeat;width:325px;padding-top:10px;margin:auto;position:relative;top:50px;left:-160px;}
 .auth_botbg {background:url(../images/grid/auth-block-bot.png) left bottom no-repeat;padding:0 35px 20px;}
 
 form.login .zend_form fieldset {border:0;}
 
-form.login .zend_form input {border: 0;background:url(../images/grid/login-input.png) left top no-repeat;width:225px;height:25px;padding:0 10px;line-height:25px;}
+form.login .zend_form input {width:225px;height:25px;padding:0 10px;line-height:25px;}
 
 form.login .zend_form input#submit {
-	background:url(../images/grid/login-button.png) left top no-repeat;
-    width: 70px;
-	height:20px;
+    width: auto;
+	height:25px;
 	color:#363636;
 	font:12px Arial, Helvetica, sans-serif;cursor:pointer;
 	line-height:20px;
-	margin-left:175px;
+	margin-top:5px;
+	margin-left:182px;
 }
 form.login legend {
     font-size:25px;
@@ -423,13 +421,13 @@ fieldset#fieldset-social_media {
 }
 
 /* rounded block */
-.rounded {margin-top:30px;margin-bottom:30px;max-width:995px;}
+.rounded {margin-top:30px;margin-bottom:30px;max-width:995px;min-width:800px;}
 .rounded .left-top {background:url(../images/grid/left-top.gif) left top no-repeat;}
 .rounded .right-top {background:url(../images/grid/right-top.gif) right top no-repeat;padding-top:5px;}
 .rounded .left-bot {background:url(../images/grid/left-bot.gif) left bottom no-repeat;}
 .rounded .right-bot {background:url(../images/grid/right-bot.gif) right bottom no-repeat;padding-bottom:5px;}
 .rounded .bot-bg {background:url(../images/grid/corners-bot.gif) left bottom no-repeat;padding-bottom:5px;}
-.rounded .borders {border-left:2px solid #cdcdcd;border-right:2px solid #cdcdcd;padding:20px 40px 20px 10px;}
+.rounded .borders {border-left:2px solid #cdcdcd;border-right:2px solid #cdcdcd;padding:20px 40px 20px 10px;min-width: 746px;}
 .rounded .userpic {padding-left:180px;}
 .rounded .userpic img, .rounded .userpic object {margin:0 0 20px;}
 
