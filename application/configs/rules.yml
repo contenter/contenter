@@ -40,4 +40,3 @@ Admin:
     type: FUNC
   change_page_route_allowed:
     type: FUNC
-    
