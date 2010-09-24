@@ -24,6 +24,8 @@ final class FinalView_Doctrine
             Doctrine::MODEL_LOADING_CONSERVATIVE
         );
         
+        $manager->setAttribute(Doctrine::ATTR_TABLE_CLASS, 'FinalView_Doctrine_Table');
+        
         $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
                 
         if(array_key_exists('models_path', $config)) {
