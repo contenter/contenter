@@ -47,7 +47,7 @@ class FinalView_View_Helper_DateFormat extends Zend_View_Helper_Abstract
     public function dateFormat($date, $format = null, $time_zone = null) 
     {
         $time_zone = is_null($time_zone) ? self::$_time_zone : $time_zone;
-		$locale = Zend_Registry::isRegistered('locale') ? Zend_Registry::get('locale') : null;
+		$locale = Zend_Registry::isRegistered('Zend_Locale') ? Zend_Registry::get('Zend_Locale') : null;
         
         $date = new Zend_Date($date, Zend_Date::ISO_8601, $locale);
         if (!is_null($time_zone)) {
