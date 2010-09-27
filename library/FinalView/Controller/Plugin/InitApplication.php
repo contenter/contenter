@@ -60,7 +60,7 @@ class FinalView_Controller_Plugin_InitApplication
         if (is_dir($lang_path = APPLICATION_PATH . 
             sprintf('/modules/%s/lang', $current_module))) 
         {
-			$locale = Zend_Registry::isRegistered('locale') ? Zend_Registry::get('locale') : null;
+			$locale = Zend_Registry::isRegistered('Zend_Locale') ? Zend_Registry::get('Zend_Locale') : null;
             Zend_Registry::get('Zend_Translate')->addTranslation($lang_path, $locale);
         }
     }

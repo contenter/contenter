@@ -48,7 +48,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initLocale()
 	{
 		if ($locale = $this->getOption('locale')) {
-            Zend_Registry::set('locale', $locale);
+            Zend_Registry::set('Zend_Locale', $locale);
         }
 	}
     
@@ -101,7 +101,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initTranslator()
     {
-		$locale = Zend_Registry::isRegistered('locale') ? Zend_Registry::get('locale') : null;
+		$locale = Zend_Registry::isRegistered('Zend_Locale') ? Zend_Registry::get('Zend_Locale') : null;
         $translator = new Zend_Translate('Gettext', APPLICATION_PATH . '/lang', $locale);
         Zend_Registry::set('Zend_Translate', $translator);
         

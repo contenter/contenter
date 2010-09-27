@@ -111,7 +111,12 @@ class FinalView_Doctrine_Table extends Doctrine_Table
             
             $method = $filter->filter($param).'Selector';
             if (!method_exists($this, $method)) {
-                throw new FinalView_Doctrine_Table_Exception('there is no selector ' . $param . ' in model ' . get_class($this) );
+                if ($this->hasColumn($param) ) {
+                    $this->_fieldSelector($param, $value);
+                    continue;
+                }else{
+                    throw new FinalView_Doctrine_Table_Exception('there is no selector ' . $param . ' in model ' . get_class($this) );
+                }
             }
             
             $this->$method($value);
@@ -146,6 +151,11 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $this->_joinedTables[] = $tableObject;
             
         return $tableObject->build($this->_query, $params);
+    }
+
+    private function _fieldSelector($field_name, $value)
+    {
+        $this->_getQuery()->addWhere($this->getTableName().'.' . $field_name . ' = ?', $value);
     }
 
     protected function limitSelector($params)
