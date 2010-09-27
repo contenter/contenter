@@ -38,7 +38,7 @@ class FinalView_Controller_Action_Helper_FileTransferHttp
 	{
 		$mime_type = self::DEFAULT_MIME_TYPE;
 
-		$mimefile = MAGIC;
+		$mimefile = defined('MAGIC') ? constant('MAGIC') : '';
         if (class_exists('finfo', false)) {
             $const = defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME;
             if (!empty($mimefile)) {
