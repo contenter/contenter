@@ -1,6 +1,5 @@
 <?php
-
-class Confirmation_UserController extends FinalView_Controller_Action 
+class Confirmation_UserController extends FinalView_Controller_Action
 {
     public function registrationAction()
     {
