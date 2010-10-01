@@ -57,7 +57,7 @@ class Admin_AuthController extends FinalView_Controller_Action
     {
         return Doctrine::getTable('User')->findOneByParams(array(
             'email'     =>  $this->getLoginForm()->getValue('email'),
-            'role'      =>  Roles::USER_ADMIN
+            'role'      =>  Roles::USER_BACKEND
         ));
     }
     
