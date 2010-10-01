@@ -4,7 +4,10 @@ class Admin_Grid_Users extends Admin_Grid_Base
     public function __construct()
     {
         parent::__construct(array(
-            'model' => 'User',
+            'model'     =>  'User',
+            'filter'    =>  array(
+                'role'  =>  Roles::USER_FRONTEND
+            )
         ));
 
         $router = Zend_Controller_Front::getInstance()->getRouter();

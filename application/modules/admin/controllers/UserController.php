@@ -22,7 +22,8 @@ class Admin_UserController extends FinalView_Controller_Action
     private function delete()
     {
         Doctrine::getTable('User')->findByParams(array(
-            'ids' => $this->getRequest()->getParam('ids', array() )
+            'ids'   =>  $this->getRequest()->getParam('ids', array() ),
+            'role'  =>  Roles::USER_FRONTEND
         ))->delete();
     }
     
