@@ -17,7 +17,7 @@ class User_Auth_Adapter extends FinalView_Auth_Adapter
         if (!$this->_account->confirmed) {
             throw new User_Auth_Exception
             (
-                __(self::AUTHORIZE_UNCONFIRMED, $this->_account->email, Roles::USER), 
+                __(self::AUTHORIZE_UNCONFIRMED, $this->_account->email, Roles::USER_FRONTEND),
                 Zend_Auth_Result::FAILURE
             );
         }        
