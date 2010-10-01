@@ -1,6 +1,7 @@
 <?php
 class Roles
 {
-    const USER = 16;
-    const USER_ADMIN = 20;
+    const USER = 1;                 //001
+    const USER_FRONTEND = 3;        //011
+    const USER_BACKEND = 5;         //101
 }
