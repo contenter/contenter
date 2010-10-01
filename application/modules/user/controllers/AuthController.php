@@ -48,7 +48,7 @@ class User_AuthController extends FinalView_Controller_Action
                 );
                 
                 if ($result->getCode() !== Zend_Auth_Result::SUCCESS) {
-                    $this->getLoginForm()->addDecorator('Errors')->addErrors($result->getMessages());
+                	$this->getLoginForm()->addErrors($result->getMessages());
                 }
                 
                 return $result->getCode();                
@@ -60,7 +60,7 @@ class User_AuthController extends FinalView_Controller_Action
     {
         return Doctrine::getTable('User')->findOneByParams(array(
             'email'     =>  $this->getLoginForm()->getValue('email'),
-            'role'      =>  Roles::USER
+            'role'  =>  Roles::USER_FRONTEND
         ));
     }
     
