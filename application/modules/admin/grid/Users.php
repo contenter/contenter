@@ -6,7 +6,11 @@ class Admin_Grid_Users extends Admin_Grid_Base
         parent::__construct(array(
             'model'     =>  'User',
             'filter'    =>  array(
-                'role'  =>  Roles::USER_FRONTEND
+                'role'      =>  Roles::USER_FRONTEND,
+                'order_by'  =>  array(
+                    'field'         =>  'email',
+                    'direction'     =>  'asc'
+                )
             )
         ));
 
@@ -25,9 +29,8 @@ class Admin_Grid_Users extends Admin_Grid_Base
             array('type'    =>  'submit', 'value' => 'Delete Users', 'name' => 'delete'),
         )));
         
-        $this->addPlugin(new FinalView_Grid_Plugin_Sortable(array(
+        $this->getPlugin('sortable')->setColumns(array(
             'id', 'email', 'created_at', 'updated_at', 'role'
-        )));                
-        
+        ));
     }
 }
