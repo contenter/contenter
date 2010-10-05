@@ -6,9 +6,14 @@ class FinalView_Grid_Plugin_Sortable extends FinalView_Grid_Plugin_Abstract
     public $columnName;
     public $direction;
     
-    public function __construct(array $sortableColumns)
+    protected $_sortParams;
+    protected $_defaultSortParams;
+    
+    public function __construct(array $sortableColumns = null)
     {
-        $this->_columns = $sortableColumns;
+        if(!is_null($sortableColumns)) {
+            $this->setColumns($sortableColumns);
+        }
     }
     
     public function init()
@@ -16,19 +21,42 @@ class FinalView_Grid_Plugin_Sortable extends FinalView_Grid_Plugin_Abstract
         foreach ($this->_columns as $columnName) {
         	$this->_grid->getColumns()->$columnName->getTitle()->setScript('column/title/sortable.phtml');
         }
-        
-        $columnName = Zend_Controller_Front::getInstance()->getRequest()->getParam('sort', null);
-        
-        if ($columnName) {
-        	$this->columnName = $columnName;
-            $direction = Zend_Controller_Front::getInstance()->getRequest()->getParam('direction', null);
-        	
-        	$this->direction = $direction == 'asc' ? 'desc' : 'asc';
-        }        
     }
     
     public function getScriptsPath()
     {
         return dirname(__FILE__).'/scripts/Sortable';
+    }
+    
+    public function setColumns(array $sortableColumns)
+    {
+        $this->_columns = $sortableColumns;
+        return $this;
+    }
+    
+    public function setSortParams(array $sortParams)
+    {
+        $this->_sortParams = new stdClass;
+        $this->_sortParams->columnName = $sortParams['field'];
+        $this->_sortParams->direction  = $sortParams['direction'] == 'asc' ? 'asc' : 'desc';
+        
+        return $this;
+    }
+
+    public function getSortParams()
+    {
+        if (is_null($this->_sortParams)) {
+            $this->setSortParams(array(
+                'field'         =>  null,
+                'direction'     =>  null,
+            ));
+        }
+
+        return $this->_sortParams;
+    }
+    
+    public function setDefaultSortParams(array $sortParams)
+    {
+        $this->_defaultSortParams = $sortParams;
     }
 }
