@@ -40,6 +40,25 @@ class Admin_Grid_Base extends FinalView_Grid
             $iterator->getPage()
         ));
         
+        $this->addPlugin(new FinalView_Grid_Plugin_Sortable());
+        
+        switch (true) {
+            case isset($_params['order_by']):
+                $sortParams = $_params['order_by'];
+            break;
+            case !is_null($orderBy = Doctrine::getTable($params['model'])->getOption('orderBy')):
+                $s_params = explode(' ', $this->getIterator()->getTable()->getOption('orderBy'), 2);
+                $sortParams['field'] = $s_params[0];
+                $sortParams['direction'] = $s_params[1] == 'desc' ? 'desc' : 'asc';
+            break;
+            case isset($params['filter']['order_by']):
+                $sortParams = $params['filter']['order_by'];
+            break;
+        }
+        
+        if (isset($sortParams)) {
+            $this->getPlugin('sortable')->setSortParams($sortParams);
+        }
     }
 
     static public function getParams()
