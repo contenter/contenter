@@ -4,7 +4,13 @@ class Admin_Grid_CmsPages extends Admin_Grid_Base
     public function __construct()
     {
         parent::__construct(array(
-            'model' => 'CmsPage',
+            'model'     =>  'CmsPage',
+            'filter'    =>  array(
+                'order_by'  =>  array(
+                    'field'     =>  'name',
+                    'direction' =>  'asc'
+                )
+            )
         ));
 
         $router = Zend_Controller_Front::getInstance()->getRouter();
@@ -40,9 +46,9 @@ class Admin_Grid_CmsPages extends Admin_Grid_Base
             )));                    	
         }        
         
-        $this->addPlugin(new FinalView_Grid_Plugin_Sortable(array(
+        $this->getPlugin('sortable')->setColumns(array(
             'name', 'title'
-        )));
+        ));
         
         $urlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('Url');
         
