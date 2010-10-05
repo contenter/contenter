@@ -47,7 +47,7 @@ class Admin_Grid_Base extends FinalView_Grid
                 $sortParams = $_params['order_by'];
             break;
             case !is_null($orderBy = Doctrine::getTable($params['model'])->getOption('orderBy')):
-                $s_params = explode(' ', $this->getIterator()->getTable()->getOption('orderBy'), 2);
+                $s_params = explode(' ', $orderBy, 2);
                 $sortParams['field'] = $s_params[0];
                 $sortParams['direction'] = $s_params[1] == 'desc' ? 'desc' : 'asc';
             break;
