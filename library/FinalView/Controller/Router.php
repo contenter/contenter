@@ -82,6 +82,8 @@ class FinalView_Controller_Router extends Zend_Controller_Router_Route_Abstract
     
     public function assemble($data = array(), $reset = false, $encode = false, $partial = false)
     {
+		unset($data['module'], $data['controller'], $data['action']);
+
         foreach ($this->_innerRoutes as $route) {
             
             $route_vars = $route->getVariables();            
