@@ -54,10 +54,23 @@ class FinalView_Navigation_Page extends Zend_Navigation_Page_Mvc
         return parent::getResource();
     }
     
+    public function setResource($resource = null)
+    {
+        if (is_string($resource)) {
+        	return parent::setResource(new FinalView_Acl_Resource($resource, $this->getParams()));
+        }
+        
+        return parent::setResource($resource);
+    }
+    
     public function getParams()
     {
         if (null === $this->_params) {
-        	$this->setParams($this->getParent()->getParams());
+            if (is_null($this->getParent())) {
+                $this->setParams(array());
+            }else{
+                $this->setParams($this->getParent()->getParams());
+            }
         }
         return (array)parent::getParams();
     }
