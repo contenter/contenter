@@ -14,4 +14,15 @@ class FinalView_Navigation_Page_Cms extends FinalView_Navigation_Page
     {
         return $this->_name;
     }
+    
+    public function setRoute($route)
+    {
+        parent::setRoute($route);
+
+        $this->setModule('Cms');
+        $this->setController('index');
+        $this->setAction('index');
+
+        return $this;
+    }
 }
