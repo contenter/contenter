@@ -8,6 +8,8 @@ class FinalView_Grid_Plugin_Sortable extends FinalView_Grid_Plugin_Abstract
     
     protected $_sortParams;
     protected $_defaultSortParams;
+
+    protected $_columns = array();
     
     public function __construct(array $sortableColumns = null)
     {
