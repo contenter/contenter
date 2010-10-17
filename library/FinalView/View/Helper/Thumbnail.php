@@ -47,7 +47,7 @@ class FinalView_View_Helper_Thumbnail extends Zend_View_Helper_HtmlElement
 				'width' => $this->_width,
 				'height' => $this->_height,
 				'id' => $this->_id
-			), $attribs
+			), (array)$attribs
 		);
 
 		return '<img' . $this->_htmlAttribs($attribs) . $this->getClosingBracket(). PHP_EOL;
