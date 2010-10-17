@@ -2,20 +2,20 @@
 
 /**
 * Registration
-* 
+*
 */
 class User_RegisterController extends FinalView_Controller_Action
-{ 
-    
+{
+
     const SUCCESS_REGISTRATION_MESSAGE = 'SUCCESS_REGISTRATION_MESSAGE';
-    
+
     private $_registerForm;
 
     public function registerAction()
     {
         if ($newUser = $this->_register()) {
             $newUser->save();
-            
+
             $this->_helper->redirector->gotoRoute(array(), 'UserAuthLogin');
         }
     }
@@ -24,13 +24,13 @@ class User_RegisterController extends FinalView_Controller_Action
     /**
     * Simple registration
     */
-    protected function _register() 
+    protected function _register()
     {
         $this->view->form = $this->getForm();
-        
+
         if ($this->getRequest()->isPost()) {
             if ($this->getForm()->isValid($this->getRequest()->getPost())) {
-                
+
                 $newUser = Doctrine::getTable('User')->create($this->getForm()->getValues());
                 $newUser->role = Roles::USER_FRONTEND;
                 
@@ -38,7 +38,7 @@ class User_RegisterController extends FinalView_Controller_Action
             }
         }
     }
-    
+
     protected function getForm()
     {
         if (is_null($this->_registerForm)) {
