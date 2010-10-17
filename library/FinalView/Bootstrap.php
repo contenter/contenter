@@ -202,6 +202,9 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             array(__CLASS__, 'assignNavigation'), $view);
         
         $view->navigation()->setAcl(FinalView_Acl::getInstance())->setUseAcl(false);
+        
+        $this->bootstrap('Translator');
+        $view->navigation()->setTranslator(Zend_Registry::get('Zend_Translate'))->setUseTranslator(true);
     }
     
     /**
