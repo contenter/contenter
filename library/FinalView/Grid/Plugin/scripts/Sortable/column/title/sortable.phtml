@@ -1,12 +1,18 @@
-<?$plugin = $this->grid->getPlugin('sortable');?>
+<?
+    $plugin = $this->grid->getPlugin('sortable');
+    $direction = 'asc';
+    if ($this->column->getName() == $plugin->getSortParams()->columnName) {
+        $direction = $plugin->getSortParams()->direction == 'asc' ? 'desc' : 'asc';
+    }
+?>
 <div
-    <? if ($plugin->columnName == $this->column->getName()):?>
-    class="<? echo $plugin->direction == 'asc' ? 'asc' : 'desc';?>"
+    <? if ($plugin->getSortParams()->columnName == $this->column->getName()):?>
+    class="<? echo $plugin->getSortParams()->direction == 'asc' ? 'asc' : 'desc';?>"
     <?endif;?>
 >
 <a href="<?=$this->addToUrl(array(
     'sort'      =>  $this->column->getName(),
-    'direction' =>  $this->column->getName() == $plugin->columnName ? $plugin->direction : 'asc'
+    'direction' =>  $direction
 ))
 ?>"><?=$this->title;?></a>
 </div>
