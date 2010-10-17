@@ -33,7 +33,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'basePath'  => APPLICATION_PATH,
         ));
         
-        $autoloaderAppNamespace->addResourceType('plugins', '/plugins', 'Plugin');        
+        $autoloaderAppNamespace->addResourceType('plugins', '/plugins', 'Plugin');
         
         return $autoloaderAppNamespace;
     }
@@ -48,7 +48,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initLocale()
 	{
 		if ($locale = $this->getOption('locale')) {
-            Zend_Registry::set('locale', $locale);
+            Zend_Registry::set('Zend_Locale', $locale);
         }
 	}
     
@@ -101,12 +101,12 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initTranslator()
     {
-		$locale = Zend_Registry::isRegistered('locale') ? Zend_Registry::get('locale') : null;
+		$locale = Zend_Registry::isRegistered('Zend_Locale') ? Zend_Registry::get('Zend_Locale') : null;
         $translator = new Zend_Translate('Gettext', APPLICATION_PATH . '/lang', $locale);
         Zend_Registry::set('Zend_Translate', $translator);
         
         // init view helper "Translate" to get static instance for short alias __()
-        $this->bootstrap('view');
+        $this->bootstrap('ViewHelpers');
         $view = $this->getResource('view');
         $view->getHelper('Translate');
     }
@@ -154,7 +154,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'modelsAutoload'));
         $this->getApplication()->getAutoloader()->pushAutoloader(array('Doctrine', 'extensionsAutoload'));
         
-        if (!is_null($doctrine_config = $this->getOption('doctrine'))) {            
+        if (!is_null($doctrine_config = $this->getOption('doctrine'))) {
             FinalView_Doctrine::init($doctrine_config);	
         }
     }
@@ -167,11 +167,11 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {       
         $this->bootstrap('FrontController');
         
-        Zend_Controller_Front::getInstance()->getRouter()->removeDefaultRoutes();             
+        Zend_Controller_Front::getInstance()->getRouter()->removeDefaultRoutes();
         
         // add all found routes 
-        iterate_resursive(APPLICATION_PATH . '/routes/', 
-            array(__CLASS__, 'addRoutes'));        
+        iterate_resursive(APPLICATION_PATH . '/routes/',
+            array(__CLASS__, 'addRoutes'));
     }
     
     /**
@@ -201,7 +201,10 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         iterate_resursive(APPLICATION_PATH . '/navigation/', 
             array(__CLASS__, 'assignNavigation'), $view);
         
-        $view->navigation()->setAcl(FinalView_Acl::getInstance())->setUseAcl(false);        
+        $view->navigation()->setAcl(FinalView_Acl::getInstance())->setUseAcl(false);
+        
+        $this->bootstrap('Translator');
+        $view->navigation()->setTranslator(Zend_Registry::get('Zend_Translate'))->setUseTranslator(true);
     }
     
     /**
@@ -223,12 +226,12 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             case 'xml':
                 $navigation = new Zend_Config_Xml($file);
                 $view->navigation[pathinfo($file, PATHINFO_FILENAME)] = 
-                    new Zend_Navigation($navigation->pages->toArray());                
+                    new Zend_Navigation($navigation->pages->toArray());
             break;
             case 'yml':
                 $navigation = Doctrine_Parser::load($file, 'yml');  
                 $view->navigation[pathinfo($file, PATHINFO_FILENAME)] = 
-                    new FinalView_Navigation($navigation['Pages']);                
+                    new FinalView_Navigation($navigation['Pages']);
             break;
         }
     }
