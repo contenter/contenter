@@ -1,12 +1,12 @@
 <?php
 
 /**
-* Confirmation_Controller 
-* 
+* Confirmation_Controller
+*
 */
-class Confirmation_IndexController extends FinalView_Controller_Action 
+class Confirmation_IndexController extends FinalView_Controller_Action
 {
-            
+
     public function acceptAction()
     {
         $confirmation = $this->_helper->confirmation();
@@ -16,14 +16,14 @@ class Confirmation_IndexController extends FinalView_Controller_Action
             'reply' =>  Confirmation::ACTION_ACCEPT
         ));
     }
-    
+
     public function declineAction()
     {
         $confirmation = $this->_helper->confirmation();
-        
+
         $this->_forward($confirmation->confirmation_type, $confirmation->entity_model, 'confirmation', array(
             'hash'  =>  $this->getRequest()->getParam('hash'),
             'reply' =>  Confirmation::ACTION_DECLINE
         ));
-    }    
+    }
 }
