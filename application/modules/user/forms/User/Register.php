@@ -16,7 +16,7 @@ class User_Form_User_Register extends User_Form_User_Abstract
         
         $element = new Zend_Form_Element_Text('email');
         $element
-            ->setLabel('Email')
+            ->setLabel('EMAIL_FIELD_LABEL')
             ->setRequired()
             ->addFilters(array('StringTrim'))
             ->addValidator('EmailAddress')
@@ -30,7 +30,7 @@ class User_Form_User_Register extends User_Form_User_Abstract
             array('min_password_length', 'max_password_length')));
         $element = new Zend_Form_Element_Password('password');
         $element
-            ->setLabel('Password')
+            ->setLabel('PASSWORD_FIELD_LABEL')
             ->setRequired()
             ->addValidator('StringLength', false, array(
                     $min_password_length, $max_password_length))
@@ -43,7 +43,7 @@ class User_Form_User_Register extends User_Form_User_Abstract
         
         $element = new Zend_Form_Element_Password('password_confirm');
         $element
-            ->setLabel('Confirm Password')
+            ->setLabel('CONFIRM_PASSWORD_FIELD_LABEL')
             ->setRequired()
             ->addValidator($validate)
             ->setAttrib('renderPassword', true)
@@ -52,7 +52,7 @@ class User_Form_User_Register extends User_Form_User_Abstract
         
         $element = new Zend_Form_Element_Submit('submit');
         $element
-            ->setLabel('Register')
+            ->setLabel('REGISTER_BUTTON_TEXT')
             ->setIgnore(true)
             ->setOrder(100)
             ;

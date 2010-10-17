@@ -39,11 +39,11 @@ class User_Form_Login extends Zend_Form
     public function init()
     {
         parent::init();
-        
+
         // Email
         $element = new Zend_Form_Element_Text('email');
         $element
-            ->setLabel('Email')
+            ->setLabel('EMAIL_FIELD_LABEL')
             ->setRequired()
             ->addFilters(array('StringTrim'))
             ->addValidator('EmailAddress')
@@ -57,7 +57,7 @@ class User_Form_Login extends Zend_Form
             array('min_password_length', 'max_password_length')));
         $element = new Zend_Form_Element_Password('password');
         $element
-            ->setLabel('Password')
+            ->setLabel('PASSWORD_FIELD_LABEL')
             ->setRequired()
             ->addValidator('StringLength', false, array(
                     $min_password_length, $max_password_length))
@@ -68,7 +68,7 @@ class User_Form_Login extends Zend_Form
         // Submit
         $element = new Zend_Form_Element_Submit('submit');
         $element
-            ->setLabel('Login')
+            ->setLabel('LOGIN_BUTTON_TEXT')
             ->setIgnore(true)
             ;
         $this->addElement($element);
