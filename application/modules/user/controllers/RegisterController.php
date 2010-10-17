@@ -33,7 +33,7 @@ class User_RegisterController extends FinalView_Controller_Action
 
                 $newUser = Doctrine::getTable('User')->create($this->getForm()->getValues());
                 $newUser->role = Roles::USER_FRONTEND;
-                
+
                 return $newUser;
             }
         }
