@@ -1,6 +1,6 @@
 <?php
 
-class Confirmation_Bootstrap extends FinalView_Application_Module_Bootstrap 
+class Confirmation_Bootstrap extends FinalView_Application_Module_Bootstrap
 {
     public function init()
     {
