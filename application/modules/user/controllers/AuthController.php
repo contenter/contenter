@@ -62,7 +62,7 @@ class User_AuthController extends FinalView_Controller_Action
     {
         return Doctrine::getTable('User')->findOneByParams(array(
             'email' =>  $this->getLoginForm()->getValue('email'),
-            'role'  =>  Roles::USER
+            'role'  =>  Roles::USER_FRONTEND
         ));
     }
     
