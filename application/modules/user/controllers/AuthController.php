@@ -34,7 +34,7 @@ class User_AuthController extends FinalView_Controller_Action
     */
     private function _login() 
     {
-        $this->view->form = $this->getLoginForm();        
+        $this->view->form = $this->getLoginForm();
         
         if ($this->getRequest()->isPost()) {
             if ($this->getLoginForm()->isValid($this->getRequest()->getPost())) {
@@ -51,7 +51,7 @@ class User_AuthController extends FinalView_Controller_Action
                 	$this->getLoginForm()->addErrors($result->getMessages());
                 }
                 
-                return $result->getCode();                
+                return $result->getCode();
             }
         }
     }

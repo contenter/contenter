@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Юра <yuryz@finalview.com>\n"
+"Last-Translator: Yury <yagoldie@yandex.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -44,4 +44,19 @@ msgstr "Background uploaded successfully"
 
 msgid "PROFILE_VIDEO_UPLOADED_SUCCESSFULLY"
 msgstr "Profile video uploaded successfully"
+
+msgid "EMAIL_FIELD_LABEL"
+msgstr "Email"
+
+msgid "PASSWORD_FIELD_LABEL"
+msgstr "Password"
+
+msgid "LOGIN_BUTTON_TEXT"
+msgstr "Login"
+
+msgid "CONFIRM_PASSWORD_FIELD_LABEL"
+msgstr "Confirm password"
+
+msgid "REGISTER_BUTTON_TEXT"
+msgstr "Register"
 
