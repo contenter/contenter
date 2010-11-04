@@ -51,14 +51,14 @@ class FinalView_View_Helper_Pagination extends Zend_View_Helper_Abstract
 
         return $path . '?' . $query;
     }
-    
+
     private function _getBaseUrl()
     {
         if (is_null($this->_base_url)) {
             $this->_base_url = Zend_Controller_Front::getInstance()
                 ->getRequest()->getRequestUri();
         }
-        
+
         return $this->_base_url;
     }
 
