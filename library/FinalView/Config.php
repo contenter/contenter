@@ -82,6 +82,43 @@ abstract class FinalView_Config
         }
     }
     
+    static public function factory($config = array(), $section= null, $options = false){
+        if (is_string($config) and file_exists($config)) {
+            $suffix      = strtolower(pathinfo($config, PATHINFO_EXTENSION));
+
+            switch ($suffix){
+                case "ini":
+                    $configObj = new Zend_Config_Ini($config, $section, $options);
+                    break;
+                case "xml":
+                    $configObj = new Zend_Config_Xml($config, $section, $options);
+                    break;
+                case "json":
+                    $configObj = new Zend_Config_Json($config, $section, $options);
+                    break;
+                case "yaml":
+                    $configObj = new Zend_Config_Yaml($config, $section, $options);
+                    break;
+                case "php":
+                case "inc":
+                    $configArr = include $config;
+                    if (!is_array($config)) {
+                        throw new Zend_Config_Exception('Invalid configuration file provided; PHP file does not return array value');
+                    }
+                    $configObj = new Zend_Config($configArr, $options);
+                    break;
+                default:
+                    throw new Zend_Config_Exception("Invalid configuration file provided; unknown config type");
+                    break;
+            }
+        }elseif(is_array($config)){
+            $configObj = new Zend_Config($config, $options);
+        }else {
+            throw new Zend_Config_Exception("Invalid configuration file provided; unknown config type");
+        }
+        return $configObj;
+    }
+    
 }
 
 

@@ -181,9 +181,10 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     static public function addRoutes($file)
     {
-        if (pathinfo($file, PATHINFO_EXTENSION) != 'xml') return;
-        $routes = new Zend_Config_Xml($file);
-        Zend_Controller_Front::getInstance()->getRouter()->addConfig($routes, 'routes');
+        if (filesize($file) > 0) {
+            $routes = FinalView_Config::factory($file);
+            Zend_Controller_Front::getInstance()->getRouter()->addConfig($routes, 'routes');
+        }
     }
 
     /**
