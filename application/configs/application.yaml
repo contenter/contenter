@@ -1,0 +1,44 @@
+production: 
+  phpSettings: 
+    display_startup_errors: 0
+    display_errors: 0
+  includePaths: 
+    library: W:\home\fvbase.loc\application/../library
+  bootstrap: 
+    path: W:\home\fvbase.loc\application/Bootstrap.php
+    class: Bootstrap
+  resources: 
+    frontController: 
+      controllerDirectory: W:\home\fvbase.loc\application/controllers
+      moduleDirectory: W:\home\fvbase.loc\application/modules
+      moduleControllerDirectoryName: controllers
+    modules: 
+      - 
+    layout: 
+      layoutPath: W:\home\fvbase.loc\application/layouts
+    view: 
+      encoding: UTF-8
+  locale: en
+  doctrine: 
+    data_fixtures_path: W:\home\fvbase.loc\application/../doctrine/data/fixtures
+    migrations_path: W:\home\fvbase.loc\application/../doctrine/migrations
+    sql_path: W:\home\fvbase.loc\application/../doctrine/data/sql
+    yaml_schema_path: W:\home\fvbase.loc\application/../doctrine/schema
+    models_path: W:\home\fvbase.loc\application/../doctrine/models
+  rules: 
+    default_behavior: 1
+
+staging: 
+  _extends: production
+
+testing: 
+  phpSettings: 
+    display_startup_errors: 1
+    display_errors: 1
+  _extends: production
+development: 
+  phpSettings: 
+    display_startup_errors: 1
+    display_errors: 1
+  config: W:\home\fvbase.loc\application/configs/application.local.yaml
+  _extends: production

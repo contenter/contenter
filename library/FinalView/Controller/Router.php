@@ -1,5 +1,5 @@
 <?php
-class FinalView_Controller_Router extends Zend_Controller_Router_Route_Abstract
+class FinalView_Controller_Router extends Zend_Controller_Router_Route
 {
     
     protected $_innerRoutes = array();
@@ -16,7 +16,11 @@ class FinalView_Controller_Router extends Zend_Controller_Router_Route_Abstract
         	throw new FinalView_Controller_Router_Exception('Router must have optional part in round brackets');
         }
         
-        $route = trim($route, '/');        
+        $route = trim($route, '/');
+        $this->_defaults     = (array) $defaults;
+        $this->_requirements = (array) $reqs;
+        $this->_translator   = $translator;
+        $this->_locale       = $locale;
         
         $pos_close = 0;
 
