@@ -13,34 +13,33 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Ldap
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Service_ShortUrl
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Interface.php 13152 2008-12-11 11:28:02Z sgehrig $
+ * @version    $Id: $
  */
 
 /**
- * Zend_Ldap_Collection_Iterator_Interface provides a contract for
- * adapter specific collection iterators
- *
  * @category   Zend
- * @package    Zend_Ldap
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Service_ShortUrl
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Ldap_Collection_Iterator_Interface extends Iterator, Countable
+interface Zend_Service_ShortUrl_Shortener
 {
     /**
-     * Closes the current result set
-     *
-     * @return boolean
+     * This function shortens long url
+     * 
+     * @param  string $url URL to Shorten
+     * @return string Shortened Url
      */
-    public function close();
-
+    function shorten($shortenedUrl);
+    
     /**
-     * Gets the current LDAP connection.
+     * Reveals target for short URL
      *
-     * @return Zend_Ldap
+     * @param  string $shortenedUrl URL to reveal target of
+     * @return string Unshortened Url
      */
-    public function getLdap();
+    function unshorten($shortenedUrl);
 }

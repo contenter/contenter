@@ -8,9 +8,12 @@
 class FinalView_View_Helper_Pagination extends Zend_View_Helper_Abstract
 {
 
-    public function pagination(Doctrine_Pager_Range $pager_range, $current_page)
+    private $_base_url;
+
+    public function pagination(Doctrine_Pager_Range $pager_range, $current_page, $base_url = null)
     {
         $pager = $pager_range->getPager();
+        $this->_base_url = $base_url;
 
         if ($pager->getMaxPerPage() < $pager->getNumResults()) {
             $html = '<ul class="pagination">';
@@ -34,8 +37,8 @@ class FinalView_View_Helper_Pagination extends Zend_View_Helper_Abstract
 
     private function _makeUrl($page)
     {
-        $request_uri_parts = parse_url(Zend_Controller_Front::getInstance()
-            ->getRequest()->getRequestUri());
+
+        $request_uri_parts = parse_url($this->_getBaseUrl());
         $path = array_shift($request_uri_parts);
         $query = !empty($request_uri_parts)
             ? array_shift($request_uri_parts)
@@ -47,6 +50,16 @@ class FinalView_View_Helper_Pagination extends Zend_View_Helper_Abstract
 
 
         return $path . '?' . $query;
+    }
+
+    private function _getBaseUrl()
+    {
+        if (is_null($this->_base_url)) {
+            $this->_base_url = Zend_Controller_Front::getInstance()
+                ->getRequest()->getRequestUri();
+        }
+
+        return $this->_base_url;
     }
 
 }
