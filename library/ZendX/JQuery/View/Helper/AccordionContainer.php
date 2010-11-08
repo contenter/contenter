@@ -15,9 +15,9 @@
  * @category    ZendX
  * @package     ZendX_JQuery
  * @subpackage  View
- * @copyright   Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AccordionContainer.php 15992 2009-06-11 08:53:04Z beberlei $
+ * @version     $Id: AccordionContainer.php 20165 2010-01-09 18:57:56Z bkarwin $
  */
 
 /**
@@ -31,7 +31,7 @@ require_once "ZendX/JQuery/View/Helper/UiWidget.php";
  * @uses 	   Zend_Json
  * @package    ZendX_JQuery
  * @subpackage View
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
   */
 class ZendX_JQuery_View_Helper_AccordionContainer extends ZendX_JQuery_View_Helper_UiWidget
@@ -143,11 +143,29 @@ class ZendX_JQuery_View_Helper_AccordionContainer extends ZendX_JQuery_View_Help
     {
         if($this->_elementHtmlTemplate == null) {
             if(version_compare($this->jquery->getUiVersion(), "1.7.0") >= 0) {
-                $this->_elementHtmlTemplate = '<a href="#">%s</a><div>%s</div>';
+                $this->_elementHtmlTemplate = '<h3><a href="#">%s</a></h3><div>%s</div>';
             } else {
                 $this->_elementHtmlTemplate = '<li class="ui-accordion-group"><a href="#" class="ui-accordion-header">%s</a><div class="ui-accordion-content">%s</div></li>';
             }
         }
         return $this->_elementHtmlTemplate;
+    }
+
+    /**
+     * Set the accordion element template
+     *
+     * @param  string $htmlTemplate
+     * @return ZendX_JQuery_View_Helper_AccordionContainer
+     */
+    public function setElementHtmlTemplate($htmlTemplate)
+    {
+        if(substr_count($htmlTemplate, '%s') != 2) {
+            require_once "ZendX/JQuery/View/Exception.php";
+            throw new ZendX_JQuery_View_Exception(
+                "Accordion Container HTML Template requires two sprintf() string replace markers '%s'."
+            );
+        }
+        $this->_elementHtmlTemplate = $htmlTemplate;
+        return $this;
     }
 }

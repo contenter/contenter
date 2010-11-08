@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ControllerFile.php 20247 2010-01-12 21:38:15Z dasprid $
+ * @version    $Id: ControllerFile.php 23204 2010-10-21 15:35:21Z ralph $
  */
 
 /**
@@ -113,11 +113,11 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
                         new Zend_CodeGenerator_Php_Method(array(
                             'name' => 'init',
                             'body' => '/* Initialize action controller here */',
-                        	))
-                    	)
-                	))
-            	)
-        	));
+                            ))
+                        )
+                    ))
+                )
+            ));
 
 
         if ($className == 'ErrorController') {
@@ -133,6 +133,11 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
                                 'name' => 'errorAction',
                                 'body' => <<<EOS
 \$errors = \$this->_getParam('error_handler');
+
+if (!\$errors) {
+    \$this->view->message = 'You have reached the error page';
+    return;
+}
 
 switch (\$errors->type) {
     case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
@@ -167,7 +172,7 @@ EOS
                                 'name' => 'getLog',
                                 'body' => <<<EOS
 \$bootstrap = \$this->getInvokeArg('bootstrap');
-if (!\$bootstrap->hasPluginResource('Log')) {
+if (!\$bootstrap->hasResource('Log')) {
     return false;
 }
 \$log = \$bootstrap->getResource('Log');
