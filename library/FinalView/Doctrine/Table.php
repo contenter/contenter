@@ -125,7 +125,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         return $this->_getQuery();      
     }
     
-    protected function innerJoin($relation, $params, $on = '')
+    protected function innerJoin($relation, array $params = array(), $on = '')
     {    
         $tableObject = $this->getRelation($relation)->getTable();
         
@@ -139,7 +139,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         return $tableObject->build($this->_query, $params);
     }
     
-    protected function LeftJoin($relation, $params, $on = '')
+    protected function LeftJoin($relation, array $params = array(), $on = '')
     {    
         $tableObject = $this->getRelation($relation)->getTable();
         
