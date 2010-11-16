@@ -12,7 +12,7 @@ User:
       type: string(32)
       notnull: true
     role:
-      type: integer(10)
+      type: integer(1)
       notnull: true
   actAs:
     Timestampable:

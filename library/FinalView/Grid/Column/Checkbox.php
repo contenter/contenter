@@ -13,7 +13,6 @@ class FinalView_Grid_Column_Checkbox extends FinalView_Grid_Column
     
     public function handler($params, FinalView_Grid_Renderer $view)
     {
-        $view->columnName = $this->getName();
         $view->value = ($this->iteratorField === null) ? '' : @$params[$this->iteratorField];
     }
 }
