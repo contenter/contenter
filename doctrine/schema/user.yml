@@ -25,6 +25,7 @@ User:
     FinalView_Doctrine_Template_Confirmable: 
       types: 
         - registration
+        - forgot-password
   options:
     type: INNODB
     collate: utf8_general_ci

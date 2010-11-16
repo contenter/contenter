@@ -46,5 +46,23 @@
                 <action>confirmation</action>
             </defaults>
         </UserRegisterConfirmation>                                   
+        <UserAuthForgotPassword>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>user/forgot-password.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>auth</controller>
+                <action>forgot-password</action>
+            </defaults>
+        </UserAuthForgotPassword>
+        <UserAuthForgotPasswordMailSent>
+            <type>Zend_Controller_Router_Route</type>
+            <route>user/:hash/forgot-password-mail-sent.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>auth</controller>
+                <action>forgot-password-mail-sent</action>
+            </defaults>
+        </UserAuthForgotPasswordMailSent>                                           
     </routes>
 </configdata>

@@ -60,3 +60,6 @@ msgstr "Confirm password"
 msgid "REGISTER_BUTTON_TEXT"
 msgstr "Register"
 
+msgid "SEND_REQUEST_BUTTON_TEXT"
+msgstr "Send Request"
+

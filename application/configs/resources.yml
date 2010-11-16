@@ -12,6 +12,10 @@ Request:
 
   confirmation-user-registration: {rule: !logged_in, handler: forbidden}
   
+  user-auth-forgot-password: {rule: !logged_in, handler: forbidden}
+  user-auth-forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, handler: not_found}
+  
+  confirmation-user-forgot-password: {rule: not_logged_in_and_forgot_pswd_hash_exist, handler: not_found}
   admin-index-index: {rule: admin_logged_in, handler: not_detected_admin}
   admin-auth-login:  {rule: !admin_logged_in, handler: forbidden}
   admin-auth-logout: {rule: admin_logged_in, handler: forbidden}

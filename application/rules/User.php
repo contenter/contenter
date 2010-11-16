@@ -41,4 +41,14 @@ class Application_Rules_User extends FinalView_Access_Rules_Abstract
     {
         return !(bool)$this->_user->confirmed;
     }    
+    
+    public function forgotPswdHashRule()
+    {
+        $hash = Doctrine::getTable('Confirmation')->findOneByParams(array(
+            'hash'  =>  $this->_params['hash'],
+            'type'  =>  'forgot-password'
+        ));
+        
+        return (bool)$hash;
+    }   
 }
