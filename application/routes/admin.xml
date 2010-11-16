@@ -46,5 +46,41 @@
                 <action>edit</action>
             </defaults>
         </AdminUserEdit>                   
+        <AdminCmsIndex>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>admin/cms.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>cms</controller>
+                <action>index</action>
+            </defaults>        
+        </AdminCmsIndex>
+        <AdminCmsEditPage>
+            <type>Zend_Controller_Router_Route</type>
+            <route>admin/cms-page/:page_name/edit.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>cms</controller>
+                <action>edit-page</action>
+            </defaults>        
+        </AdminCmsEditPage>
+        <AdminCmsAddPage>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>admin/cms-page/add.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>cms</controller>
+                <action>add-page</action>
+            </defaults>        
+        </AdminCmsAddPage>
+        <AdminCmsDeletePage>
+            <type>Zend_Controller_Router_Route</type>
+            <route>admin/cms-page/:page_name/delete.html</route>
+            <defaults>
+                <module>admin</module>
+                <controller>cms</controller>
+                <action>delete-page</action>
+            </defaults>        
+        </AdminCmsDeletePage>                        
     </routes>
 </configdata>

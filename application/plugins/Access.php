@@ -80,4 +80,20 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         
         $this->_forbiddenHandler();
     }               
+    
+    protected function _notAllowedWorkWithCmsPage()
+    {
+        $failedRule = $this->getResource()->getAccessRule();
+        
+        if ($failedRule->isFailedRule('admin_logged_in')) {
+        	$this->_redirectToAdminLogin();
+}
+        
+        if ($failedRule->isFailedRule('cms_page_exists')) {
+        	$this->_notFoundHandler();
+        	return;
+        }
+        
+        $this->_forbiddenHandler();                
+    }               
 }

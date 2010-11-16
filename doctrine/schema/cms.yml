@@ -1,0 +1,24 @@
+CmsPage:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    name: 
+      type: string(128)
+      unique: true
+      notnull: true
+    route:
+      type: string(128)
+      unique: true
+      default: null
+    title:
+      type: string(256)
+      notnull: true
+    contents:
+      type: clob
+      notnull: true
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
