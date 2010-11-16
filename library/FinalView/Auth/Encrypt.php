@@ -1,11 +1,10 @@
 <?php
-
 /**
 * User encrypt utility
 * 
 */
 class FinalView_Auth_Encrypt 
-{
+{ 
     
     /**
     * Encrypt value

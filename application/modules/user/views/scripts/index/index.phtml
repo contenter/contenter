@@ -1,0 +1,8 @@
+Authorized User: <br />
+<? dump($this->user()->toArray());?>
+
+Contextual User:
+<? if($this->user('contextual')) {
+    dump($this->user('contextual')->toArray());
+};?>
+

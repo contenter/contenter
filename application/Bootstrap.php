@@ -3,7 +3,7 @@ require_once LIBRARY_PATH . '/FinalView/Bootstrap.php';
 
 class Bootstrap extends FinalView_Bootstrap
 {
-    
+
     /**
     * Init plugin to use https for secure pages
     * 
@@ -18,8 +18,27 @@ class Bootstrap extends FinalView_Bootstrap
         $front->registerPlugin(new Application_Plugin_SecureRequest, 3);
     }
     
-    protected function _initAccessRules()
+    protected function _initRoles()
     {
+        require_once APPLICATION_PATH.'/Roles.php';
+    }
+    
+    protected function _initAuthUserTable()
+    {       
+        $this->bootstrap('Doctrine');
+        
+        FinalView_Auth::setAuthEntityTable('User');
+    }
+
+    protected function _initAuthUser()
+    {
+        $this->bootstrap('AuthUserTable');
+
+        FinalView_Auth::getInstance()->refreshStorage();
+    }
+        
+    protected function _initAccessRules()
+    {       
         $this->bootstrap('Doctrine');
         
         if (file_exists($filename = APPLICATION_PATH . '/configs/rules.yml')) {
@@ -40,7 +59,7 @@ class Bootstrap extends FinalView_Bootstrap
     }
     
     protected function _initResources()
-    {       
+    {        
         $this->bootstrap('Doctrine');
         
         $resources = Doctrine_Parser::load(APPLICATION_PATH . '/configs/resources.yml', 'yml');
