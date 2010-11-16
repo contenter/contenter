@@ -3,28 +3,28 @@ production:
     display_startup_errors: 0
     display_errors: 0
   includePaths: 
-    library: W:\home\fvbase.loc\application/../library
+    library: APPLICATION_PATH/../library
   bootstrap: 
-    path: W:\home\fvbase.loc\application/Bootstrap.php
+    path: APPLICATION_PATH/Bootstrap.php
     class: Bootstrap
   resources: 
     frontController: 
-      controllerDirectory: W:\home\fvbase.loc\application/controllers
-      moduleDirectory: W:\home\fvbase.loc\application/modules
+      controllerDirectory: APPLICATION_PATH/controllers
+      moduleDirectory: APPLICATION_PATH/modules
       moduleControllerDirectoryName: controllers
     modules: 
       - 
     layout: 
-      layoutPath: W:\home\fvbase.loc\application/layouts
+      layoutPath: APPLICATION_PATH/layouts
     view: 
       encoding: UTF-8
   locale: en
   doctrine: 
-    data_fixtures_path: W:\home\fvbase.loc\application/../doctrine/data/fixtures
-    migrations_path: W:\home\fvbase.loc\application/../doctrine/migrations
-    sql_path: W:\home\fvbase.loc\application/../doctrine/data/sql
-    yaml_schema_path: W:\home\fvbase.loc\application/../doctrine/schema
-    models_path: W:\home\fvbase.loc\application/../doctrine/models
+    data_fixtures_path: APPLICATION_PATH/../doctrine/data/fixtures
+    migrations_path: APPLICATION_PATH/../doctrine/migrations
+    sql_path: APPLICATION_PATH/../doctrine/data/sql
+    yaml_schema_path: APPLICATION_PATH/../doctrine/schema
+    models_path: APPLICATION_PATH/../doctrine/models
   rules: 
     default_behavior: 1
 
@@ -40,5 +40,5 @@ development:
   phpSettings: 
     display_startup_errors: 1
     display_errors: 1
-  config: W:\home\fvbase.loc\application/configs/application.local.yaml
+  config: APPLICATION_PATH/configs/application.local.yaml
   _extends: production
