@@ -36,6 +36,15 @@
                 <controller>index</controller>
                 <action>index</action>
             </defaults>
-        </UserIndexIndex>                           
+        </UserIndexIndex>
+        <UserRegisterConfirmation>
+            <type>Zend_Controller_Router_Route</type>
+            <route>user/role/:role/:email/resend-confirmation.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>register</controller>
+                <action>confirmation</action>
+            </defaults>
+        </UserRegisterConfirmation>                                   
     </routes>
 </configdata>

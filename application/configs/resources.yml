@@ -5,6 +5,12 @@ Request:
   user-auth-login: {rule: allowed_to_auth, handler: redirect_to_user_index}
   user-auth-logout: {rule: _TRUE_}
   user-register-register: {rule: !logged_in, handler: redirect_to_user_index}
+  user-register-confirmation: {rule: not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed, handler: not_found}  
+  
+  confirmation-index-accept: {rule: hash_exist, handler: not_found}
+  confirmation-index-decline: {rule: hash_exist, handler: not_found}
+
+  confirmation-user-registration: {rule: !logged_in, handler: forbidden}
   
   admin-index-index: {rule: admin_logged_in, handler: not_detected_admin}
   admin-auth-login:  {rule: !admin_logged_in, handler: forbidden}

@@ -1,0 +1,35 @@
+Confirmation: 
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    hash:
+      type: string(16)
+      notnull: true
+    confirmation_type:
+      type: string(100)
+      notnull: true
+    entity_model:
+      type: string(50)
+      notnull: true
+    entity_id:
+      type: integer(4)
+      notnull: true
+  indexes: 
+    hash: 
+      fields: [hash]
+      type: unique
+    entity:
+      fields: [entity_model, entity_id, confirmation_type]
+      type: unique
+  actAs:
+    Timestampable: 
+      created:
+        disabled: false
+      updated:
+        disabled: true        
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8

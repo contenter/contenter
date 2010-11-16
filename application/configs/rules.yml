@@ -19,6 +19,17 @@ User:
     dependences: [!logged_in, is_post]
   is_post:
     type: FUNC
+  not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed:
+    type: AND
+    dependences: [!logged_in, user_exist_by_email_and_role, user_not_confirmed]
+  user_exist_by_email_and_role:
+    type: FUNC
+  user_not_confirmed:
+    type: FUNC
+
+Confirmation:
+  hash_exist:
+    type: FUNC
 
 Admin:
   admin_logged_in:

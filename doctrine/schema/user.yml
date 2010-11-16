@@ -14,8 +14,17 @@ User:
     role:
       type: integer(1)
       notnull: true
+    confirmed:
+      type: integer(1)
+      default: 0
+      notnull: true
+    replied_at:
+      type: timestamp
   actAs:
     Timestampable:
+    FinalView_Doctrine_Template_Confirmable: 
+      types: 
+        - registration
   options:
     type: INNODB
     collate: utf8_general_ci

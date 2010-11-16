@@ -1,0 +1,2 @@
+INSERT INTO `mail_templates` (`template`, `subject`, `text`, `html`) VALUES 
+  ('user/registration-confirmation', 'Registration confirmation', '', '<p>Hello, User !\r\n<br /><br />\r\nPlease confirm your account by&nbsp;clicking the link below or copy and paste it into your web browser:\r\n<br />\r\n{$BASE_PATH}confirmation/{$hash}/accept.html\r\n<br /><br />\r\nTo decline registration click the link below or copy and paste it into your web browser:\r\n{$BASE_PATH}confirmation/{$hash}/decline.html\r\n</p>');
