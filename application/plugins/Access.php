@@ -49,4 +49,35 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         
         Zend_Controller_Action_HelperBroker::getStaticHelper('Redirector')->gotoUrl($url);
     }
+    protected function _notDetectedAdminHandler()
+    {
+        $this->_redirectToAdminLogin();
+    }
+    
+    protected function _redirectToAdminLogin()
+    {
+        Zend_Controller_Action_HelperBroker::getStaticHelper('Redirector')->gotoRoute(array(), 'AdminAuthLogin' );
+    }
+        
+    protected function _notFoundIfAdminAuthorizedHandler()
+    {
+        $failedRule = $this->getResource()->getAccessRule();
+        
+        if ($failedRule->isFailedRule('admin_logged_in')) {
+        	$this->_redirectToAdminLogin();
+        }
+        
+        $this->_notFoundHandler();
+    }
+
+    protected function _forbiddenIfAdminAuthorizedHandler()
+    {
+        $failedRule = $this->getResource()->getAccessRule();
+        
+        if ($failedRule->isFailedRule('admin_logged_in')) {
+        	$this->_redirectToAdminLogin();
+        }
+        
+        $this->_forbiddenHandler();
+    }               
 }

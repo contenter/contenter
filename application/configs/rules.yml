@@ -19,3 +19,8 @@ User:
     dependences: [!logged_in, is_post]
   is_post:
     type: FUNC
+
+Admin:
+  admin_logged_in:
+    type: AND
+    dependences: [logged_in] 

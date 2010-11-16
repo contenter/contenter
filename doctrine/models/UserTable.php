@@ -30,3 +30,8 @@ class UserTable extends FinalView_Doctrine_Table
         $this->idsSelector($auth_object->id);
     }         
 }
+
+
+
+
+

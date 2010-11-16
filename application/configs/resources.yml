@@ -5,3 +5,9 @@ Request:
   user-auth-login: {rule: allowed_to_auth, handler: redirect_to_user_index}
   user-auth-logout: {rule: _TRUE_}
   user-register-register: {rule: !logged_in, handler: redirect_to_user_index}
+  
+  admin-index-index: {rule: admin_logged_in, handler: not_detected_admin}
+  admin-auth-login:  {rule: !admin_logged_in, handler: forbidden}
+  admin-auth-logout: {rule: admin_logged_in, handler: forbidden}
+  
+  admin-user-index: {rule: admin_logged_in, handler: not_detected_admin} 

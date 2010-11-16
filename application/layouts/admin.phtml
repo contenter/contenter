@@ -1,0 +1,44 @@
+<?=$this->doctype()?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>  
+    <?=$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8')?>
+    <?=$this->headTitle('FinalView Adminarea')?>
+    <base href="<?=BASE_PATH?>" />
+    <?php $this->headLink()->appendStylesheet('css/admin.css'); ?>
+    <?=$this->headLink()?>
+    <?php $this->headScript()->appendFile('/scripts/backend.js'); ?>
+    <?php $this->headScript()->prependFile('/scripts/jquery.min.js'); ?>
+    <?=$this->headScript()?>
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="header">
+		<img class="logo" src="/images/grid/logo.png" alt="" />
+        <div id="view_site"><a href="/">View Site</a></div>
+        <? if ($this->isAllowed('admin-auth-logout') ) : ?>
+        <div id="logout"><a href="<?=$this->url(array(), 'AdminAuthLogout')?>">Log out</a></div>
+        <? endif; ?>
+    </div>
+    <div id="middle">
+        <div id="container">
+            <div id="content">
+                    <?=$this->partial('_message.phtml')?>
+                    <?=$this->layout()->content?>
+
+		<div class="clear"><!-- --></div>
+            </div>
+        </div>
+        
+        <? if ($this->isAllowed('admin-index-index')) : ?>
+        <div class="sidebar sl mainMenu">
+            <?=$this->navigation()->menu($this->navigation['admin']);?>
+        </div>
+        <? endif; ?>
+    </div>
+    <div id="footer">
+        &copy; FinalView 2010. All rights reserved.
+    </div>
+</div>
+</body>
+</html>
