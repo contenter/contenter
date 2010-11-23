@@ -5,7 +5,7 @@ class FinalView_Controller_Action_Helper_IsAllowed
 {
     public function direct($resource, $params = array(), $head = null, $context = null)
     {
-       return $this->isAllowed($resource, $params, $head);
+       return $this->isAllowed($resource, $params, $head, $context);
     }
 
     public function isAllowed($resource, $params = array(), $head = null, $context = null)
