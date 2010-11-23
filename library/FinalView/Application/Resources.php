@@ -7,6 +7,7 @@ class FinalView_Application_Resources
     protected $_resource;
     protected $_section;
     private $_access_rule;
+    private $_context_rules;
 
     public static function setResources(array $resources)
     {
@@ -53,21 +54,34 @@ class FinalView_Application_Resources
     public function getAccessRule($context = null)
     {
         if (!is_null($context)) {
-            $contexts = $this->getResource('contexts');
-            if (!isset($contexts[$context])) {
-                throw new FinalView_Application_Exception('context ' . $context . ' is not defined for resource: ' . $this->_resource);
+            if (!isset($this->_context_rules[$context]) ) {
+                $contexts = $this->getResource('contexts');
+                if (!isset($contexts[$context])) {
+                    throw new FinalView_Application_Exception('context ' . $context . ' is not defined for resource: ' . $this->_resource);
+                }
+                
+                $this->_context_rules[$context] = FinalView_Access_Rules::getRule($contexts[$context]);
+                
+                if (is_null($this->_context_rules[$context])) {
+                    throw new FinalView_Application_Exception('can not be defined rule for resource: ' . $this->_resource);
+                }
+                
             }
-
-            $rule = $contexts[$context];
+            
+            $rule = $this->_context_rules[$context];
         }else{
-            $rule = $this->getResource('rule');
+            if ($this->_access_rule === null) {
+            	$this->_access_rule = FinalView_Access_Rules::getRule($this->getResource('rule'));
+
+                if (is_null($this->_access_rule)) {
+                    throw new FinalView_Application_Exception('can not be defined rule for resource: ' . $this->_resource);
+                }
+            }
+            
+            $rule = $this->_access_rule;
         }
 
-        if (is_null($rule)) {
-            throw new FinalView_Application_Exception('can not be defined rule for resource: ' . $this->_resource . ' in context: ' . $context);
-        }
-
-        return FinalView_Access_Rules::getRule($rule);
+        return $rule;
     }
 
     public function getResource($key = null)
