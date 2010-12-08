@@ -157,7 +157,11 @@ class FinalView_Doctrine_Table extends Doctrine_Table
 
     private function _fieldSelector($field_name, $value)
     {
-        $this->_getQuery()->addWhere($this->getTableName().'.' . $field_name . ' = ?', $value);
+        if (is_null($value)) {
+            $this->_getQuery()->addWhere($this->getTableName().'.' . $field_name . ' IS NULL');
+        } else {
+            $this->_getQuery()->addWhere($this->getTableName().'.' . $field_name . ' = ?', $value);
+        }
     }
 
     protected function limitSelector($params)
