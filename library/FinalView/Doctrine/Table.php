@@ -1,11 +1,12 @@
 <?php
+
 class FinalView_Doctrine_Table extends Doctrine_Table
 {
     private $_queryParams;
     private $_query;
-    
+
     private $_joinedTables = array();
-    
+
     /**
      * @return Doctrine_Query
      */
@@ -14,67 +15,70 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         if ($this->_query === null) {
         	$this->_query = $this->createQuery($this->getTableName());
         }
-        
+
         return $this->_query;
     }
-    
+
     public function resetQuery()
     {
         $this->_query = null;
+
         foreach ($this->_joinedTables as $table) {
         	$table->resetQuery();
-        }    
-    } 
-    
+        }
+
+        $this->_joinedTables = array();
+    }
+
     final public function findByParams($params = array(), $hydrationMode = null)
     {
         $this->build($this->_getQuery(), $params);
 
         $result = $this->_getQuery()->execute(array(), $hydrationMode);
-        
+
         $this->resetQuery();
-        
+
         return $result;
     }
-    
+
     final public function findOneByParams($params = array(), $hydrationMode = null)
     {
         $this->build($this->_getQuery(), $params);
 
         $result = $this->_getQuery()->limit(1)->fetchOne(array(), $hydrationMode);
-        
+
         $this->resetQuery();
-        
+
         return $result;
     }
-    
+
     final public function findPageByParams($params = array(), $pageNum, $perPage, $hydrationMode = null)
     {
         $this->build($this->_getQuery(), $params);
-        
+
         $query = clone($this->_getQuery());
         $pager = new Doctrine_Pager(
             $query,
             $pageNum,
             $perPage
         );
-        
+
         $this->resetQuery();
-        
+
         return $pager;
     }
-    
+
     final public function countByParams($params = array())
     {
         $this->build($this->_getQuery(), $params);
-        
+
         $result = $this->_getQuery()->count(array());
-        
+
         $this->resetQuery();
-        
+
         return $result;
-    }    
-    
+    }
+
     final public function updateByParams($params = array(), $values = array())
     {
         foreach ( $values as $key=>$value ) {
@@ -126,32 +130,32 @@ class FinalView_Doctrine_Table extends Doctrine_Table
 
         return $this->_getQuery();
     }
-    
+
     protected function innerJoin($relation, array $params = array(), $on = '')
-    {    
+    {
         $tableObject = $this->getRelation($relation)->getTable();
-        
+
         if (!empty($on)) {
         	$on = ' ON (' . $on . ')';
         }
-        
+
         $this->_getQuery()->innerJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on);
         $this->_joinedTables[] = $tableObject;
-              
+
         return $tableObject->build($this->_query, $params);
     }
-    
+
     protected function LeftJoin($relation, array $params = array(), $on = '')
-    {    
+    {
         $tableObject = $this->getRelation($relation)->getTable();
-        
+
         if (!empty($on)) {
         	$on = ' ON (' . $on . ')';
         }
 
         $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on );
         $this->_joinedTables[] = $tableObject;
-            
+
         return $tableObject->build($this->_query, $params);
     }
 
@@ -171,12 +175,12 @@ class FinalView_Doctrine_Table extends Doctrine_Table
             ->offset($params['per_page']*$params['page'])
             ;
     }
-    
+
     protected function orderBySelector($sort)
     {
-        $this->_getQuery()->addOrderBy($this->getTableName().'.'.$sort['field'].' '.$sort['direction'] );                
+        $this->_getQuery()->addOrderBy($this->getTableName().'.'.$sort['field'].' '.$sort['direction'] );
     }
-    
+
     protected function fieldsSelector($fields)
     {
         $this->_getQuery()->select( implode(', ', $fields) );
