@@ -2,6 +2,9 @@
 <configdata>
     <secure_pages>
         <resource>
+            <route>DefaultIndexIndex</route>
+        <resource>
+        <resource>
             <module>user</module>
             <controller>register_venue</controller>
             <action>venue-2</action>
