@@ -35,6 +35,10 @@ class FinalView_Application_Resources
                     if($sectionName === 0) continue;
                     if (array_key_exists($resource, self::$_resources[$sectionName])) { $section = $sectionName; break;}
                 }
+                
+                if ($section === null) {
+                    return null;
+                }
             }else{
                 $section = 0;
             }
