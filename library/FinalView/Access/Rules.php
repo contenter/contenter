@@ -26,8 +26,13 @@ class FinalView_Access_Rules
                     'group'     =>  $group,
                     'type'      =>  $data['type']
                 );
+                
                 if (array_key_exists('dependences', $data)) {
                     self::$_rules[$rule]['dependences'] = $data['dependences'];
+                }
+                
+                if (array_key_exists('expression', $data)) {
+                    self::$_rules[$rule]['expression'] = $data['expression'];
                 }
             }
         }
@@ -39,7 +44,7 @@ class FinalView_Access_Rules
             throw new FinalView_Access_Exception("Please use only OR and AND for one part of rule. Use brackets (). Expression: " . $expression);
         }
 
-        if (!preg_match('/^[!a-zA-Z0-9][a-zA-Z0-9\-\_\s]+$/', $expression)) {
+        if (!preg_match('/^[!a-zA-Z0-9][!a-zA-Z0-9\-\_\s]+$/', $expression)) {
             throw new FinalView_Access_Exception("Please use only a-zA-Z - _ in rules names. Expression: " . $expression);
         }
         
@@ -100,7 +105,7 @@ class FinalView_Access_Rules
         if (!isset(self::$_rules[$ruleName]) ) {
             self::addRuleToSchema($ruleName, $cleanRule);
         }
-        
+
         return $ruleName;
     }
 
@@ -109,6 +114,7 @@ class FinalView_Access_Rules
         if ($rule == '_TRUE_' || $rule == '_FALSE_') {
             return new self($rule);
         }
+        
         if (preg_match('/\s/', trim($rule))) {
             return self::getRule(self::buildRule(trim($rule)));
         }elseif (substr($rule, 0, 1) == '!') {
@@ -146,26 +152,56 @@ class FinalView_Access_Rules
     {
         $this->_failedRules = array();
 
-        switch ($this->_rule) {
-            case '_TRUE_':
+        switch (true) {
+            case $this->_rule == '_TRUE_':
                 return true;
             break;
-            case '_FALSE_':
+            
+            case $this->_rule == '_FALSE_':
                 return false;
             break;
+            
+            case !is_null($this->_getRule('expression')):
+                $checkingRule = self::getRule($this->_getRule('expression'));
+                $result = $checkingRule->checkInContext();
+
+                if (false === $result) {
+                    $this->_failedRules = $this->_failedRules + $checkingRule->getFailedRules();
+                }
+            break;
+            
+            case $this->_getRule('type') == 'FUNC':
+                $result = $this->_check();
+            break;
+            
+            case in_array($this->_getRule('type'), array('OR', 'AND')):
+                $result = $this->_checkDependencies();
+            break;
+            
+            default:
+                throw new FinalView_Access_Exception('rule' . $this->_rule . 'is incorrect');
+            break;
+        }
+        
+        if (false === $result) {
+            $this->_failedRules[$this->_rule] = $this;
         }
 
-        if ($this->_getRule('type') == 'FUNC') {
-            $result = $this->_check();
-            if (false === $result) {
-                $this->_failedRules[$this->_rule] = $this;
-            }
-
-            return $result;
-        }
+        return $result;
+    }
+    
+    protected function _checkDependencies()
+    {
         $dependences = $this->_getRule('dependences');
+        if (!is_array($dependences) || empty($dependences) ) {
+            throw new FinalView_Access_Exception("For dependent rule: " . $this->_rule . ' dependences is incorrect (must be non empty array)');
+        }
+        
+        if (!in_array($this->_getRule('type'), array('OR', 'AND'))) {   // do not add any other types. At first look at return value at the end of function
+            throw new FinalView_Access_Exception("For dependent rule: " . $this->_rule . ' type is incorrect (must be OR or AND)');
+        }
 
-        foreach ((array)$dependences as $checking_rule) {
+        foreach ($dependences as $checking_rule) {
             $checkingRule = self::getRule($checking_rule);
             $result = $checkingRule->checkInContext();
             $rule_type = $this->_getRule('type');
@@ -198,28 +234,8 @@ class FinalView_Access_Rules
                 break;
             }
         }
-
-        $result = $this->_check();
-
-        if ($result === null) {
-            switch ($this->_getRule('type')) {
-                case 'OR':
-                   return false;
-                break;
-                case 'AND':
-                   return true;
-                break;
-                default:
-                   throw new FinalView_Access_Exception('type of rule '.$this->_rule.' is incorrect');
-                break;
-            }
-        }
-
-        if (false === $result) {
-            $this->_failedRules[$this->_rule] = $this;
-        }
-
-        return $result;
+        
+        return $this->_getRule('type') == 'AND';  //here we know that only AND expressions can be true. OR expressions are false.
     }
 
     public function isFailedRule($rule = null)
@@ -256,13 +272,13 @@ class FinalView_Access_Rules
 
         $method = $this->_getMethodName();
 
-        if (method_exists($rules, $method)) {
-            return !$this->isInverted()
-                ? $rules->$method()
-                : !$rules->$method();
+        if (!method_exists($rules, $method)) {
+            throw new FinalView_Access_Exception('Rule Method ' . $method . ' can not be found in class ' . $className);
         }
-
-        return null;
+        
+        return !$this->isInverted()
+            ? $rules->$method()
+            : !$rules->$method();
     }
 
     protected function _getRule($key = null)
