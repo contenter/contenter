@@ -1,3 +1,13 @@
-Request:    
-  default-error-error: {rule: _TRUE_}
-  default-index-index: {rule: _TRUE_} 
+default:
+  rule: _TRUE_
+  children:
+    index:
+      rule: _TRUE_
+      children:
+        index:
+          rule: _TRUE_
+    error:
+      rule: _TRUE_
+      children:
+        error:
+          rule: _TRUE_

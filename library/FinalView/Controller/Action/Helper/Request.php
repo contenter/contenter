@@ -43,7 +43,7 @@ class FinalView_Controller_Action_Helper_Request
      */
     private function _initRequestParams()
     {
-        $params = $this->getRequest()->getParams();
+        $params = $this->getRequest()->getUserParams();
         unset($params['module']);
         unset($params['controller']);
         unset($params['action']);

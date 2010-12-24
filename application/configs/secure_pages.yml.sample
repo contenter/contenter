@@ -1,4 +1,6 @@
 -
+  route: DefaultIndexIndex
+-
   module: default
   controller: index
   action: index
