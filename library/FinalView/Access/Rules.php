@@ -37,7 +37,7 @@ class FinalView_Access_Rules
             }
         }
     }
-    
+
     public static function addRuleToSchema($name, $expression)
     {
         if (strpos($expression, ' AND ') !== false && strpos($expression, ' OR ') !== false) {
@@ -45,9 +45,10 @@ class FinalView_Access_Rules
         }
 
         if (!preg_match('/^[!a-zA-Z0-9][!a-zA-Z0-9\-\_\s]+$/', $expression)) {
-            throw new FinalView_Access_Exception("Please use only a-zA-Z - _ in rules names. Expression: " . $expression);
+            if (!in_array($expression, array('_TRUE_', '_FALSE_') )) {
+                throw new FinalView_Access_Exception("Please use only a-zA-Z - _ in rules names. Expression: " . $expression);
+            }
         }
-        
 
         if (strpos($expression, ' AND ') !== false) {
             $arr = explode(' AND ', $expression);
