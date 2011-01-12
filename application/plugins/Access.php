@@ -8,14 +8,7 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         $contr = $request->getControllerName();
         $action = $request->getActionName();
         
-        switch (true) {
-            case FinalView_Application_Resources::hasResource($res = $module . '.' . $contr . '.' . $action):
-            case FinalView_Application_Resources::hasResource($res = $module . '.' . $contr):
-            case FinalView_Application_Resources::hasResource($res = $module):
-                return $res;
-            break;
-        }
-        return null;
+        return $module . '.' . $contr . '.' . $action;
     }
     
     protected function _defaultHandler()
