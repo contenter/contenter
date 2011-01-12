@@ -1,12 +1,29 @@
 <?php
 class FinalView_Application_Resources
 {
+    const ACCESS_MODE_EXPLICIT = 'ACCESS_MODE_EXPLICIT';
+    const ACCESS_MODE_SOFT = 'ACCESS_MODE_SOFT';
+
     private static $_yml_resources;
-    private static $_resources;
+    private static $_resources = array(
+        '_ROOT_'    =>  array(
+            'rule'  =>  '_FALSE_'
+        )
+    );
 
     protected $_resource;
     protected $_path;
     private $_access_rule;
+    
+    private static $_access_mode = self::ACCESS_MODE_SOFT;
+
+    public static function setAccessMode($accessMode)
+    {
+        if (!in_array($accessMode, array(self::ACCESS_MODE_EXPLICIT, self::ACCESS_MODE_SOFT))) {
+            throw new FinalView_Application_Exception('access mode ' . $accessMode . 'doesn\'t allowed. Only ACCESS_MODE_EXPLICIT and ACCESS_MODE_SOFT can be used');
+        }
+        self::$_access_mode = $accessMode;
+    }
 
     public static function setResources(array $resources)
     {
@@ -15,29 +32,48 @@ class FinalView_Application_Resources
         foreach (self::$_yml_resources as $resName => $resData) {
             self::_addResource($resName, $resData);
         }
-        
-//         dump(self::$_resources);
-//         exit;
     }
-
-    private static function _addResource($key, $data, $context = null)
+    
+    private static function _addResource($key, $data, $context = '_ROOT_')
     {
-        if (!array_key_exists('rule', $data)) {
-             throw new FinalView_Application_Exception('incorrect resource with key ' . $key);
+        if (!isset(self::$_resources[$context])) {
+            throw new FinalView_Application_Exception('context ' . $context . ' is not defined');
         }
 
-        $contextResources = &self::$_resources;
-        if (!is_null($context)) {
-            $resourceParts = explode('.', $context);
-            while ($part = array_shift($resourceParts)) {
-                if (!isset($contextResources[$part])) {
-                    $contextResources[$part] = array();
+        if (strpos($key, '.')) {
+            $keys = explode('.', $key);
+            
+            $lastKey = array_pop($keys);
+            $evContext = $context;
+            while ($pKey = array_shift($keys)) {
+                if (!isset(self::$_resources[$evContext . '.' . $pKey])) {
+                    self::_addResource($pKey, array(), $evContext);
                 }
-                $contextResources = &$contextResources[$part];
+                $evContext .= '.' . $pKey;
             }
+        }else{
+            $lastKey = $key;
+            $evContext = $context;
         }
+        
+        switch (true) {
+            case !empty($data['rule']):
+            break;
+            case !empty($data['orRule']):
+                $data['rule'] = '(' . self::$_resources[$evContext]['rule'] . ') OR (' . $data['orRule'] . ')';
+                unset($data['orRule']);
+            break;
+            case !empty($data['andRule']):
+                $data['rule'] = '(' . self::$_resources[$evContext]['rule'] . ') AND (' . $data['andRule'] . ')';
+                unset($data['andRule']);
+            break;
+            default:
+                $data['rule'] = self::$_resources[$evContext]['rule'];
+            break;
+        }
+        
 
-        if (isset($contextResources[$key]['rule'])) {
+        if (isset(self::$_resources[$evContext . '.' . $lastKey])) {
             throw new FinalView_Application_Exception('resource with key ' . $key . ' already defined in context ' . $context);
         }
 
@@ -47,48 +83,37 @@ class FinalView_Application_Resources
             unset($data['children']);
         }
 
-        $contexts = array();
-        if (array_key_exists('contexts', $data)) {
-            $contexts = $data['contexts'];
-            unset($data['contexts']);
-        }
-
-        if (isset($contextResources[$key]) ) {
-            $contextResources[$key] = array_merge($contextResources[$key], $data);
-        } else {
-            $contextResources[$key] = $data;
-        }
+        self::$_resources[$evContext . '.' . $lastKey] = $data;
 
         foreach ($children as $resName => $resData) {
-            if (!is_array($resData) || !array_key_exists('rule', $resData)) {
-                throw new FinalView_Application_Exception('resource with key ' . $resName . ' must have rule');
+            if (is_int($resName) && is_string($resData)) {
+                self::_addResource($resData, array(), $evContext . '.' . $lastKey);
+            }elseif(is_array($resData)){
+                self::_addResource($resName, $resData, $evContext . '.' . $lastKey);
+            }else{
+                throw new FinalView_Application_Exception('incorrect children of resource ' . $key);
             }
-
-            $resData['rule'] = '(' . $data['rule'] . ') AND (' . $resData['rule'] . ')';
-            self::_addResource($resName, $resData, !is_null($context) ? $context . '.' . $key : $key);
-        }
-        
-        foreach ($contexts as $contextName => $resData) {
-            if (!is_array($resData) || !array_key_exists('rule', $resData)) {
-                throw new FinalView_Application_Exception('resource with key ' . $contextName . ' must have rule');
-            }
-
-            self::_addResource($key, $resData, $contextName);
         }
     }
-    
+
     public static function hasResource($resource)
     {
         if (empty($resource)) { return false;}
-        $resource = strtolower($resource);
+        $resource = '_ROOT_.' . strtolower($resource);
+
+        if (isset(self::$_resources[$resource])) {
+            return true;
+        }elseif(self::$_access_mode === self::ACCESS_MODE_EXPLICIT) {
+            return false;
+        }
         
-        $resourceParts = explode('.', $resource);
-        $currentResources = &self::$_resources;
-        while ($part = array_shift($resourceParts)) {
-            if (!isset($currentResources[$part])) {
-                return false;
-            }
-            $currentResources = &$currentResources[$part];
+        $resourceParent = substr($resource, 0, strrpos($resource, '.'));
+        while (!isset(self::$_resources[$resourceParent])) {
+            $resourceParent = substr($resourceParent, 0, strrpos($resourceParent, '.'));
+        }
+        
+        if ($resourceParent === '_ROOT_') {
+            return false;
         }
         
         return true;
@@ -97,20 +122,24 @@ class FinalView_Application_Resources
     public static function get($resource)
     {
         if (empty($resource)) { return false;}
-        $resource = strtolower($resource);
+        $resource = '_ROOT_.' . strtolower($resource);
         
-        $resourceParts = explode('.', $resource);
-        
-        $currentResources = &self::$_resources;
-
-        while ($part = array_shift($resourceParts)) {
-            if (!isset($currentResources[$part])) {
-                throw new FinalView_Application_Exception('resource ' . $resource . ' not found');
-            }
-            $currentResources = &$currentResources[$part];
+        if (isset(self::$_resources[$resource])) {
+            return new self(self::$_resources[$resource], $resource);
+        }elseif(self::$_access_mode === self::ACCESS_MODE_EXPLICIT) {
+            return null;
         }
         
-        return new self($currentResources, $resource);
+        $resourceParent = substr($resource, 0, strrpos($resource, '.'));
+        while (!isset(self::$_resources[$resourceParent])) {
+            $resourceParent = substr($resourceParent, 0, strrpos($resourceParent, '.'));
+        }
+
+        if ($resourceParent === '_ROOT_') {
+            return null;
+        }
+
+        return new self(self::$_resources[$resourceParent], $resource);
     }
 
     private function __construct($resource, $path)

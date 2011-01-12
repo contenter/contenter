@@ -8,13 +8,13 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $resource = $this->_matchRequestToResource($request);
-        
+        $resource = FinalView_Application_Resources::get($resource);
+
         if (is_null($resource)) {
             $this->setResource($resource);
 
             $this->_notFoundHandler();
         }else{
-            $resource = FinalView_Application_Resources::get($resource);
             $this->setResource($resource);
 
             try{
