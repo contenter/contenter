@@ -17,5 +17,4 @@ User:
 
 Admin:
   admin_logged_in:
-    type: AND
-    dependences: [logged_in] 
+    type: FUNC

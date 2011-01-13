@@ -1,6 +1,7 @@
 default.error.error: {rule: _TRUE_}
 default.index.index: {rule: _TRUE_}
 
-admin.index.index: {rule: admin_logged_in, handler: not_detected_admin}
+admin: {rule: admin_logged_in, handler: not_detected_admin}
+
 admin.auth.login: {rule: !admin_logged_in, handler: forbidden}
 admin.auth.logout: {rule: admin_logged_in, handler: forbidden}
