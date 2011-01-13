@@ -96,14 +96,20 @@ class FinalView_Application_Resources
         }
     }
 
-    public static function hasResource($resource)
+    public static function hasResource($resource, $mode = null)
     {
         if (empty($resource)) { return false;}
         $resource = '_ROOT_.' . strtolower($resource);
 
+        if (is_null($mode)) {
+            $mode = self::$_access_mode;
+        }elseif(!in_array($mode, array(self::ACCESS_MODE_EXPLICIT, self::ACCESS_MODE_SOFT) )) {
+            throw new FinalView_Application_Exception('mode is not correct: ' . $mode);
+        }
+
         if (isset(self::$_resources[$resource])) {
             return true;
-        }elseif(self::$_access_mode === self::ACCESS_MODE_EXPLICIT) {
+        }elseif($mode === self::ACCESS_MODE_EXPLICIT) {
             return false;
         }
         
@@ -119,14 +125,20 @@ class FinalView_Application_Resources
         return true;
     }
 
-    public static function get($resource)
+    public static function get($resource, $mode = null)
     {
         if (empty($resource)) { return false;}
         $resource = '_ROOT_.' . strtolower($resource);
+
+        if (is_null($mode)) {
+            $mode = self::$_access_mode;
+        }elseif(!in_array($mode, array(self::ACCESS_MODE_EXPLICIT, self::ACCESS_MODE_SOFT) )) {
+            throw new FinalView_Application_Exception('mode is not correct: ' . $mode);
+        }
         
         if (isset(self::$_resources[$resource])) {
             return new self(self::$_resources[$resource], $resource);
-        }elseif(self::$_access_mode === self::ACCESS_MODE_EXPLICIT) {
+        }elseif($mode === self::ACCESS_MODE_EXPLICIT) {
             return null;
         }
         
@@ -148,7 +160,7 @@ class FinalView_Application_Resources
         $this->_path = $path;
     }
 
-    public function getAccessRule($context = null)
+    public function getAccessRule()
     {
         if ($this->_access_rule === null) {
             $this->_access_rule = FinalView_Access_Rules::getRule($this->getResource('rule'));
