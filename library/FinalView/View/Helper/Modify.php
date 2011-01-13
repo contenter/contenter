@@ -25,7 +25,7 @@ class FinalView_View_Helper_Modify extends Zend_View_Helper_Abstract
                 case (array_key_exists($m, $this->view->getFilters())  || (bool)$this->view->getPluginLoader('filter')->load($m, false)): 
                     $value = call_user_func_array(
                         array($this->view->getFilter($m), 'filter'),
-                        $value
+                        array($value)
                     );
                     break;
                 case function_exists($m):
