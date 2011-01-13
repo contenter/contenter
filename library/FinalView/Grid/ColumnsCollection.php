@@ -1,4 +1,4 @@
-<?php 
+<?php
 class FinalView_Grid_ColumnsCollection implements Iterator
 {
     const APPEND_AFTER_COLUMN       = 'APPEND_AFTER_COLUMN';
@@ -13,7 +13,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         ),
         '__end__' =>  array(
             'next'  =>  null, 'prev'   =>  '__begin__'
-        ),        
+        ),
     );
     
     private $_currentColumn;
@@ -32,11 +32,11 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_currentColumn = null;
 
         return $this;
-    } 
+    }
     
-    public function addColumn(FinalView_Grid_Column $column, 
+    public function addColumn(FinalView_Grid_Column $column,
         $appendType = FinalView_Grid_ColumnsCollection::APPEND_LAST, $relatedColumn = null)
-    {                
+    {
         switch ($appendType) {
             case FinalView_Grid_ColumnsCollection::APPEND_LAST:
                 $columnName = $this->getLastColumn()?$this->getLastColumn()->getName():'__begin__';
@@ -48,14 +48,14 @@ class FinalView_Grid_ColumnsCollection implements Iterator
             break;
             case FinalView_Grid_ColumnsCollection::APPEND_AFTER_COLUMN:
                 if (!is_null($relatedColumn) && $this->getColumn($relatedColumn) ) {
-                    $this->insertColumnAfter($column, $relatedColumn);	
-                }                
+                    $this->insertColumnAfter($column, $relatedColumn);
+                }
             break;
             case FinalView_Grid_ColumnsCollection::APPEND_BEFORE_COLUMN:
                 if (!is_null($relatedColumn) && $this->getColumn($relatedColumn) ) {
-                    $this->insertColumnBefore($column, $relatedColumn);	
-                } 
-            break;                                    
+                    $this->insertColumnBefore($column, $relatedColumn);
+                }
+            break;
         }
 
         return $this;
@@ -65,7 +65,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
     {
         if (isset($this->_columns[$name])) {
         	return $this->_columns[$name];
-        }        
+        }
     }
     
     public function insertColumnAfter(FinalView_Grid_Column $column, $relatedColumn)
@@ -87,7 +87,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         $this->_columnsIndex[$next]['prev'] = $columnName;
 
-        $this->_currentColumn = $columnName;        
+        $this->_currentColumn = $columnName;
         
         return $this;
     }
@@ -138,14 +138,14 @@ class FinalView_Grid_ColumnsCollection implements Iterator
     {
         if ($column == '__begin__' || $column == '__end__' || !isset($this->_columns[$column])) {
         	return false;
-        }    
+        }
         return true;
     }
     
     public function removeColumn($column)
     {
         if (!$this->isExistColumn($column) ) {
-        	throw new FinalView_Grid_Exception('column doesn\'t exist');
+        	throw new FinalView_Grid_Exception('column ' . $column . 'doesn\'t exist');
         }
         
         unset($this->_columns[$column]);
@@ -154,7 +154,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$prev]['next'] = $next;
         $this->_columnsIndex[$next]['prev'] = $prev;
         
-        unset($this->_columnsIndex[$column]);     
+        unset($this->_columnsIndex[$column]);
         
         return $this;
     }
@@ -194,7 +194,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
 
         $prevPrevColumn = $this->_columnsIndex[$prevColumn]['prev'];
         
-        $this->_columnsIndex[$prevColumn]['next'] = $nextColumn;        
+        $this->_columnsIndex[$prevColumn]['next'] = $nextColumn;
         $this->_columnsIndex[$prevColumn]['prev'] = $column;
         
         $this->_columnsIndex[$column]['prev'] = $prevPrevColumn;
@@ -231,13 +231,13 @@ class FinalView_Grid_ColumnsCollection implements Iterator
             ),
             '__end__' =>  array(
                 'next'  =>  null, 'prev'   =>  '__begin__'
-            ),        
+            ),
         );
 
         return $this;
     }
     
-    public function move($column, 
+    public function move($column,
         $movingType = FinalView_Grid_ColumnsCollection::APPEND_LAST, $relationColumn = null)
     {
         switch ($movingType) {
@@ -251,14 +251,14 @@ class FinalView_Grid_ColumnsCollection implements Iterator
             break;
             case FinalView_Grid_ColumnsCollection::APPEND_AFTER_COLUMN:
                 if (!is_null($relationColumn) && $this->getColumn($relationColumn) ) {
-                    $this->moveColumnAfter($column, $relationColumn);	
-                }                
+                    $this->moveColumnAfter($column, $relationColumn);
+                }
             break;
             case FinalView_Grid_ColumnsCollection::APPEND_BEFORE_COLUMN:
                 if (!is_null($relationColumn) && $this->getColumn($relationColumn) ) {
-                    $this->moveColumnBefore($column, $relationColumn);	
-                } 
-            break;                                    
+                    $this->moveColumnBefore($column, $relationColumn);
+                }
+            break;
         }
 
         return $this;
@@ -283,7 +283,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         }
 
         return $this;
-    }    
+    }
     
     private function moveColumnAfter($column, $relatedColumn)
     {
@@ -299,7 +299,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
             $prev = $this->_columnsIndex[$column]['prev'];
             $next = $this->_columnsIndex[$column]['next'];
             $this->_columnsIndex[$prev]['next'] = $next;
-            $this->_columnsIndex[$next]['prev'] = $prev;        	
+            $this->_columnsIndex[$next]['prev'] = $prev;
         }
         
         $next = $this->_columnsIndex[$relatedColumn]['next'];
@@ -322,7 +322,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         if (!array_key_exists($relatedColumn, $this->_columnsIndex) || $relatedColumn == '__begin__') {
         	throw new FinalView_Grid_Exception('not found relation column');
-        }        
+        }
         
         if (isset($this->_columnsIndex[$column])) {
             $prev = $this->_columnsIndex[$column]['prev'];
@@ -341,7 +341,7 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         $this->_columnsIndex[$prev]['next'] = $column;
 
         return $this;
-    }     
+    }
     
     public function current()
     {
@@ -365,22 +365,22 @@ class FinalView_Grid_ColumnsCollection implements Iterator
     {
         if (empty($this->_columns)) {
         	return false;
-        }        
+        }
         $nextItem = $this->_columnsIndex[$this->_currentColumn]['next'];
         
         if ($nextItem == '__end__') {
             $this->_currentColumn = '__end__';
             return false;
-        }        
+        }
         
         $this->_currentColumn = $nextItem;
         
-        return $this->_columns[$this->_currentColumn]; 
+        return $this->_columns[$this->_currentColumn];
     }
     
     public function rewind()
     {
-        $this->_currentColumn = $this->_columnsIndex['__begin__']['next'];    
+        $this->_currentColumn = $this->_columnsIndex['__begin__']['next'];
     }
     
     public function valid()
@@ -391,9 +391,9 @@ class FinalView_Grid_ColumnsCollection implements Iterator
         
         if ($this->_currentColumn == '__end__' || $this->_currentColumn == '__begin__') {
         	return false;
-        }        
+        }
         return array_key_exists($this->_currentColumn, $this->_columns);
-    }        
+    }
     
     
 }

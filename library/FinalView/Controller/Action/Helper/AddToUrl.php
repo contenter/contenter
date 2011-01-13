@@ -20,8 +20,10 @@ class FinalView_Controller_Action_Helper_AddToUrl extends Zend_Controller_Action
 			$url = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 		}
 
-		parse_str(parse_url($url, PHP_URL_QUERY), $query);
-		return http_build_url($url, array('query' => array_merge($query, $params)));
+        parse_str(parse_url($url, PHP_URL_QUERY), $query);
+
+        $parts = array('query' => array_merge($query, $params));
+        return empty($parts['query']) ? $url : http_build_url($url, $parts);
     }
 
 }
