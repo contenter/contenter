@@ -21,7 +21,7 @@ require_once 'FinalView/Application.php';
 // Create application, bootstrap, and run
 $application = new FinalView_Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.yaml'
+    APPLICATION_PATH . '/configs/application.ini'
 );
  
 $application->getBootstrap()->bootstrap('FinalViewNamespace');
