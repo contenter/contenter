@@ -5,8 +5,10 @@
  *
  * @author dV
  */
-class FinalView_Mail implements FinalView_Mail_Interface
+class FinalView_Mail
 {
+
+    const DEFAULT_CHARSET = 'utf-8';
 
     /**
     * Zend_Mail
@@ -16,65 +18,27 @@ class FinalView_Mail implements FinalView_Mail_Interface
     protected $_mailer;
 
     /**
-    * Template name
+    * Template
     *
-    * @var string
+    * @var FinalView_Mail_Template_Interface
     */
-    private $_template;
+    protected $_template;
 
     /**
     * Vars to parse in template
     *
     * @var array
     */
-    private $_vars = array();
+    protected $_vars = array();
 
-    /**
-    * Db table to get templates from
-    *
-    * @var string
-    */
-    private $_table = 'MailTemplates';
-
-    /**
-     * Mail character set
-     * @var string
-     */
-    private $_charset = 'utf-8';
-
-
-    public function __construct($template = null, array $vars = array(), $table = null)
+    public function __construct(FinalView_Mail_Template_Interface $template,
+        array $vars = array(), $charset = self::DEFAULT_CHARSET)
     {
-		if (is_null(Zend_Mail::getDefaultFrom())) {
-			Zend_Mail::setDefaultFrom('no-reply@' . $_SERVER['HTTP_HOST']);
-		}
-
-        $this->_mailer = new Zend_Mail($this->_charset);
+        $this->_mailer = new Zend_Mail($charset);
         $this->_mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
 
-        if (!is_null($template)) {
-            $this->_template = $template;
-        }
-
-        if (!empty($vars)) {
-            $this->_vars = $vars;
-        }
-        $this->_setVarsDefault();
-
-        if (!is_null($table)) {
-            $this->_table = $table;
-        }
-    }
-
-    /**
-    * Set template
-    *
-    * @param string $template
-    */
-    public function setTemplate($template)
-    {
         $this->_template = $template;
-		return $this;
+        $this->_vars = $vars;
     }
 
     /**
@@ -89,49 +53,19 @@ class FinalView_Mail implements FinalView_Mail_Interface
     }
 
     /**
-    * Set default vars set
+    * Set default vars 
     *
     */
-    protected function _setVarsDefault()
+    protected function _getDefaultVars()
     {
+        $vars = array();
+
         if (defined('BASE_PATH')) {
-            $this->_vars['BASE_PATH'] = BASE_PATH;
+            $vars['BASE_PATH'] = BASE_PATH;
         }
-    }
 
-    /**
-    * Set Mail character charset
-    *
-    * @param string $charset
-    */
-    public function setCharset($charset)
-    {
-        $this->_charset = $charset;
-		return $this;
+        return $vars;
     }
-
-    /**
-	 * @deprecated Use setTable() method instead
-	 *
-	 * @param string $table
-	 * @return $this
-	 */
-    public function setModel($table)
-    {
-        $this->setTable($table);
-		return $this;
-    }
-
-	/**
-	 * Set table
-	 *
-	 * @param string $table
-	 * @return $this
-	 */
-	public function setTable($table) {
-		$this->_table = $table;
-		return $this;
-	}
 
     /**
      * Magic method for calling Zend_Mail methods
@@ -165,38 +99,10 @@ class FinalView_Mail implements FinalView_Mail_Interface
             }
         }
 
-        $this->_mailer->setSubject($this->_parse($this->_template()->subject));
-
-        trim($this->_template()->html)
-            ? $this->setBodyHtml($this->_parse($this->_template()->html))
-            : $this->_mailer->setBodyText($this->_parse($this->_template()->text));
+        $this->setSubject($this->_parse($this->_template->getSubject()));
+        $this->setBodyText($this->_parse($this->_template->getBodyText()));
+        $this->setBodyHtml($this->_parse($this->_template->getBodyHtml()));
         $this->_mailer->send();
-    }
-
-    /**
-    * Return template
-    *
-    * @return Doctrine_Record
-    */
-    protected function _template()
-    {
-        static $cach = array();
-
-        if (!array_key_exists($this->_template, $cach)) {
-
-            $template = Doctrine::getTable($this->_table)->findOneByParams(array(
-                'template'  =>  $this->_template
-            ));
-
-            if (!$cach[$this->_template] = $template)
-            {
-                trigger_error('Template named "' . $this->_template . '" was not
-                    found', E_USER_ERROR);
-            }
-
-        }
-
-        return $cach[$this->_template];
     }
 
     /**
@@ -207,13 +113,15 @@ class FinalView_Mail implements FinalView_Mail_Interface
     */
     private function _parse($string)
     {
+        $vars = $this->_vars + $this->_getDefaultVars();
+
         return strtr($string, array_combine(
                 array_map
                 (
-                    create_function('$var', 'return \'{$\' . $var . \'}\';'),
-                    array_keys($this->_vars)
+                    function ($var) { return '{$' . $var . '}'; },
+                    array_keys($vars)
                 ),
-                $this->_vars
+                $vars
             ));
     }
 
@@ -229,34 +137,93 @@ class FinalView_Mail implements FinalView_Mail_Interface
     public function setBodyHtml($html, $charset = null,
         $encoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE)
     {
-        $this->_mailer->setType(Zend_Mime::MULTIPART_RELATED);
-
         $dom = new DOMDocument(null, $this->_mailer->getCharset());
-        @$dom->loadHTML($html);
+        if (@$dom->loadHTML($html)) {
 
-        $images = $dom->getElementsByTagName('img');
+            // "multipart/related" content type should be set in case any attachment was added
+            $anyAttachmentAdded = false;
 
-        for ($i = 0; $i < $images->length; $i++) {
-            $url = $images->item($i)->getAttribute('src');
-
-            $image_http = new Zend_Http_Client($url);
-            $response = $image_http->request(Zend_Http_Client::GET);
-
-            if (200 == $response->getStatus())
-            {
-                $mime = new Zend_Mime_Part($response->getBody());
-                $mime->id          = $url;
-                $mime->location    = $url;
-                $mime->type        = $response->getHeader(Zend_Http_Client::CONTENT_TYPE);
-                $mime->disposition = Zend_Mime::DISPOSITION_INLINE;
-                $mime->encoding    = Zend_Mime::ENCODING_BASE64;
-                $mime->filename    = pathinfo($url, PATHINFO_BASENAME);
-
-                $this->_mailer->addAttachment($mime);
+            // attache images
+            $images = $dom->getElementsByTagName('img');
+            for ($i = 0; $i < $images->length; $i++) {
+                $item = $images->item($i);
+                $src = $item->getAttribute('src');
+                if ($mimeType = $this->_getMimeType($src)) {
+                    $anyAttachmentAdded = true;
+                    $contentID = $this->_addAttachment($src, file_get_contents($src), $mimeType);
+                    // replace image src with attachment cid to display
+                    // as inline attachment and not by the url
+                    $item->setAttribute('src', 'cid:' . $contentID);
+                }
             }
+
+            // attache other linked files
+            $links = $dom->getElementsByTagName('a');
+            for ($i = 0; $i < $links->length; $i++) {
+                $item = $links->item($i);
+                $href = $item->getAttribute('href');
+                if ($mimeType = $this->_getMimeType($href)) {
+                    $anyAttachmentAdded = true;
+                    $contentID = $this->_addAttachment($href, file_get_contents($href), $mimeType);
+                    // also replace attachment link with cid to open it from attchment
+                    $item->setAttribute('href', 'cid:' . $contentID);
+                }
+            }
+
+            if ($anyAttachmentAdded) {
+                $this->_mailer->setType(Zend_Mime::MULTIPART_RELATED);
+            }
+
+            $html = $dom->saveHTML();
         }
 
+
+
         return $this->_mailer->setBodyHtml($html, $charset, $encoding);
+    }
+
+    protected function _getMimeType($filename)
+    {
+        switch(true) {
+            case in_array(parse_url($filename, PHP_URL_SCHEME), array('http', 'https')) :
+                $definer = new FinalView_Mail_MimeType_ViaHttp;
+                $mimeType = $definer->defineMimeType($filename);
+                break;
+
+            case file_exists($filename) :
+                $definer = new FinalView_Mail_MimeType_ViaFS;
+                $mimeType = $definer->defineMimeType($filename);
+                break;
+
+            default :
+                $mimeType = null;
+                break;
+        }
+
+        return $mimeType;
+    }
+
+    /**
+     * Add attachemnt and return content id
+     *
+     * @param string $filename 
+     * @param string $content
+     * @param string $mimeType
+     * @return string
+     */
+    protected function _addAttachment($filename, $content, $mimeType)
+    {
+        $attachment = new Zend_Mime_Part($content);
+        $attachment->id          = md5_file($filename);
+        $attachment->filename    = pathinfo($filename, PATHINFO_BASENAME);
+        
+        $attachment->type        = $mimeType;
+        $attachment->disposition = Zend_Mime::DISPOSITION_INLINE;
+        $attachment->encoding    = Zend_Mime::ENCODING_BASE64;
+
+        $this->_mailer->addAttachment($attachment);
+
+        return $attachment->id;
     }
 
 }
