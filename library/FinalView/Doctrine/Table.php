@@ -13,7 +13,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
     final public function _getQuery()
     {
         if ($this->_query === null) {
-        	$this->_query = $this->createQuery($this->getTableName());
+            $this->_query = $this->createQuery($this->getTableName());
         }
 
         return $this->_query;
@@ -24,7 +24,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $this->_query = null;
 
         foreach ($this->_joinedTables as $table) {
-        	$table->resetQuery();
+            $table->resetQuery();
         }
 
         $this->_joinedTables = array();
@@ -126,7 +126,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
             $this->$method($value);
         }
 
-		//$this->_getQuery()->useResultCache(true);
+        //$this->_getQuery()->useResultCache(true);
 
         return $this->_getQuery();
     }
@@ -136,7 +136,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $tableObject = $this->getRelation($relation)->getTable();
 
         if (!empty($on)) {
-        	$on = ' ON (' . $on . ')';
+            $on = ' ON (' . $on . ')';
         }
 
         $this->_getQuery()->innerJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on);
@@ -150,7 +150,7 @@ class FinalView_Doctrine_Table extends Doctrine_Table
         $tableObject = $this->getRelation($relation)->getTable();
 
         if (!empty($on)) {
-        	$on = ' ON (' . $on . ')';
+            $on = ' ON (' . $on . ')';
         }
 
         $this->_getQuery()->LeftJoin($this->getTableName() . '.' . $relation . ' ' . $tableObject->getTableName() . $on );

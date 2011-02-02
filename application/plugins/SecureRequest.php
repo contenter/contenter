@@ -17,7 +17,7 @@ class Application_Plugin_SecureRequest extends Zend_Controller_Plugin_Abstract
         }
 
         $route = array(
-        	'route'		=>	Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName()
+            'route'        =>    Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName()
         );
 
         $resource = array
@@ -57,9 +57,9 @@ class Application_Plugin_SecureRequest extends Zend_Controller_Plugin_Abstract
                     $secure_pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/secure_pages.xml');
 
                     if (isset($secure_pages->secure_pages->resource)) {
-						$this->_secure_pages = $secure_pages->secure_pages->resource->toArray();
-						if (!is_array(reset($this->_secure_pages))) {
-                        	$this->_secure_pages = array($this->_secure_pages);
+                        $this->_secure_pages = $secure_pages->secure_pages->resource->toArray();
+                        if (!is_array(reset($this->_secure_pages))) {
+                            $this->_secure_pages = array($this->_secure_pages);
                         }
                     }
                 break;
@@ -71,8 +71,8 @@ class Application_Plugin_SecureRequest extends Zend_Controller_Plugin_Abstract
                     $this->_secure_pages = $secure_pages;
                 break;
                 default:
-            	   $this->_secure_pages = array();
-            	break;
+                   $this->_secure_pages = array();
+                break;
             }
         }
 

@@ -21,7 +21,7 @@ class FinalView_Grid_Plugin_Sortable extends FinalView_Grid_Plugin_Abstract
     public function init()
     {
         foreach ($this->_columns as $columnName) {
-        	$this->_grid->getColumns()->$columnName->getTitle()->setScript('column/title/sortable.phtml');
+            $this->_grid->getColumns()->$columnName->getTitle()->setScript('column/title/sortable.phtml');
         }
     }
     

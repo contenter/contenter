@@ -49,11 +49,11 @@ class FinalView_Mail
     public function setVars(array $vars)
     {
         $this->_vars = $vars;
-		return $this;
+        return $this;
     }
 
     /**
-    * Set default vars 
+    * Set default vars
     *
     */
     protected function _getDefaultVars()
@@ -72,7 +72,7 @@ class FinalView_Mail
      *
      * @param string $method_name
      * @param array $arguments
-	 * @return mixed
+     * @return mixed
      */
     public function __call($method_name, $arguments)
     {
@@ -206,7 +206,7 @@ class FinalView_Mail
     /**
      * Add attachemnt and return content id
      *
-     * @param string $filename 
+     * @param string $filename
      * @param string $content
      * @param string $mimeType
      * @return string
@@ -216,7 +216,7 @@ class FinalView_Mail
         $attachment = new Zend_Mime_Part($content);
         $attachment->id          = md5_file($filename);
         $attachment->filename    = pathinfo($filename, PATHINFO_BASENAME);
-        
+
         $attachment->type        = $mimeType;
         $attachment->disposition = Zend_Mime::DISPOSITION_INLINE;
         $attachment->encoding    = Zend_Mime::ENCODING_BASE64;

@@ -21,9 +21,9 @@ class FinalView_Validate_NotIdentical extends Zend_Validate_Identical
         self::SAME      => "The token '%token%' matchs the given token '%value%'",
     );
 
-	protected $_case_insensitive;
+    protected $_case_insensitive;
 
-	/**
+    /**
      * Sets validator options
      *
      * @param  mixed $token
@@ -31,20 +31,20 @@ class FinalView_Validate_NotIdentical extends Zend_Validate_Identical
      */
     public function __construct($token = null, $case_insensitive = false)
     {
-		$this->setCaseInSensitive($case_insensitive);
+        $this->setCaseInSensitive($case_insensitive);
 
-		parent::__construct($token);
-	}
+        parent::__construct($token);
+    }
 
-	public function setCaseInSensitive($case_insensitive = true)
-	{
-		$this->_case_insensitive = (bool)$case_insensitive;
-	}
+    public function setCaseInSensitive($case_insensitive = true)
+    {
+        $this->_case_insensitive = (bool)$case_insensitive;
+    }
 
-	public function isCaseInSensitive()
-	{
-		return $this->_case_insensitive;
-	}
+    public function isCaseInSensitive()
+    {
+        return $this->_case_insensitive;
+    }
 
     /**
      * Defined by Zend_Validate_Interface
@@ -73,9 +73,9 @@ class FinalView_Validate_NotIdentical extends Zend_Validate_Identical
         return true;
     }
 
-	private function _compareMethod()
-	{
-		return $this->_case_insensitive ? 'strcasecmp' : 'strcmp';
-	}
+    private function _compareMethod()
+    {
+        return $this->_case_insensitive ? 'strcasecmp' : 'strcmp';
+    }
 
 }

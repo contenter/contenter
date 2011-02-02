@@ -19,7 +19,7 @@ class FinalView_Doctrine_Template_Sortable extends Doctrine_Template
             ->addWhere('position < ?', $this->getInvoker()->position)
             ->orderBy('position DESC');
         if (!empty($this->_options['manyListsColumn'])) {
-			$this->_applyManyListColumns($query, (array)$this->_options['manyListsColumn']);
+            $this->_applyManyListColumns($query, (array)$this->_options['manyListsColumn']);
         }
 
         return $query->fetchOne();
@@ -31,22 +31,22 @@ class FinalView_Doctrine_Template_Sortable extends Doctrine_Template
             ->addWhere('position > ?', $this->getInvoker()->position)
             ->orderBy('position ASC');
         if (!empty($this->_options['manyListsColumn'])) {
-			$this->_applyManyListColumns($query, (array)$this->_options['manyListsColumn']);
+            $this->_applyManyListColumns($query, (array)$this->_options['manyListsColumn']);
         }
 
         return $query->fetchOne();
     }
 
-	private function _applyManyListColumns(Doctrine_Query $query, array $many_lists_column)
-	{
-		foreach ($many_lists_column as $column) {
-			if (is_null($this->getInvoker()->$column)) {
-				$query->addWhere($column . ' IS NULL');
-			} else {
-				$query->addWhere($column . ' = ?', $this->getInvoker()->$column);
-			}
-		}
-	}
+    private function _applyManyListColumns(Doctrine_Query $query, array $many_lists_column)
+    {
+        foreach ($many_lists_column as $column) {
+            if (is_null($this->getInvoker()->$column)) {
+                $query->addWhere($column . ' IS NULL');
+            } else {
+                $query->addWhere($column . ' = ?', $this->getInvoker()->$column);
+            }
+        }
+    }
 
     public function swapWith(Doctrine_Record $record2)
     {

@@ -15,10 +15,10 @@ abstract class Utils
     {
         if ((bool)$system) {
             $dir = PUBLIC_PATH . DIRECTORY_SEPARATOR . $dir;
-			if (!is_dir($dir)) {
-				mkdir($dir, 0777, true);
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
                 chgrp($filename, $group);
-			}
+            }
         }
 
         return $dir;
@@ -36,7 +36,7 @@ abstract class Utils
         }
     }
 
-	/**
+    /**
      * @deprecated
      */
     static protected function _getDir($dir, $system)
@@ -44,7 +44,7 @@ abstract class Utils
         return self::getDir($dir, $system);
     }
 
-	/**
+    /**
      * @deprecated
      */
     static protected function _removeFile($file)
@@ -53,21 +53,21 @@ abstract class Utils
     }
 
     static public function clearDir($dir)
-	{
-		$pattern = rtrim($dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '{,.}*';
+    {
+        $pattern = rtrim($dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '{,.}*';
 
-		foreach (glob($pattern, GLOB_BRACE) as $filename) {
-			if (in_array(basename($filename), array('.', '..'))) {
-				continue;
-			}
+        foreach (glob($pattern, GLOB_BRACE) as $filename) {
+            if (in_array(basename($filename), array('.', '..'))) {
+                continue;
+            }
 
-			if (is_dir($filename)) {
-				self::clearDir($filename);
-				@rmdir($filename);
-			} else {
-				@unlink($filename);
-			}
-		}
-	}
+            if (is_dir($filename)) {
+                self::clearDir($filename);
+                @rmdir($filename);
+            } else {
+                @unlink($filename);
+            }
+        }
+    }
 
 }

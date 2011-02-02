@@ -46,7 +46,7 @@ class Doctrine_Task_GenerateYamlDbTable extends Doctrine_Task
         $tables = explode(',', $this->getArgument('tables'));
         $models = array();
         foreach ($tables as $table) {
-        	$models[] = Doctrine_Inflector::classify($table);
+            $models[] = Doctrine_Inflector::classify($table);
         }
         
         FinalView_Doctrine::generateYamlFromDbTable(

@@ -7,7 +7,7 @@ class FinalView_Mail_MimeType_ViaFS implements FinalView_Mail_MimeType_Interface
     {
         $mime_type = self::DEFAULT_MIME_TYPE;
 
-		$mimefile = defined('MAGIC') ? constant('MAGIC') : '';
+        $mimefile = defined('MAGIC') ? constant('MAGIC') : '';
         if (class_exists('finfo', false)) {
             $const = defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME;
             if (!empty($mimefile)) {

@@ -39,10 +39,10 @@ class ErrorController extends Zend_Controller_Action
                     case 403:
                     case 404:
                         $this->getResponse()->setHttpResponseCode($errors->exception->getCode());
-                	break;
-                	default:
+                    break;
+                    default:
                         $this->getResponse()->setHttpResponseCode(500);
-                	break;
+                    break;
                 }
                 $this->view->message = $errors->exception->getMessage();
             break;
