@@ -1,4 +1,7 @@
-production: 
+production:
+  domains:
+    private: contenter.loc
+    public: contenter.usercontent.loc
   phpSettings: 
     display_startup_errors: 0
     display_errors: 0
@@ -36,7 +39,11 @@ testing:
     display_startup_errors: 1
     display_errors: 1
   _extends: production
-development: 
+
+development:   
+  domains:
+    private: contenter.loc
+    public: contenter.usercontent.loc
   phpSettings: 
     display_startup_errors: 1
     display_errors: 1

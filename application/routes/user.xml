@@ -63,6 +63,42 @@
                 <controller>auth</controller>
                 <action>forgot-password-mail-sent</action>
             </defaults>
-        </UserAuthForgotPasswordMailSent>                                           
+        </UserAuthForgotPasswordMailSent>
+        <UserPageIndex>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>user/create-page.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>page</controller>
+                <action>create-new</action>
+            </defaults>
+        </UserPageIndex>
+        <UserPageSetUp>
+            <type>Zend_Controller_Router_Route</type>
+            <route>user/page/:page_id/setup-page.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>page</controller>
+                <action>set-up</action>
+            </defaults>
+        </UserPageSetUp>
+        <UserPageBuild>
+            <type>Zend_Controller_Router_Route</type>
+            <route>user/page/:page_id/build.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>page</controller>
+                <action>build</action>
+            </defaults>
+        </UserPageBuild>
+        <UserPageView>
+            <type>Zend_Controller_Router_Route</type>
+            <route>user/page/:page_id/view.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>page</controller>
+                <action>view</action>
+            </defaults>
+        </UserPageView>
     </routes>
 </configdata>

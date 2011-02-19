@@ -11,7 +11,7 @@ class User_Bootstrap extends FinalView_Application_Module_Bootstrap
     {       
         Zend_Controller_Action_HelperBroker::addPath(
             APPLICATION_PATH . '/modules/user/controllers/helpers', 
-            'User_Controller_Helper'
+            'User_ActionHelper'
         );
     }
     
@@ -22,11 +22,10 @@ class User_Bootstrap extends FinalView_Application_Module_Bootstrap
             'basePath'  => APPLICATION_PATH . '/modules/user',
         ));
         $autoloader->addResourceTypes(array(
-            'auth' => array
-                (
-                    'path' => 'auth', 
-                    'namespace' => 'Auth', 
-                ) 
+            'auth' => array(
+                'path' => 'auth',
+                'namespace' => 'Auth',
+            )
         ));
     }
 }

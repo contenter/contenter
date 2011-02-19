@@ -1,0 +1,16 @@
+Page:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    url:
+      type: clob
+      notnull: true
+    contents:
+      type: clob
+      notnull: true
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
