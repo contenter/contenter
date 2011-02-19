@@ -1,50 +1,37 @@
-Page:
+Gateway:
   columns:
     id:
       type: integer(4)
       autoincrement: true
       primary: true
-    title:
-      type: string(64)
+    gateway_title:
+      type: string(128)
+      unique: true
       notnull: true
-    url:
-      type: clob
-      notnull: true
-    status:
-      type: integer(1)
-      default: 1
-      notnull: true
-    tags:
-      type: string(255)
-      notnull: true
-      default: ''
-  actAs:
-    Timestampable:
+    auth_data: object
   options:
     type: INNODB
     collate: utf8_general_ci
     charset: utf8
 
-PageContent:
+GatewayCountries:
   columns:
     id:
       type: integer(4)
       autoincrement: true
       primary: true
-    page_id:
+    gateway_id:
       type: integer(4)
       notnull: true
-    contents:
-      type: clob
+    country_id:
+      type: integer(4)
       notnull: true
   relations:
-    Page:
-      local: page_id
+    Gateway:
+      local: gateway_id
       foreign: id
-      class: Page
-      foreignType: one
-      type: one
-      foreignAlias: Content
+      class: Gateway
+      foreignAlias: Countries
   options:
     type: INNODB
     collate: utf8_general_ci

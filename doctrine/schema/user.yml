@@ -30,3 +30,51 @@ User:
     type: INNODB
     collate: utf8_general_ci
     charset: utf8
+    
+UserSettings:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    country_id:
+      type: integer(4)
+    gateway_id:
+      type: integer(4)
+    auth_data: object
+    banner_count:
+      type: integer(2)
+      notnull: true
+    banner_types:
+      type: integer(1)
+      notnull: true
+      default: 0
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      class: User
+      foreignAlias: Settings
+      type: one
+      foreignType: one
+    Country:
+      local: country_id
+      foreign: id
+      class: GeoCountry
+      foreignAlias: Users
+      type: one
+      foreignType: many
+    Gateway:
+      local: gateway_id
+      foreign: id
+      class: Gateway
+      foreignAlias: Users
+      type: one
+      foreignType: many
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8

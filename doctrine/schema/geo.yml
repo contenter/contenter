@@ -1,22 +1,13 @@
 GeoCountry:
   columns:
-    code:
-      type: char(2)
+    id:
+      type: integer(4)
+      autoincrement: true
       primary: true
-    name:
-      char(64)
-  options:
-    type: INNODB
-    collate: utf8_general_ci
-    charset: utf8
-
-GeoState:
-  columns:
     code:
-      type: char(2)
-      primary: true
+      type: varchar(2)
     name:
-      char(64)
+      type: varchar(64)
   options:
     type: INNODB
     collate: utf8_general_ci
