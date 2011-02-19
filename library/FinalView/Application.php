@@ -20,7 +20,7 @@ class FinalView_Application extends Zend_Application
         parent::setOptions($options); 
         
         if (isset($local_config)) {
-        	$this->_options['config'] = $local_config;
+            $this->_options['config'] = $local_config;
         }  
     }
 }

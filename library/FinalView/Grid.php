@@ -17,7 +17,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         $forbidden = array();        
         
         if (isset($options['plugins'])) {
-        	foreach ((array)$options['plugins'] as $plugin) {
+            foreach ((array)$options['plugins'] as $plugin) {
                 $this->addPlugin($plugin);
             }            
         }
@@ -43,7 +43,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     private function _initPlugins()
     {
         foreach ($this->_plugins as $plugin) {
-        	$plugin->init();
+            $plugin->init();
         }
     } 
     
@@ -81,7 +81,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         $this->getColumns()->resetColumns();
         
         foreach ((array)$columns as $column) {
-        	$this->addColumn($column);
+            $this->addColumn($column);
         }        
     }
     
@@ -89,15 +89,15 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     {        
         $iterator = $this->getIterator();
         if (is_null($iterator)) {
-        	throw new FinalView_Grid_Exception('not defined iterator');
+            throw new FinalView_Grid_Exception('not defined iterator');
         }
         
         if ($iterator instanceof Doctrine_Collection) {
-        	$columns = $iterator->getTable()->getColumnNames();
+            $columns = $iterator->getTable()->getColumnNames();
         }else{
             $row = reset($iterator);
             if (!$row) {
-                throw new FinalView_Grid_Exception('cannot define columns from iterator');	
+                throw new FinalView_Grid_Exception('cannot define columns from iterator');
             }            
             $columns = array_keys($row);            
         }     
@@ -118,7 +118,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     public function getColumns()
     {
         if (is_null($this->_columns)) {
-        	$this->_columns = new FinalView_Grid_ColumnsCollection;
+            $this->_columns = new FinalView_Grid_ColumnsCollection;
         }
         
         return $this->_columns;
@@ -127,7 +127,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
     public function getRenderer()
     {
         if ($this->_renderer === null) {
-        	$this->_renderer = new FinalView_Grid_Renderer($this);        	
+            $this->_renderer = new FinalView_Grid_Renderer($this);
         }
         
         return $this->_renderer;
@@ -141,10 +141,10 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
             break;
             case $entity instanceof FinalView_Grid_Entity_Abstract:
                 $entityName = $entity->getName();
-        	break;
-        	default:
-        	   throw new FinalView_Grid_Exception('Not valid entity for rendering');
-        	break;
+            break;
+            default:
+               throw new FinalView_Grid_Exception('Not valid entity for rendering');
+            break;
         }
         $this->getRenderer()->clearScript();
         $currNamespace = $this->getRenderer()->currentNamespace();
@@ -163,7 +163,7 @@ class FinalView_Grid extends FinalView_Grid_Entity_Abstract
         $this->getRenderer()->entity = $entity;        
 
         if ($this->getRenderer()->getScript() === null) {
-        	if (is_object($entity)) {
+            if (is_object($entity)) {
                 $this->getRenderer()->setScript($entity->getScript());                 
             }else{
                 $this->getRenderer()->setScript($entityName.'.phtml');    

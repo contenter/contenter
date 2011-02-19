@@ -50,19 +50,19 @@ class FinalView_View_Helper_UserUrl extends Zend_View_Helper_Url
      */
     public function userUrl(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
-		if (is_null($name)) {
-			$name = Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName();
-		}
+        if (is_null($name)) {
+            $name = Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName();
+        }
 
-		if ('ProfileView' == $name) {
-			if (!array_key_exists(self::$_user_id_key_name, $urlOptions)) {
-				$urlOptions[self::$_user_id_key_name] = self::$_logged_user_id;
-			}
+        if ('ProfileView' == $name) {
+            if (!array_key_exists(self::$_user_id_key_name, $urlOptions)) {
+                $urlOptions[self::$_user_id_key_name] = self::$_logged_user_id;
+            }
 
-			return $this->url($urlOptions, $name, $reset, $encode);
-		}
+            return $this->url($urlOptions, $name, $reset, $encode);
+        }
 
-		// fucking shirt !
+        // fucking shirt !
 
         $query_string = '';
         

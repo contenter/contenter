@@ -1,22 +1,22 @@
 <?php
 
-class FinalView_Acl_Resource implements Zend_Acl_Resource_Interface 
+class FinalView_Acl_Resource implements Zend_Acl_Resource_Interface
 {
-    
+
     /**
      * Unique id of Resource
      *
      * @var string
      */
     private $_resource_id;
-    
+
     private $_params = array();
-    
+
     private $_resourceName = array();
-    
+
     /**
     * Sets the Resource identifier
-    * 
+    *
     * @param string $module
     * @param string $controller
     * @param string $action
@@ -37,15 +37,15 @@ class FinalView_Acl_Resource implements Zend_Acl_Resource_Interface
     {
         return $this->_resource_id;
     }
-    
+
     public function getParams()
     {
         return $this->_params;
     }
-    
+
     public function getResourceName()
     {
         return $this->_resourceName;
     }
-    
+
 }

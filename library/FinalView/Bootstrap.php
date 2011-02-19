@@ -15,14 +15,14 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 
     protected function _initFinalViewNamespace()
-	{
-		$autoloader = $this->getApplication()->getAutoloader();
-		$autoloader->registerNamespace('FinalView');
+    {
+        $autoloader = $this->getApplication()->getAutoloader();
+        $autoloader->registerNamespace('FinalView');
 
-		$autoloader->autoload('FinalView_Config');
+        $autoloader->autoload('FinalView_Config');
 
-		return $autoloader;
-	}
+        return $autoloader;
+    }
 
     protected function _initAplicationAutoloader()
     {
@@ -45,12 +45,12 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
-	protected function _initLocale()
-	{
-		if ($locale = $this->getOption('locale')) {
+    protected function _initLocale()
+    {
+        if ($locale = $this->getOption('locale')) {
             Zend_Registry::set('Zend_Locale', $locale);
         }
-	}
+    }
 
     protected function _initMagicFile()
     {
@@ -101,7 +101,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     */
     protected function _initTranslator()
     {
-		$locale = Zend_Registry::isRegistered('Zend_Locale') ? Zend_Registry::get('Zend_Locale') : null;
+        $locale = Zend_Registry::isRegistered('Zend_Locale') ? Zend_Registry::get('Zend_Locale') : null;
         $translator = new Zend_Translate('Gettext', APPLICATION_PATH . '/lang', $locale);
         Zend_Registry::set('Zend_Translate', $translator);
 

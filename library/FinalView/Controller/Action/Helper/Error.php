@@ -9,7 +9,7 @@ class FinalView_Controller_Action_Helper_Error
     public function notFound($message = null)
     {
         if (is_null($message)) {
-        	$message = __(self::PAGE_NOT_FOUND_MESSAGE);
+            $message = __(self::PAGE_NOT_FOUND_MESSAGE);
         }
         
         $e = new FinalView_Application_Exception($message, 404);
@@ -21,7 +21,7 @@ class FinalView_Controller_Action_Helper_Error
     public function forbidden($message = null)
     {
         if (is_null($message)) {
-        	$message = __(self::PAGE_FORBIDDEN_MESSAGE);
+            $message = __(self::PAGE_FORBIDDEN_MESSAGE);
         }
         $e = new FinalView_Application_Exception($message, 403);
         throw $e;
