@@ -1,36 +1,33 @@
-Request:    
-  default-error-error: {rule: _TRUE_}
-  default-index-index: {rule: _TRUE_}
-  user-index-index: {rule: user_logged_in_or_in_params, handler: not_detected_user}
-  user-auth-login: {rule: allowed_to_auth, handler: redirect_to_user_index}
-  user-auth-logout: {rule: _TRUE_}
-  user-register-register: {rule: !logged_in, handler: redirect_to_user_index}
-  user-register-confirmation: {rule: not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed, handler: not_found}  
-  
-  confirmation-index-accept: {rule: hash_exist, handler: not_found}
-  confirmation-index-decline: {rule: hash_exist, handler: not_found}
+default.error.error: {rule: _TRUE_}
+default.index.index: {rule: _TRUE_}
+user.index.index: {rule: user_logged_in_or_in_params, handler: not_detected_user}
+user-auth-login: {rule: allowed_to_auth, handler: redirect_to_user_index}
+user.auth.logout: {rule: _TRUE_}
+user.register.register: {rule: !logged_in, handler: redirect_to_user_index}
+user.register.confirmation: {rule: not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed, handler: not_found}
 
-  confirmation-user-registration: {rule: !logged_in, handler: forbidden}
-  
-  user-auth-forgot-password: {rule: !logged_in, handler: forbidden}
-  user-auth-forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, handler: not_found}
-  
-  confirmation-user-forgot-password: {rule: not_logged_in_and_forgot_pswd_hash_exist, handler: not_found}
-  admin-index-index: {rule: admin_logged_in, handler: not_detected_admin}
-  admin-auth-login:  {rule: !admin_logged_in, handler: forbidden}
-  admin-auth-logout: {rule: admin_logged_in, handler: forbidden}
-  
-  admin-user-index: {rule: admin_logged_in, handler: not_detected_admin} 
-  
-  admin-cms-index:       {rule: admin_logged_in,         handler: not_detected_admin}
-  admin-cms-add-page:    {rule: allowed_add_cms_page,    handler: forbidden_if_admin_authorized}
-  admin-cms-edit-page:   {rule: allowed_edit_cms_page,   handler: not_found_if_admin_authorized}
-  admin-cms-delete-page: {rule: allowed_delete_cms_page, handler: not_allowed_work_with_cms_page}
-  
-  cms-index-index:       {rule: cms_page_exists,         handler: not_found} 
+confirmation.index.accept: {rule: hash_exist, handler: not_found}
+confirmation.index.decline: {rule: hash_exist, handler: not_found}
 
+confirmation.user.registration: {rule: !logged_in, handler: forbidden}
 
-Cms:
-  change-cms-page-name:  {rule: change_page_name_allowed}
-  change-cms-page-route: {rule: change_page_route_allowed}
-  delete-cms-pages:      {rule: delete_page_allowed}
+user.auth.forgot-password: {rule: !logged_in, handler: forbidden}
+user.auth.forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, handler: not_found}
+
+confirmation.user.forgot-password: {rule: not_logged_in_and_forgot_pswd_hash_exist, handler: not_found}
+admin.index.index: {rule: admin_logged_in, handler: not_detected_admin}
+admin.auth.login:  {rule: !admin_logged_in, handler: forbidden}
+admin.auth.logout: {rule: admin_logged_in, handler: forbidden}
+
+admin.user.index: {rule: admin_logged_in, handler: not_detected_admin}
+
+admin.cms.index:       {rule: admin_logged_in,         handler: not_detected_admin}
+admin.cms.add-page:    {rule: allowed_add_cms_page,    handler: forbidden_if_admin_authorized}
+admin.cms.edit-page:   {rule: allowed_edit_cms_page,   handler: not_found_if_admin_authorized}
+admin.cms.delete-page: {rule: allowed_delete_cms_page, handler: not_allowed_work_with_cms_page}
+
+cms.index.index:       {rule: cms_page_exists,         handler: not_found}
+
+change-cms-page-name:  {rule: change_page_name_allowed}
+change-cms-page-route: {rule: change_page_route_allowed}
+delete-cms-pages:      {rule: delete_page_allowed}
