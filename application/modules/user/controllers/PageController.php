@@ -58,11 +58,14 @@ class User_PageController extends FinalView_Controller_Action
                 $content = preg_replace('#<head\b[^>]*>#isu', "<head>\r\n<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />", $content);
 
                 $page = Doctrine::getTable('Page')->create(array(
-                    'url'        =>  $form->getValue('uri'),
-                    'contents'   =>  $content
+                    'url'        =>  $form->getValue('uri')
                 ) );
 
                 $page->save();
+                
+                $page->Content->page_id = $page->id;
+                $page->Content->contents = $content;
+                $page->Content->save();
                 
                 $this->_helper->redirector->gotoUrl(
                     $this->_helper->contentUrl('public', array('page_id' => $page->id), 'UserPageSetUp')
@@ -108,7 +111,7 @@ class User_PageController extends FinalView_Controller_Action
         $this->_helper->layout()->disableLayout();
 
         $document = new DOMDocument();
-        $page_content = $page->contents;
+        $page_content = $page->Content->contents;
         $page_content = preg_replace("/<body([^>]*)>/i", '<body$1><div style="position:relative;z-index:1;">', $page_content);
         $page_content = preg_replace("/<\/body>/i", '</div></body>', $page_content);
 

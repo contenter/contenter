@@ -14,51 +14,51 @@ class Admin_Grid_CmsPages extends Admin_Grid_Base
         ));
 
         $router = Zend_Controller_Front::getInstance()->getRouter();
-        
+
         $this->getColumns()->removeColumn('ids');
         $this->getColumns()->removeColumn('id');
-        
+
         $this->getColumns()->contents->setFilter('StripTags|substr:0:50');
-        
+
         $access = Zend_Controller_Action_HelperBroker::getStaticHelper('isAllowed');
-        
+
         $this->addColumn(
             new FinalView_Grid_Column_Action(
-                'edit_action', 
+                'edit_action',
                 'Edit',
-                $router->getRoute('AdminCmsEditPage'), 
+                $router->getRoute('AdminCmsEditPage'),
                 array('page_name' => 'name')
             )
         );
-        
-        if ($access->isAllowed('delete-cms-pages', array(), 'Cms') ) {
+
+        if ($access->isAllowed('delete-cms-pages', array()) ) {
             $this->addColumn(
                 new FinalView_Grid_Column_Action(
-                    'delete_action', 
+                    'delete_action',
                     'Delete',
-                    $router->getRoute('AdminCmsDeletePage'), 
+                    $router->getRoute('AdminCmsDeletePage'),
                     array('page_name' => 'name')
                 )
             );
-            
+
             $this->addPlugin(new FinalView_Grid_Plugin_Colspan(array(
                 'edit_action'   =>  2
-            )));                    	
-        }        
-        
+            )));
+        }
+
         $this->getPlugin('sortable')->setColumns(array(
             'name', 'title'
         ));
-        
+
         $urlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('Url');
-        
-        if ($access->isAllowed('admin-cms-add-page', array(), 'Request' ) ) {
-            
+
+        if ($access->isAllowed('admin-cms-add-page', array()) ) {
+
             $this->addPlugin(new FinalView_Grid_Plugin_Gridactions(array(
                 array('type' => 'link', 'label' =>  'Add Page', 'href' => $urlHelper->url(array(), 'AdminCmsAddPage' ))
             )));
-                    	
+
         }
-                                        
+
     }
 }

@@ -136,7 +136,7 @@ class User_AuthController extends FinalView_Controller_Action
 
     protected function _sendForgotPasswordLetter($user)
     {
-        $mail = new FinalView_Mail('user/forgot-password', array(
+        $mail = new FinalView_Mail(new FinalView_Mail_Template_Doctrine('user/forgot-password'), array(
             'email' => $user->email,
             'hash'  => $user->getConfirmation('forgot-password')->hash,
         ));

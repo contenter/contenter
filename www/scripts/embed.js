@@ -226,8 +226,8 @@ $(function(){
     } );
     
     interval = setInterval(function(){
-        var doc_height = $(body).height();
-        var doc_width = $(body).width();
+        var doc_height = $('body').height();
+        var doc_width = $('body').width();
         console.log(doc_width);
 //         doc_height = doc_height - 87;
         
@@ -309,6 +309,7 @@ $(function(){
             });
 
             $('embed[wmode!="opaque"]').each(function(){
+                console.log('bla');
                 $(this).css({"z-index": 0});
                 $(this).attr('wmode', 'opaque');
                 var html = $(this).outerHTML();

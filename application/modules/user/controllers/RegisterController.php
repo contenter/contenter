@@ -62,7 +62,7 @@ class User_RegisterController extends FinalView_Controller_Action
 
     protected function sendRegistrationConfirmationMail($user)
     {
-        $mail = new FinalView_Mail('user/registration-confirmation', array(
+        $mail = new FinalView_Mail(new FinalView_Mail_Template_Doctrine('user/registration-confirmation'), array(
             'email' => $user->email,
             'hash'  => $user->getConfirmation('registration')->hash,
         ));
