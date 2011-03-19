@@ -37,6 +37,42 @@
                 <action>index</action>
             </defaults>
         </UserIndexIndex>
+        <UserIndexSettings>
+            <type>FinalView_Controller_Router</type>
+            <route>user/{:user_id/}settings.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>index</controller>
+                <action>settings</action>
+            </defaults>
+        </UserIndexSettings>
+        <UserIndexCountry>
+            <type>FinalView_Controller_Router</type>
+            <route>user/ccountry/{:country_id/}</route>
+            <defaults>
+                <module>user</module>
+                <controller>index</controller>
+                <action>country</action>
+            </defaults>
+        </UserIndexCountry>
+        <UserIndexGateway>
+            <type>FinalView_Controller_Router</type>
+            <route>user/cgateway/{:gateway_id/}</route>
+            <defaults>
+                <module>user</module>
+                <controller>index</controller>
+                <action>gateway</action>
+            </defaults>
+        </UserIndexGateway>
+        <UserIndexFill>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>user/fill.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>index</controller>
+                <action>fill</action>
+            </defaults>
+        </UserIndexFill>
         <UserRegisterConfirmation>
             <type>Zend_Controller_Router_Route</type>
             <route>user/role/:role/:email/resend-confirmation.html</route>

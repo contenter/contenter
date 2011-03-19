@@ -1,0 +1,41 @@
+Visit:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    page_id:
+      type: integer(4)
+      notnull: true
+    country_id:
+      type: integer(4)
+      notnull: true
+    date:
+      type: date
+    uni:
+      type: integer(4)
+      notnull: true
+      default: 0
+    nonuni:
+      type: integer(4)
+      notnull: true
+      default: 0
+    status:
+      type: integer(1)
+      default: 1
+      notnull: true
+  relations:
+    Country:
+      local: country_id
+      foreign: id
+      class: GeoCountry
+      foreignAlias: Visits
+    Page:
+      local: page_id
+      foreign: id
+      class: Page
+      foreignAlias: Visits
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8

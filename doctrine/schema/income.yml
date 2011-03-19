@@ -1,0 +1,61 @@
+Income:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    amount:
+      type: decimal(5, 2)
+      default: 0.00
+      notnull: true
+      unsigned: true
+    date:
+      type: date
+    status:
+      type: integer(1)
+      default: 1
+      notnull: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      class: User
+      foreignAlias: Incomes
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8
+
+Outcome:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    amount:
+      type: decimal(5, 2)
+      default: 0.00
+      notnull: true
+      unsigned: true
+    date:
+      type: date
+    status:
+      type: integer(1)
+      default: 1
+      notnull: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      class: User
+      foreignAlias: Outcomes
+  options:
+    type: INNODB
+    collate: utf8_general_ci
+    charset: utf8

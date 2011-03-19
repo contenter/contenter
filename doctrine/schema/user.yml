@@ -20,6 +20,18 @@ User:
       notnull: true
     replied_at:
       type: timestamp
+    current_balance:
+      type: decimal(5, 2)
+      default: 0.00
+      notnull: true
+      unsigned: true
+    outcomes:
+      type: decimal(5, 2)
+      default: 0.00
+      notnull: true
+      unsigned: true
+    last_outome:
+      type: date
   actAs:
     Timestampable:
     FinalView_Doctrine_Template_Confirmable: 
