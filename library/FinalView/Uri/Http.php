@@ -23,7 +23,8 @@ class FinalView_Uri_Http extends Zend_Uri_Http
              . '://'
              . $auth
              . $this->_host
-             . $port;
+             . $port
+             . $this->_path;
     }
     
     /**

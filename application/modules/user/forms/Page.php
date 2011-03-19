@@ -30,4 +30,10 @@ class User_Form_Page extends Zend_Form
         $this->addElement($element);
     }
     
+    public function isValidResponse(Zend_Http_Response $response)
+    {
+        $valid = !$response->isError();
+        return $valid;
+    }
+    
 }

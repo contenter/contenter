@@ -12,7 +12,7 @@ $.widget("ui.boxer", $.extend({}, $.ui.mouse, {
 
     this._mouseInit();
     
-    this.doc_height = $(document).height();
+    this.doc_height = $(document).height() - 84;
     this.doc_width = $(document).width();
     
     this.helpers = this.options.helpers;
@@ -154,7 +154,7 @@ $.extend($.ui.boxer, {
 });
 
 $(function(){
-    var divs = $(document).data('divs');
+    var divs = $(document).data('params');
 
     var self = {
         getParentDiv: function() {
@@ -193,24 +193,26 @@ $(function(){
         getBti: function() {
             return $('#' + divs['bti'], this.getForm());
         },
-        getBodyw: function() {
-            return $('#' + divs['bodyw'], this.getForm());
+        getDocumentw: function() {
+            return $('#' + divs['documentW'], this.getForm());
         },
-        getBodyh: function() {
-            return $('#' + divs['bodyh'], this.getForm());
+        getDocumentyh: function() {
+            return $('#' + divs['documentH'], this.getForm());
+        },
+        getContentDiv: function() {
+            return $('#' + divs['contentDiv']);
         }
     };
     var doc_height = $(document).height();
+    var clear_height = doc_height - 84;
     var doc_width = $(document).width();
-//     doc_height = doc_height - 87;
     
-    self.getLD().css({height: doc_height});
-    self.getRD().css({height: doc_height});
-    self.getTransD().css({height: doc_height});
-    self.getBodyw().val(doc_width + 'px');
-    self.getBodyh().val(doc_height + 'px');
-    
-    $('body').css('width', doc_width);
+    self.getContentDiv().css({height: clear_height, width: doc_width});
+    self.getLD().css({height: clear_height});
+    self.getRD().css({height: clear_height, width: doc_width});
+    self.getTransD().css({height: clear_height, width: doc_width});
+    self.getDocumentw().val(doc_width + 'px');
+    self.getDocumentyh().val(clear_height + 'px');
     
     self.getParentDiv().boxer({
         appendTo: self.getParentDiv(),
@@ -226,19 +228,6 @@ $(function(){
     } );
     
     interval = setInterval(function(){
-        var doc_height = $('body').height();
-        var doc_width = $('body').width();
-        console.log(doc_width);
-//         doc_height = doc_height - 87;
-        
-        self.getLD().css({height: doc_height});
-        self.getRD().css({height: doc_height});
-        self.getTransD().css({height: doc_height});
-        self.getBodyw().val(doc_width + 'px');
-        self.getBodyh().val(doc_height + 'px');
-
-        $('body').css('width', doc_width);
-
         if(jQuery.browser.msie) {
             $('object').each(function(){
                 var paramWmodeReps = false;

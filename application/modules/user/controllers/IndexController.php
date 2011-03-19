@@ -6,4 +6,9 @@ class User_IndexController extends FinalView_Controller_Action
     {
         
     }
+    
+    public function headerAction()
+    {
+
+    }
 }

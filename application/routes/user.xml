@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configdata>
     <routes>
+        <UserIndexHeader>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>user/page-header.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>index</controller>
+                <action>header</action>
+            </defaults>
+        </UserIndexHeader>
         <UserRegisterRegister>
             <type>Zend_Controller_Router_Route_Static</type>
             <route>user/register.html</route>
