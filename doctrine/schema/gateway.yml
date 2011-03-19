@@ -8,7 +8,15 @@ Gateway:
       type: string(128)
       unique: true
       notnull: true
+    gateway_ident:
+      type: string(128)
+      unique: true
+      notnull: true
     auth_data: object
+    status:
+      type: integer(1)
+      default: 1
+      notnull: true
   options:
     type: INNODB
     collate: utf8_general_ci
@@ -32,6 +40,11 @@ GatewayCountries:
       foreign: id
       class: Gateway
       foreignAlias: Countries
+    Country:
+      local: country_id
+      foreign: id
+      class: GeoCountry
+      foreignAlias: Gateways
   options:
     type: INNODB
     collate: utf8_general_ci

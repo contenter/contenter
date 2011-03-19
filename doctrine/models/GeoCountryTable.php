@@ -1,9 +1,8 @@
 <?php
 
-class GeoCountryTable extends Doctrine_Table
+class GeoCountryTable extends FinalView_Doctrine_Table
 {
-
-	public function getCountries()
+       public function getCountries()
 	{
 		$query = $this->createQuery()
 			->orderBy('code <> "US", name ASC')
@@ -17,4 +16,13 @@ class GeoCountryTable extends Doctrine_Table
 		return $this->getCountries()->toKeyValueArray('code', 'name');
 	}
 
+        public function getCountriesAsOptionsId()
+	{
+		return $this->getCountries()->toKeyValueArray('id', 'name');
+	}
+
+         protected function innerJoinCountrySelector($params)
+         {
+            $this->innerJoin('Country', $params);
+         }
 }

@@ -9,6 +9,18 @@ class User_Form_User_Register extends User_Form_User_Abstract
      * 
      * @return void
      */
+    public $ip;
+    public $country_code;
+
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+    }
+    public function setCountry_code($country_code)
+    {
+        $this->country_code = $country_code;
+    }
+    
     public function init()
     {
         parent::init();     
@@ -48,7 +60,19 @@ class User_Form_User_Register extends User_Form_User_Abstract
             ->setAttrib('renderPassword', true)
             ;
         $this->addElement($element);
-        
+
+        $countries_list = Doctrine::getTable('GeoCountry')->getCountriesAsOptions();
+
+        $element = new Zend_Form_Element_Select('country');
+        $element
+            ->setLabel("Select your country")
+            ->setRequired()
+            ->addMultiOptions(array($countries_list))
+            ->setValue($this->country_code)
+            ->addFilters(array('StringTrim'))
+            ;
+        $this->addElement($element);
+
         $element = new Zend_Form_Element_Submit('submit');
         $element
             ->setLabel('REGISTER_BUTTON_TEXT')

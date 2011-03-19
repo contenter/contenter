@@ -15,7 +15,24 @@ class User_RegisterController extends FinalView_Controller_Action
     {
         if ($newUser = $this->_register()) {
             $newUser->save();
+            $values->user_id = $newUser->id;
+            $country =  Doctrine::getTable('GeoCountry')->findOneByParams(array(
+                  'code'    =>  $this->getForm()->getValue('country')
+            ));
+            $values->country_id  = $country->id;
 
+            $q = Doctrine_Query::create()
+                -> select ('*,g.gateway_title,g.gateway_ident')
+                -> from('GatewayCountries x')
+                ->innerJoin('x.Gateway g')
+                ->innerJoin('x.Country c')
+                ->andWhere('g.status = ?', 1)
+                ->andWhere('c.id = ?', $country->id);
+            $gateways = $q->execute();
+
+            $newUserSettings = Doctrine::getTable('UserSettings')->create($values);
+            $newUserSettings->gateway_id = $gateways[0]->Gateway->id;
+            $newUserSettings->save();
             $newUser->createConfirmation('registration');
             $this->sendRegistrationConfirmationMail($newUser);
 
@@ -55,7 +72,9 @@ class User_RegisterController extends FinalView_Controller_Action
     protected function getForm()
     {
         if (is_null($this->_registerForm)) {
-        	$this->_registerForm = new User_Form_User_Register;
+                $ip = $this->getRealIpAddr();
+                $country_code = geoip_country_code_by_name ($ip);
+        	$this->_registerForm = new User_Form_User_Register(array('ip'=>$ip,'country_code'=>$country_code));
         }
         return $this->_registerForm;
     }
@@ -68,4 +87,21 @@ class User_RegisterController extends FinalView_Controller_Action
         ));
         $mail->send($user->email, $user->email);
     }
+
+   public function getRealIpAddr()
+  {
+   $client = $this->getRequest()->getServer('HTTP_CLIENT_IP');
+   $forwarded = $this->getRequest()->getServer('HTTP_X_FORWARDED_FOR');
+    if (!empty($forwarded)) {
+        $ip = $this->getRequest()->getServer('HTTP_X_FORWARDED_FOR');
+    } else if (!empty($client)) {
+        $ip = $this->getRequest()->getServer('HTTP_CLIENT_IP');
+    } else {
+        $ip = $this->getRequest()->getServer('REMOTE_ADDR');
+    }
+    $ip = '87.250.251.11'; // HARDCODE IP !!!
+    return $ip;
+
+ }
+
 }

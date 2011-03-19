@@ -1,6 +1,11 @@
 default.error.error: {rule: _TRUE_}
 default.index.index: {rule: _TRUE_}
 user.index.index: {rule: user_logged_in_or_in_params, handler: not_detected_user}
+user.index.settings: {rule: user_logged_in_or_in_params, handler: not_detected_user}
+user.index.fill: {rule: _TRUE_}
+user.index.country: {rule: logged_in, handler: not_detected_user}
+user.index.gateway: {rule: logged_in, handler: not_detected_user}
+
 user.auth.login: {rule: allowed_to_auth, handler: redirect_to_user_index}
 user.auth.logout: {rule: _TRUE_}
 user.register.register: {rule: !logged_in, handler: redirect_to_user_index}
