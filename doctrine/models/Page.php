@@ -89,7 +89,7 @@ class Page extends BasePage
 
         $content = preg_replace(
             '@<head\b([^>]*)>@is',
-            '<head$1><meta http-equiv="Content-Type" charset="text/html; charset=utf-8">',
+            '<head$1><meta http-equiv="Content-Type" content="text/html; charset=utf-8">',
             $content
         );
         
