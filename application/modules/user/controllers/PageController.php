@@ -191,8 +191,7 @@ class User_PageController extends FinalView_Controller_Action
             ),
         ));
         
-//         $page->Content->built_content = $page->Content->contents;
-//         $page->save();
+        $page->saveToFile();
 
         $this->view->content = $page->Content->contents;
     }

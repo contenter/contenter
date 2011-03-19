@@ -14,6 +14,19 @@ class Page extends BasePage
 {
     private $_document;
 
+    public function postInsert($event)
+    {
+        $this->code_36 = User_Utils_Digits::convertTo36($this->id);
+        $this->save();
+    }
+    
+    public function saveToFile()
+    {
+        $bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $filename = PUBLIC_PATH . $bootstrap->getOption('path_to_files') . '/' . $this->code_36 . '.html';
+        file_put_contents($filename, $this->Content->contents);
+    }
+
     public function populateFromResponse(Zend_Http_Response $response)
     {
         if ($content_type = $response->getHeader('Content-Type')) {

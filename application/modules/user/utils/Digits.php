@@ -10,7 +10,14 @@ class User_Utils_Digits {
 
     // class functions
 
-    public function __construct($num, $base=10) {
+    public static function convertTo36($num)
+    {
+        $m = new User_Utils_Digits($num,10);
+        return $m->getConvNum(36);
+    }
+
+    public function __construct($num, $base=10)
+    {
         $this->alnum_digit = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";   // default use upper case letters
         $this->num = $num;    //  the mumber encoded with base
         $this->base = $base;   //  the used base
@@ -18,43 +25,50 @@ class User_Utils_Digits {
         $this->dec_num = $this->calc_dec($num); // dec_num always keeps the decimal-value of num
     }
 
-    public function getNum() {
+    public function getNum()
+    {
         return $this->num;
     }
 
 // returns the encoded value
 
-    public function getDec() {
+    public function getDec()
+    {
         return $this->dec_num;
     }
 
 // returns the decimal value
 
-    public function getBase() {
+    public function getBase()
+    {
         return $this->base;
     }
 
 // returns the used base
 
-    public function getMaxBase() {
+    public function getMaxBase()
+    {
         return $this->max_base;
     }
 
 // returns the maximum-base
 
-    public function toUpper() {
+    public function toUpper()
+    {
         $this->changeAlnumDigits("upper");
     }
 
 // use upper digits
 
-    public function toLower() {
+    public function toLower()
+    {
         $this->changeAlnumDigits("lower");
     }
 
 // use lower digits
 
-    public function mixedDigits() {
+    public function mixedDigits()
+    {
         $this->changeAlnumDigits("mixed");
     }
 
@@ -63,7 +77,8 @@ class User_Utils_Digits {
     // different values while using mixed Digits
     // returns the stored number converted to base $base
     // does the same as getNum but doesnt change (restores)base or number
-    public function getConvNum($base) {
+    public function getConvNum($base)
+    {
         $tmp_num = $this->num;
         $tmp_base = $this->base;
         // dbg var_dump($this);
@@ -78,14 +93,16 @@ class User_Utils_Digits {
     // change the base encoded number
     // param: $value ; the used base
     // return: none
-    public function setNum($value, $base=10) {
+    public function setNum($value, $base=10)
+    {
         $this->num = $value;
         $this->base = $base;
         $this->dec_num = $this->calc_dec($value);
     }
 
     // changes the base and builds the new encoded number using the new base
-    public function setBase($base) {
+    public function setBase($base)
+    {
 
         if ($base > strlen($this->alnum_digit) OR $base < 2)
             die("<br><b>Invalid Base " . $value . "     Allowed Range = 2 - " . strlen($this->alnum_digit) . "</b>");
@@ -96,7 +113,8 @@ class User_Utils_Digits {
         }
     }
 
-    private function calc_dec($number) {
+    private function calc_dec($number)
+    {
 
         // nothing to do if base == 10
         if ($this->base == 10)
@@ -116,7 +134,8 @@ class User_Utils_Digits {
         return $dec;
     }
 
-    private function build_nBase_number() {
+    private function build_nBase_number()
+    {
         $num = $this->get_highest_numPart($this->dec_num, $this->base);
         //dbg("erster Aufruf von get_highest...",$num);
         $rest = $this->dec_num - $this->calc_dec($num);
@@ -140,7 +159,8 @@ class User_Utils_Digits {
     }
 
     // find the highest valid left digit ( filled with "0" )
-    private function get_highest_numPart($dec_num, $base) {
+    private function get_highest_numPart($dec_num, $base)
+    {
         if ($dec_num == 0)
             return "0";
         $dec = 0;
@@ -175,7 +195,8 @@ class User_Utils_Digits {
         } while ($dec < $dec_num);
     }
 
-    private function changeAlnumDigits($uc) {
+    private function changeAlnumDigits($uc)
+    {
         switch ($uc) {
             case "upper" : $this->alnum_digit = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 break;

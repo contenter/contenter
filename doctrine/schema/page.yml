@@ -22,6 +22,8 @@ Page:
       type: string(255)
       notnull: true
       default: ''
+    code_36:
+      type: string(24)
   actAs:
     Timestampable:
   options:
