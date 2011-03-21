@@ -89,7 +89,7 @@ class Page extends BasePage
 
         $content = preg_replace(
             '@<head\b([^>]*)>@is',
-            '<head$1><meta http-equiv="Content-Type" content="text/html; charset=utf-8">',
+            '<head$1><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />',
             $content
         );
         
@@ -126,9 +126,8 @@ class Page extends BasePage
         }
 
         $this->title = $title;
-        
+
         $content = $document->saveHTML();
-        $content = mb_convert_encoding($content, 'utf-8', 'html-entities');
 
         $this->Content->contents = $content;
         return $this;
@@ -212,7 +211,6 @@ class Page extends BasePage
         }
 
         $content = $dom->saveHTML();
-        $content = mb_convert_encoding($content, 'utf-8', 'html-entities');
         $this->Content->contents = $content;
     }
     
