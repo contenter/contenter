@@ -4,3 +4,7 @@
 /application/configs/environment.php
 /application/configs/application.local.ini
 /application/configs/application.local.yaml
+
+.buildpath
+.project
+.settings/*
