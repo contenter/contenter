@@ -5,6 +5,7 @@ class FinalView_Mail_Template_Doctrine implements FinalView_Mail_Template_Interf
     public static $_default_model = 'MailTemplates';
     public static $selector = 'template';
 
+    protected $_template;
 
     public function __construct($key = null, $model = null)
     {
