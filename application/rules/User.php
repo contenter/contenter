@@ -50,5 +50,11 @@ class Application_Rules_User extends FinalView_Access_Rules_Abstract
         ));
         
         return (bool)$hash;
-    }   
+    }
+
+    public function urlInParamsRule()
+    {
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+        return $request->getQuery('url', false);
+    }
 }

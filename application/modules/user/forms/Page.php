@@ -16,7 +16,9 @@ class User_Form_Page extends Zend_Form
         $element
             ->setLabel('URL_FIELD_LABEL')
             ->setRequired()
-            ->addFilters(array('StringTrim'))
+            ->addFilters(array(
+                'StringTrim',
+            ))
             ->addValidator(new FinalView_Validate_Uri())
             ;
         $this->addElement($element);
@@ -28,6 +30,11 @@ class User_Form_Page extends Zend_Form
             ->setIgnore(true)
             ;
         $this->addElement($element);
+        
+        $this->addPrefixPath('FinalView_Form_Decorator', 'FinalView/Form/Decorator', Zend_Form::DECORATOR);
+        $this->loadDefaultDecorators();
+        $this->addDecorator('FvformErrors');
+        $this->getDecorator('FvformErrors')->setOption('placement', Zend_Form_Decorator_Abstract::PREPEND);
     }
     
     public function isValidResponse(Zend_Http_Response $response)

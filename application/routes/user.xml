@@ -145,5 +145,14 @@
                 <action>view</action>
             </defaults>
         </UserPageView>
+        <UserPageFramePump>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>user/page/frame-pump.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>page</controller>
+                <action>frame-pump</action>
+            </defaults>
+        </UserPageFramePump>
     </routes>
 </configdata>

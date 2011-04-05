@@ -30,7 +30,9 @@ User:
     type: AND
     dependences: [!logged_in, forgot_pswd_hash]
   forgot_pswd_hash:
-    type: FUNC    
+    type: FUNC
+  url_in_params:
+    type: FUNC
 
 Confirmation:
   hash_exist:

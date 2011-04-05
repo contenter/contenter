@@ -22,6 +22,7 @@ user.auth.forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, 
 user.page.create-new: {rule: logged_in, handler: not_detected_user}
 user.page.set-up: {rule: _TRUE_}
 user.page.build: {rule: _TRUE_}
+user.page.frame-pump: {rule: url_in_params, handler: not_found}
 
 user.index.header: {rule: _TRUE_}
 

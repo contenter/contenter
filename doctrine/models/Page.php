@@ -503,4 +503,18 @@ class Page extends BasePage
             'inner_content' =>  '$(function(){$(document).data("params", ' . Zend_Json::encode($params) . ')} )'
         ), $document));
     }
+    
+    private function _changeIframeSrcDModifier($document, $params)
+    {
+        $addToUrlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('AddToUrl');
+
+        $frames = $document->getElementsByTagName('iframe');
+
+        foreach ($frames as $frame) {
+            $src = $frame->getAttribute('src');
+            $frame->setAttribute('src', $addToUrlHelper->addToUrl(array(
+                'url'   =>  $src,
+            ), $params['url']));
+        }
+    }
 }
