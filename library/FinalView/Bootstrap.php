@@ -264,7 +264,7 @@ class FinalView_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     'Exception',
                     'Html',
                 ),
-                'jquery_path' => '/scripts/jquery.js'
+                'jquery_path' => '/scripts/jquery.min.js'
             );
 
             $debug = new ZFDebug_Controller_Plugin_Debug($options);

@@ -9,3 +9,7 @@
 /log
 /_FILES
 /www/files
+
+.buildpath
+.project
+.settings/*
