@@ -54,7 +54,7 @@ abstract class FinalView_Controller_Plugin_Access extends Zend_Controller_Plugin
         if (method_exists($this, $method = '_' . $filter->filter($handler) . 'Handler')) {
             call_user_func(array($this, $method));
         }else{
-            throw new FinalView_Exception('handler '.$handler.' not found in Access Plugin');
+            $this->_throwException(new FinalView_Exception('handler '.$handler.' not found in Access Plugin'));
         }
     }
 
