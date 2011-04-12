@@ -24,8 +24,17 @@ Page:
       default: ''
     code_36:
       type: string(24)
+    user_id:
+      type: integer(4)
+      notnull: true
   actAs:
     Timestampable:
+  relations:
+    User:
+      class: User
+      local: user_id
+      foreign: id
+      foreignAlias: Pages
   options:
     type: INNODB
     collate: utf8_general_ci
@@ -51,6 +60,7 @@ PageContent:
       foreignType: one
       type: one
       foreignAlias: Content
+      cascade: [delete, update]
   options:
     type: INNODB
     collate: utf8_general_ci

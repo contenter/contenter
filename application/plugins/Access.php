@@ -23,16 +23,21 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         }
     }
     
-    protected function _defaultHandler()
+    protected function _redirectToLoginHandler()
     {
-        switch (true) {
-            case is_null($this->getResource()):
-                return;
-            break;
-        }
-        
-        parent::_defaultHandler();
+        $this->_redirectToLogin();
     }
+    
+//     protected function _defaultHandler()
+//     {
+//         switch (true) {
+//             case is_null($this->getResource()):
+//                 return;
+//             break;
+//         }
+//
+//         parent::_defaultHandler();
+//     }
     
     protected function _redirectToLogin()
     {
@@ -103,5 +108,17 @@ class Application_Plugin_Access extends FinalView_Controller_Plugin_Access
         }
         
         $this->_forbiddenHandler();                
-    }               
+    }
+
+    protected function _pageManipulateDeniedHandler()
+    {
+        $failedRule = $this->getResource()->getAccessRule();
+        
+        if ($failedRule->isFailedRule('logged_in')) {
+            $this->_redirectToLogin();
+        }
+        
+        $this->_notFoundHandler();
+        return;
+    }
 }

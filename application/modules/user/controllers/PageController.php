@@ -23,6 +23,7 @@ class User_PageController extends FinalView_Controller_Action
                 $page = Doctrine::getTable('Page')->create();
                 $page->url = $form->getValue('uri');
                 $page->populateFromResponse($response);
+                $page->user_id = $this->_helper->user->authorized->id;
                 $page->save();
 
                 $this->_helper->redirector->gotoUrl(
@@ -206,5 +207,14 @@ class User_PageController extends FinalView_Controller_Action
         ));
         
         $this->view->content = $page->Content->contents;
+    }
+    
+    public function removeAction()
+    {
+        $page = Doctrine::getTable('Page')->findOneByParams(array(
+            'id'    =>  $this->_getParam('page_id')
+        ))->delete();
+        
+        $this->_helper->redirector->gotoRoute(array(), 'UserIndexIndex');
     }
 }

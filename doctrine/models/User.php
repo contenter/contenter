@@ -33,5 +33,15 @@ class User extends BaseUser
     public function isRole($role)
     {
         return (($this->role & $role) === $role);
-    }    
+    }
+
+    public function getPages(array $selectors, $page = null, $per_page = null)
+    {
+        $selectors['user_id'] = $this->id;
+        if (!is_null($page)) {
+            $per_page = is_null($per_page) ? Config::get('user', 'pages_per_page') : $per_page;
+            return Doctrine::getTable('Page')->findPageByParams($selectors, $page, $per_page);
+        }
+        return Doctrine::getTable('Page')->findByParams($selectors);
+    }
 }

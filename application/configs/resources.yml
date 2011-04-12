@@ -1,6 +1,8 @@
 default.error.error: {rule: _TRUE_}
 default.index.index: {rule: _TRUE_}
-user.index.index: {rule: user_logged_in_or_in_params, handler: not_detected_user}
+
+user.index.index: {rule: logged_in, handler: redirect_to_login}
+user.index.header: {rule: _TRUE_}
 user.index.settings: {rule: user_logged_in_or_in_params, handler: not_detected_user}
 user.index.fill: {rule: _TRUE_}
 user.index.country: {rule: logged_in, handler: not_detected_user}
@@ -8,26 +10,26 @@ user.index.gateway: {rule: logged_in, handler: not_detected_user}
 
 user.auth.login: {rule: allowed_to_auth, handler: redirect_to_user_index}
 user.auth.logout: {rule: _TRUE_}
-user.register.register: {rule: !logged_in, handler: redirect_to_user_index}
-user.register.confirmation: {rule: not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed, handler: not_found}
-
-confirmation.index.accept: {rule: hash_exist, handler: not_found}
-confirmation.index.decline: {rule: hash_exist, handler: not_found}
-
-confirmation.user.registration: {rule: !logged_in, handler: forbidden}
-
 user.auth.forgot-password: {rule: !logged_in, handler: forbidden}
 user.auth.forgot-password-mail-sent: {rule: not_logged_in_and_forgot_pswd_hash, handler: not_found}
+
+user.register.register: {rule: !logged_in, handler: redirect_to_user_index}
+user.register.confirmation: {rule: not_logged_in_and_user_exist_by_email_and_role_and_not_confirmed, handler: not_found}
 
 user.page.create-new: {rule: logged_in, handler: not_detected_user}
 user.page.set-up: {rule: _TRUE_}
 user.page.build: {rule: _TRUE_}
 user.page.frame-pump: {rule: url_in_params, handler: not_found}
+user.page.remove: {rule: logged_in AND (page_exist AND page_owner), handler: page_manipulate_denied}
 
-user.index.header: {rule: _TRUE_}
+confirmation.index.accept: {rule: hash_exist, handler: not_found}
+confirmation.index.decline: {rule: hash_exist, handler: not_found}
 
+confirmation.user.registration: {rule: !logged_in, handler: forbidden}
 confirmation.user.forgot-password: {rule: not_logged_in_and_forgot_pswd_hash_exist, handler: not_found}
+
 admin.index.index: {rule: admin_logged_in, handler: not_detected_admin}
+
 admin.auth.login:  {rule: !admin_logged_in, handler: forbidden}
 admin.auth.logout: {rule: admin_logged_in, handler: forbidden}
 

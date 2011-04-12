@@ -25,6 +25,7 @@ class FinalView_View_Helper_Paging extends Zend_View_Helper_Abstract
     public function paging($total, $perPage, $page)
     {
         $this->perPage = $perPage;
+
         $this->total = $total;
         $this->currentPage = is_null($page)?1:$page;
 
@@ -32,7 +33,7 @@ class FinalView_View_Helper_Paging extends Zend_View_Helper_Abstract
         $this->pages = array();
 
         $this->_setPages();
-
+        
         if (!is_null(self::$script) ) {
             return $this->view->partial(
                 self::$script,
@@ -84,7 +85,6 @@ class FinalView_View_Helper_Paging extends Zend_View_Helper_Abstract
     public function getLastPage()
     {
         if ($this->lastPage !== null) return $this->lastPage;
-
         $this->lastPage = ceil($this->total / $this->perPage);
         if ($this->lastPage <= 0) $this->lastPage = 1;
 

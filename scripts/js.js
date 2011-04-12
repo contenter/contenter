@@ -1,0 +1,1 @@
+javascript:element = document.createElement('form'); element.action = 'http://contenter.loc/user/create-page.html';element.method = 'post';url_field = document.createElement('input');url_field.type = 'text';url_field.name='uri';url_field.value = location.href;element.appendChild(url_field);element.submit();

@@ -65,3 +65,9 @@ Admin:
     type: FUNC
   change_page_route_allowed:
     type: FUNC
+
+Page:
+  page_exist:
+    type: FUNC
+  page_owner:
+    type: FUNC

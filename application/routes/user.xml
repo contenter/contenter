@@ -38,8 +38,8 @@
             </defaults>
         </UserAuthLogout>
         <UserIndexIndex>
-            <type>FinalView_Controller_Router</type>
-            <route>user/{:user_id/}index.html</route>
+            <type>Zend_Controller_Router_Route_Static</type>
+            <route>user/index.html</route>
             <defaults>
                 <module>user</module>
                 <controller>index</controller>
@@ -145,6 +145,15 @@
                 <action>view</action>
             </defaults>
         </UserPageView>
+        <UserPageRemove>
+            <type>Zend_Controller_Router_Route</type>
+            <route>user/page/:page_id/remove-page.html</route>
+            <defaults>
+                <module>user</module>
+                <controller>page</controller>
+                <action>remove</action>
+            </defaults>
+        </UserPageRemove>
         <UserPageFramePump>
             <type>Zend_Controller_Router_Route_Static</type>
             <route>user/page/frame-pump.html</route>

@@ -1,2 +1,12 @@
-<a href="<?=$this->url(array('user_id'=>$this->user_id), 'UserIndexSettings')?>">User settings</a><br />
+<a href="<?=$this->url(array(), 'UserIndexSettings')?>">User settings</a><br />
 <a href="<?=$this->url(array(), 'UserPageIndex')?>">Create page</a>
+
+<?=$this->paging($this->pager->getNumResults(), $this->pager->getMaxPerPage(), $this->pager->getPage());?>
+<? foreach($this->pages as $page): ?>
+<? dump($page->toArray())?>
+<a href="<?=$page->getViewUrl()?>">view</a>
+<a href="<?=$this->url(array('page_id' => $page->id), 'UserPageSetUp')?>">edit</a>
+<a href="<?=$this->url(array('page_id' => $page->id), 'UserPageRemove')?>">remove</a>
+<? endforeach;?>
+
+<?=$this->paging($this->pager->getNumResults(), $this->pager->getMaxPerPage(), $this->pager->getPage());?>

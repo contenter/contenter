@@ -26,6 +26,19 @@ class Page extends BasePage
         $filename = PUBLIC_PATH . $bootstrap->getOption('path_to_files') . '/' . $this->code_36 . '.html';
         file_put_contents($filename, $this->Content->contents);
     }
+    
+    public function getViewUrl()
+    {
+        $bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $schema = 'http://';
+        return trim(BASE_PATH, '/') . $bootstrap->getOption('path_to_files') . '/' . $this->code_36 . '.html';
+    }
+    
+    public function getFilePath()
+    {
+        $bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        return PUBLIC_PATH . $bootstrap->getOption('path_to_files') . '/' . $this->code_36 . '.html';
+    }
 
     public function populateFromResponse(Zend_Http_Response $response)
     {
